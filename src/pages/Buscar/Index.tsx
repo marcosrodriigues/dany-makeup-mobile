@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, TouchableOpacity, ScrollView, ImageBackground, Text } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 
 import style from './Style';
-import { SearchBar } from 'react-native-elements';
-import { FontAwesome } from '@expo/vector-icons';
 
-import CategoriaImg from '../../assets/images/categorias/categoria.jpg';
+import { useNavigation } from '@react-navigation/native';
+import HeaderSearchBar from '../../components/HeaderSearchBar/Index'
+import Categoria from '../../components/Categoria/Index';
+import CardProduto from '../../components/CardProduto/Index'
 
-interface ICategory {
-    id: number,
-    title: string,
-    image_url: string
-}
+import ICategory from '../../interface/Category';
+import IProduct from '../../interface/Product';
+
 
 const Buscar = () => {
-    const [search, setSearch] = useState('');
     const [category, setCategory] = useState<ICategory[]>([]);
+    const [search, setSearch] = useState<string>('');
+    const [categorySelected, setCategorySelected] = useState<ICategory>({} as ICategory);
+    const [showList, setShowList] = useState<Boolean>(false);
+    const [produtos, setProdutos] = useState<IProduct[]>([]);
+
+    const navigate = useNavigation();
 
     useEffect(() => {
         const categorias = [
@@ -44,43 +48,93 @@ const Buscar = () => {
         setCategory(categorias);
     }, [])
 
-    function handleSelectedCategory (id: number) {
-        console.log("id: " + id);
+    useEffect(() => {
+      setShowList(!(categorySelected.id === undefined && search === ''))
+    }, [categorySelected, search]);
+
+    useEffect(() => {
+      setProdutos([
+        {
+            id: 1,
+            image: 'https://edbr.vteximg.com.br/arquivos/ids/160548-1000-1000/Batom_Soul_Kiss_Me_Mate_Nude_Carmin_819772_1.jpg?v=636552622351130000',
+            name: 'Produto 1',
+            value: 49.00,
+            description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum '
+        },
+        {
+          id: 2,
+          image: 'https://edbr.vteximg.com.br/arquivos/ids/160548-1000-1000/Batom_Soul_Kiss_Me_Mate_Nude_Carmin_819772_1.jpg?v=636552622351130000',
+          name: 'Produto 2',
+          value: 49.00,
+          description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum '
+        },
+        {
+          id: 3,
+          image: 'https://edbr.vteximg.com.br/arquivos/ids/160548-1000-1000/Batom_Soul_Kiss_Me_Mate_Nude_Carmin_819772_1.jpg?v=636552622351130000',
+          name: 'Produto 3',
+          value: 49.00,
+          description: 'Lorem ipsum Lorem ipsum Lorem ipsum '
+        },
+        {
+          id: 4,
+          image: 'https://edbr.vteximg.com.br/arquivos/ids/160548-1000-1000/Batom_Soul_Kiss_Me_Mate_Nude_Carmin_819772_1.jpg?v=636552622351130000',
+          name: 'Produto 4',
+          value: 49.00,
+          description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum'
+        },
+        {
+          id: 5,
+          image: 'https://edbr.vteximg.com.br/arquivos/ids/160548-1000-1000/Batom_Soul_Kiss_Me_Mate_Nude_Carmin_819772_1.jpg?v=636552622351130000',
+          name: 'Produto 5',
+          value: 49.00,
+          description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum'
+        },
+      ]);
+
+    }, [])
+
+    function handleSelectedCategory (id: ICategory) {
+      setCategorySelected(id);
     }
 
-    function handleSearchButton () {
-        console.log(search);
+    function handleSearchButton (text: string) {
+      setSearch(text);
+
+      if (text === '') setCategorySelected(Object());
+    }
+
+    function handleAddCarrinho(id: number) {
+      console.log("adicionou " + id + " no carrinho");
+    }
+
+    function onClickProduct (id: number) {
+      navigate.navigate('Produto', {id});
     }
 
     return (
-        <View style={style.container}>
-            <View style={style.header}>
-                <Image source={require('../../assets/images/logo.png')} style={style.logo}></Image>
-                <SearchBar
-                    placeholder="Produto ou categoria"
-                    containerStyle={style.containerSearchBar}
-                    inputStyle={style.inputSearchBar}
-                    onChangeText={setSearch}
-                    value={search}
-                />
-                <TouchableOpacity style={style.searchButton} onPress={handleSearchButton}  >
-                <FontAwesome name="search" style={style.fa} ></FontAwesome>
-                </TouchableOpacity>
-            </View>
+      <View style={style.dataContainer}>
+          <HeaderSearchBar onClickSearch={handleSearchButton} />
+          <ScrollView contentContainerStyle={style.searchScrollView}>
+            { showList ? 
+                <>
+                  <Text style={style.subtitle}>Exibindo resultados para</Text>
+                  <Text style={style.title}>{categorySelected.title? categorySelected.title + ' ' : ''}{search}</Text>
 
-            <ScrollView style={style.scrollView}>
-                <Text style={style.allCategory}>Todas as categorias</Text>
-                {category.map(cat => (
-                <TouchableOpacity activeOpacity={0.6} style={style.content} key={cat.id} onPress={() => handleSelectedCategory(cat.id)}>
-                    <ImageBackground style={style.categoria} source={CategoriaImg}>
-                    <Text style={style.titleCategoria}>{cat.title}</Text>
-                    </ImageBackground>
-                </TouchableOpacity>
-                ))}
-                
-            </ScrollView>
-            
-            </View>
+                  {produtos.map(product => (
+                    <CardProduto key={product.id} produto={product} onClickComponent={onClickProduct} onClickAdd={handleAddCarrinho} />
+                  ))}
+                </>
+              :
+                <>
+                  <Text style={style.title}>Todas as categorias</Text>
+
+                  { category.map(cat => (
+                    <Categoria key={cat.id} category={cat} onClickCategory={handleSelectedCategory} />
+                  ))}
+                </>
+            }
+          </ScrollView>
+          </View>
     )
 }
 

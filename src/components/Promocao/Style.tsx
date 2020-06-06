@@ -46,14 +46,14 @@ export default StyleSheet.create({
     cardNewValue: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: 'green',
+        color: 'green'//'#62ae6c',
     },
     cardDiscount: {
         fontSize: 12,
         fontWeight: 'bold',
         textAlignVertical: 'bottom',
         textAlign:'right',
-        color: '#d2ae6c'
+        color: '#d2ae6c',
     },
     inline: {
         flexDirection:'row',

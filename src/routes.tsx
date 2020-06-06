@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Home from './pages/Home/Index'
-import Buscar from './pages/Buscar/Index';
+import RoutesBuscar from './routesBuscar';
 import Conta from './pages/Conta/Index'
 import Carrinho from './pages/Carrinho/Index'
 
@@ -12,6 +12,7 @@ const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
     return (
+        <>
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
@@ -37,9 +38,10 @@ export default function TabNavigator() {
             }}
         >
             <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="Buscar" component={Buscar} />
+            <Tab.Screen name="Buscar" component={RoutesBuscar} />
             <Tab.Screen name="Conta" component={Conta} />
             <Tab.Screen name="Carrinho" component={Carrinho} />
         </Tab.Navigator>
+        </>
     )
 }
