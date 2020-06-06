@@ -5,9 +5,7 @@ import Swiper from 'react-native-swiper';
 
 import styles from './Style';
 
-interface IBanner {
-    image_url: string
-}
+import IBanner from '../../interface/Banner'
 
 const Banner = () => {
     const [banner, setBanner] = useState<IBanner[]>([])

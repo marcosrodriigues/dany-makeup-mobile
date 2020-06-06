@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, ImageBackground, StyleSheet, Text } from 'react-native';
+import { View, ScrollView, ImageBackground } from 'react-native';
 
 import styles  from './Style' ;
 

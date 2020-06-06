@@ -1,9 +1,23 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { View, ImageBackground } from 'react-native';
+
+import style from './Style';
+import { ScrollView } from 'react-native-gesture-handler';
+
+import HeaderStackMenu from '../../components/HeaderStackMenu/Index'
 
 const Produto = () => {
     return (
-        <Text>Produto</Text>
+        <ScrollView contentContainerStyle={style.container}>
+            <ImageBackground style={style.imageBackground} source={require('../../../src/assets/images/dany-makeup-169h.png')}  />
+            <HeaderStackMenu title={"Nome do produto"} />
+
+            <View style={style.content}>
+                
+            </View>
+
+        </ScrollView>
+        
     )
 }
 
