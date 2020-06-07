@@ -7,11 +7,7 @@ export default StyleSheet.create({
         fontWeight: 'bold'
     },
     produtosMaisVendidos: {
-        width: '100%',
-        height: '100%',
         backgroundColor: '#d2ae6c', //f0f0f0
-        flex: 1,
-        flexDirection: 'row',
         marginTop: 10,
         marginBottom: 20
     },

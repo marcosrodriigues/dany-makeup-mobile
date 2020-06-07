@@ -1,34 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Text, View, Image } from 'react-native';
-import { useRoute } from '@react-navigation/native';
 import { Card } from 'react-native-elements';
 
 import style from './Style'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import NumberFormat from '../../util/NumberFormat';
-import { FontAwesome } from '@expo/vector-icons';
+import AddCarrinho from '../AddCarrinho/Index';
 
-interface ICategory {
-    id: number,
-    title: string,
-    image_url: string
-}
+import IParamsCardProduto from '../../interface/IParamsCardProduto';
 
-interface IProduto{
-    id: number,
-    name: string,
-    description: string,
-    category?: [ICategory],
-    image: string,
-    value: number,
-}
-interface IParams {
-    produto: IProduto,
-    onClickComponent: (id : number) => void,
-    onClickAdd: (id : number) => void
-}
-
-const CardProduto:React.FC<IParams> = ({ produto, onClickAdd, onClickComponent }) => {
+const CardProduto:React.FC<IParamsCardProduto> = ({ produto, onClickComponent }) => {
     return (
         <Card key={produto.id} containerStyle={style.cardProduto}  >
             <View style={style.product}>
@@ -37,7 +18,7 @@ const CardProduto:React.FC<IParams> = ({ produto, onClickAdd, onClickComponent }
                         activeOpacity={0.9} 
                         onPress={() => onClickComponent(produto.id)}
                     >
-                        <Image source={{ uri : produto.image }} style={style.image}></Image>
+                        <Image source={{ uri : produto.images[0] }} style={style.image}></Image>
                     </TouchableOpacity>      
                 </View>
                 <View style={style.info}>
@@ -46,16 +27,11 @@ const CardProduto:React.FC<IParams> = ({ produto, onClickAdd, onClickComponent }
                         onPress={() => onClickComponent(produto.id)}
                     >                  
                         <Text style={style.title}>{produto.name}</Text>
-                        <Text style={style.subtitle}>{produto.description}</Text>
+                        <Text style={style.subtitle}>{produto.shortDescription}</Text>
 
                         <NumberFormat value={produto.value} style={style.value} />  
                     </TouchableOpacity>
-                    <TouchableOpacity style={style.button} onPress={() => onClickAdd(produto.id)} >
-                        <View style={style.buttonIcon}>
-                        <FontAwesome name="plus" size={16}></FontAwesome>
-                        </View>
-                        <Text style={style.buttonText}>Quero comprar</Text>
-                    </TouchableOpacity>
+                    <AddCarrinho text={'Quero comprar'} product_id={produto.id} size={1} />
                 </View>
                 
             </View>

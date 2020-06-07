@@ -8,8 +8,8 @@ import HeaderSearchBar from '../../components/HeaderSearchBar/Index'
 import Categoria from '../../components/Categoria/Index';
 import CardProduto from '../../components/CardProduto/Index'
 
-import ICategory from '../../interface/Category';
-import IProduct from '../../interface/Product';
+import ICategory from '../../interface/ICategoria';
+import IProduct from '../../interface/IProduto';
 
 
 const Buscar = () => {
@@ -55,39 +55,64 @@ const Buscar = () => {
     useEffect(() => {
       setProdutos([
         {
-            id: 1,
-            image: 'https://edbr.vteximg.com.br/arquivos/ids/160548-1000-1000/Batom_Soul_Kiss_Me_Mate_Nude_Carmin_819772_1.jpg?v=636552622351130000',
-            name: 'Produto 1',
-            value: 49.00,
-            description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum '
+          id: 1,
+          name: 'Nome do produto 1',
+          fullDescription: 'Lorem 1 ipsum lorem ipsum Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum',
+          shortDescription: 'Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum',
+          images: [
+              'https://images.unsplash.com/photo-1583209814683-c023dd293cc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+              'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=765&q=80',
+              'https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+          ],
+          value: 49.00
         },
         {
           id: 2,
-          image: 'https://edbr.vteximg.com.br/arquivos/ids/160548-1000-1000/Batom_Soul_Kiss_Me_Mate_Nude_Carmin_819772_1.jpg?v=636552622351130000',
-          name: 'Produto 2',
-          value: 49.00,
-          description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum '
+          name: 'Nome do produto 2',
+          fullDescription: 'Lorem 1 ipsum lorem ipsum Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum',
+          shortDescription: 'Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum',
+          images: [
+              'https://images.unsplash.com/photo-1583209814683-c023dd293cc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+              'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=765&q=80',
+              'https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+          ],
+          value: 49.00
         },
         {
           id: 3,
-          image: 'https://edbr.vteximg.com.br/arquivos/ids/160548-1000-1000/Batom_Soul_Kiss_Me_Mate_Nude_Carmin_819772_1.jpg?v=636552622351130000',
-          name: 'Produto 3',
-          value: 49.00,
-          description: 'Lorem ipsum Lorem ipsum Lorem ipsum '
+          name: 'Nome do produto 3',
+          fullDescription: 'Lorem 1 ipsum lorem ipsum Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum',
+          shortDescription: 'Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum',
+          images: [
+              'https://images.unsplash.com/photo-1583209814683-c023dd293cc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+              'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=765&q=80',
+              'https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+          ],
+          value: 49.00
         },
         {
           id: 4,
-          image: 'https://edbr.vteximg.com.br/arquivos/ids/160548-1000-1000/Batom_Soul_Kiss_Me_Mate_Nude_Carmin_819772_1.jpg?v=636552622351130000',
-          name: 'Produto 4',
-          value: 49.00,
-          description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum'
+          name: 'Nome do produto 4',
+          fullDescription: 'Lorem 1 ipsum lorem ipsum Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum',
+          shortDescription: 'Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum',
+          images: [
+              'https://images.unsplash.com/photo-1583209814683-c023dd293cc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+              'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=765&q=80',
+              'https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+          ],
+          value: 49.00
         },
         {
           id: 5,
-          image: 'https://edbr.vteximg.com.br/arquivos/ids/160548-1000-1000/Batom_Soul_Kiss_Me_Mate_Nude_Carmin_819772_1.jpg?v=636552622351130000',
-          name: 'Produto 5',
-          value: 49.00,
-          description: 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum'
+          name: 'Nome do produto 5',
+          fullDescription: 'Lorem 1 ipsum lorem ipsum Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum',
+          shortDescription: 'Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum',
+          images: [
+              'https://images.unsplash.com/photo-1583209814683-c023dd293cc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+              'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=765&q=80',
+              'https://images.unsplash.com/photo-1540555700478-4be289fbecef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
+          ],
+          value: 49.00
         },
       ]);
 
@@ -103,12 +128,8 @@ const Buscar = () => {
       if (text === '') setCategorySelected(Object());
     }
 
-    function handleAddCarrinho(id: number) {
-      console.log("adicionou " + id + " no carrinho");
-    }
-
-    function onClickProduct (id: number) {
-      navigate.navigate('Produto', {id});
+    function onClickProduct (product: IProduct) {
+      navigate.navigate('Produto', { product: product });
     }
 
     return (
@@ -121,7 +142,7 @@ const Buscar = () => {
                   <Text style={style.title}>{categorySelected.title? categorySelected.title + ' ' : ''}{search}</Text>
 
                   {produtos.map(product => (
-                    <CardProduto key={product.id} produto={product} onClickComponent={onClickProduct} onClickAdd={handleAddCarrinho} />
+                    <CardProduto key={product.id} produto={product} onClickComponent={() => onClickProduct(product)} />
                   ))}
                 </>
               :
