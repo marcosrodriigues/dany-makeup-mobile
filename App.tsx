@@ -9,7 +9,7 @@ import { Provider } from 'react-redux'
 import Routes from './src/routes';
 import { NavigationContainer } from '@react-navigation/native';
 
-import store from './src/config/store';
+import store from './src/redux/actions';
 
 export default function App() {
   // let [fontsLoader] = useFonts({

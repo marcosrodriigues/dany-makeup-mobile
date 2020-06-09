@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Text, View, Image, ScrollView, Modal, AsyncStorage } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, Image, ScrollView, Alert, AsyncStorage } from 'react-native';
 
 import style from './Style';
 import HeaderStackMenu from '../../components/HeaderStackMenu/Index';
@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import api from '../../services/api';
 
 import { useDispatch } from 'react-redux'
+import axios from 'axios';
 
 const Login = () => {
     const [email, setEmail] = useState('marcos.rodriiigues@gmail.com');
@@ -21,20 +22,24 @@ const Login = () => {
         navigation.navigate('Cadastro');
     }
 
-    function handleLoginClick() {
-        api.post('users/login', { email, password }).then(async (response) => {
-            const { token, user } = response.data;
-            
+    async function handleLoginClick() {
+        try {
+            const { data } = await api.post('/auth/login', { email, password });
+            const { user, token } = data;
+
             if (!token || !user) {
                 alert('Não foi possível realizar o login');
                 return;
             }
-
-            dispatch({ type: 'USER_ONLINE', user, token: `BEARER ${token}`});
+    
+            const oficialToken = `Bearer ${token}`;
+            dispatch({ type: 'USER_ONLINE', user, token: oficialToken});
+            AsyncStorage.setItem("TOKEN", oficialToken);
             navigation.navigate('Conta');
-        }, (error)=> {
-            alert("Login e/ou senha incorretos");
-        })
+        } catch (err) {
+            Alert.alert("Atenção", "Email e/ou senha inválidos. Verifique e tente novamente.")
+            console.log(err);
+        }
     }
 
     return (

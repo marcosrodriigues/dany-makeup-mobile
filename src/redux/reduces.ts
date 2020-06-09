@@ -1,10 +1,7 @@
-import { createStore } from 'redux';
+import { INITIAL_STATE } from './initialState';
+import * as types from './actions';
 
-const INITIAL_STATE = {
-    token: '',
-    user: { }
-}
-function userOnline(state = INITIAL_STATE, action) {
+export const loginReducer = (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case 'USER_ONLINE':
             return { ...state, user: action.user, token: action.token}
@@ -14,7 +11,3 @@ function userOnline(state = INITIAL_STATE, action) {
             return state;
      }
 }
-
-const store = createStore(userOnline);
-
-export default store;

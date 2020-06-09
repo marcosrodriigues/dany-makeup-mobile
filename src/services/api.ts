@@ -1,21 +1,26 @@
 import axios from 'axios';
+
+import { useSelector } from 'react-redux'
+import IStateRedux from '../interface/IStateRedux';
+import { useEffect, useState } from 'react';
 import { AsyncStorage } from 'react-native';
 
 var api = axios.create({
     baseURL: 'http://192.168.2.14:3333',
 });
 
-api.interceptors.request.use(async function(config) {
-    const token = await AsyncStorage.getItem('TOKEN');
-    
+ api.interceptors.request.use(async function(config) {
+    const token = await AsyncStorage.getItem('TOKEN') || undefined;
+
     if (token) {
         if (config.method !== 'OPTIONS') {
             config.headers.authorization = token;
         }
     }
+
     return config;
-}, function (error) {
-    alert('Error: ' + error);
-})
+ }, function (error) {
+     alert('Error interceptor: ' + error);
+ })
 
 export default api;

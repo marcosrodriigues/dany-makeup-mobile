@@ -10,6 +10,7 @@ import IUsuario from '../../interface/IUsuario';
 
 import { useSelector, useDispatch } from 'react-redux';
 import IStateRedux from '../../interface/IStateRedux';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 
 const Conta = () => {
     const [isLogin, setIsLogin] = useState(false);
@@ -24,10 +25,15 @@ const Conta = () => {
             setIsLogin(true);
         else
             setIsLogin(false);
-    }, [user])
+    }, [user, token])
 
-    async function handleLogoutClick() {
+    function handleLogoutClick() {
         dispatch({ type: 'USER_OFFLINE' });
+        AsyncStorage.removeItem("TOKEN");
+    }
+
+    function handleMyProfile() {
+
     }
 
     return (
@@ -45,7 +51,10 @@ const Conta = () => {
                         </View>
                         <View style={style.infoText}>
                             <Text style={style.text}>{user.name}</Text>
+                            <TouchableHighlight activeOpacity={0.9} onPress={() => handleMyProfile()}>
                             <Link to="/Perfil" style={style.text}> Meu perfil</Link>
+                            </TouchableHighlight>
+                            
                         </View>
                     </>
                 ) : ( 

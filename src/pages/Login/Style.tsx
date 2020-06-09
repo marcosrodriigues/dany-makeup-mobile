@@ -41,7 +41,7 @@ export default StyleSheet.create({
     field: {
         height: 48,
         backgroundColor: 'black',
-        borderColor: 'white',
+        borderColor: '#d2ae6c',
         color: '#d2ae6c',
         borderWidth: 1,
         marginBottom: 10,
