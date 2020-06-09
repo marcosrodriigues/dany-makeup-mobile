@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ImageBackground, Text } from 'react-native';
+import { View, ImageBackground } from 'react-native';
 
 import style from './Style';
 import { ScrollView } from 'react-native-gesture-handler';

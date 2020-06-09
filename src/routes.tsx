@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Home from './pages/Home/Index'
 import RoutesBuscar from './routesBuscar';
-import Conta from './pages/Conta/Index'
+import RoutesConta from './routesConta';
 import Carrinho from './pages/Carrinho/Index'
 
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -39,7 +39,7 @@ export default function TabNavigator() {
         >
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Buscar" component={RoutesBuscar} />
-            <Tab.Screen name="Conta" component={Conta} />
+            <Tab.Screen name="Conta" component={RoutesConta} />
             <Tab.Screen name="Carrinho" component={Carrinho} />
         </Tab.Navigator>
         </>

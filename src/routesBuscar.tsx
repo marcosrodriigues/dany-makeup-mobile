@@ -6,7 +6,7 @@ import Produto from './pages/Produto/Index'
 
 const BuscarStack = createStackNavigator();
 
-const BuscarRoutes = () => {
+export default function BuscarRoutes() {
     return (
         <BuscarStack.Navigator 
             headerMode="none" 
@@ -21,5 +21,3 @@ const BuscarRoutes = () => {
         </BuscarStack.Navigator>
     )
 }
-
-export default BuscarRoutes;

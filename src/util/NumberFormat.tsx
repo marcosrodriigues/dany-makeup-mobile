@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { default as NF } from 'react-number-format';
 import { Text } from 'react-native';
 

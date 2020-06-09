@@ -1,33 +1,37 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, FlatList } from 'react-native'
 import { Card } from 'react-native-elements'
 
 import styles from './Style';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
-interface IProdutoPromocao {
-    id: number,
-    image: string
-    name: string,
-    originalValue: number,
-    promotionValue: number,
-    discount: string
-}
+import IProdutoPromocao from '../../interface/IProdutoPromocao';
 
 const Promocao = () => {
     const [promocoes, setPromocoes] = useState<IProdutoPromocao[]>([]);
 
+    const navigation = useNavigation();
+
+    function handleClick(item: IProdutoPromocao) {
+        console.log("Navegando pra produto " + item);
+        //navigation.navigate('Produto', { produto: item })
+    }
+
     function handleEachPromotion(item: IProdutoPromocao) {
         return (
-            <Card containerStyle={styles.cardPromocao}>
-                <Image source={require('../../assets/images/promocao/promocao.png')} style={styles.cardImage}></Image>
-                <View style={styles.cardDescription}>
-                    <Text style={styles.cardTitle}>{item.name}</Text>
-                    <Text style={styles.cardOriginalValue}>De: R$ {item.originalValue}</Text>
-                    <View style={styles.inline}>
-                        <Text style={styles.cardNewValue}>Por: R$ {item.promotionValue}</Text>
-                        <Text style={styles.cardDiscount}>({item.discount} off)</Text>
+            <Card containerStyle={styles.cardPromocao} >
+                <TouchableOpacity activeOpacity={0.9} onPress={() => handleClick(item)} >
+                    <Image source={require('../../assets/images/promocao/promocao.png')} style={styles.cardImage}></Image>
+                    <View style={styles.cardDescription}>
+                        <Text style={styles.cardTitle}>{item.name}</Text>
+                        <Text style={styles.cardOriginalValue}>De: R$ {item.originalValue}</Text>
+                        <View style={styles.inline}>
+                            <Text style={styles.cardNewValue}>Por: R$ {item.promotionValue}</Text>
+                            <Text style={styles.cardDiscount}>({item.discount} off)</Text>
+                        </View>
                     </View>
-                </View>
+                </TouchableOpacity>
             </Card>
         )
     }
