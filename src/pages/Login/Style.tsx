@@ -19,15 +19,7 @@ export default StyleSheet.create({
         borderRadius: 16,
         paddingBottom: 16
     },
-    socialMedia: {
-        height: 60,
-        alignItems: 'center',
-        width: '50%',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        backgroundColor: 'blue',
-        marginTop: 10,
-    },
+    
     textOu: {
         color: "black",
         marginTop: 5,

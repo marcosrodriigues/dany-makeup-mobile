@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, ScrollView, Alert, AsyncStorage } from 'react-native';
+import { Text, View, Image, ScrollView, Alert, AsyncStorage, ImageBackground } from 'react-native';
 
 import style from './Style';
 import HeaderStackMenu from '../../components/HeaderStackMenu/Index';
-import { TextInput, TouchableOpacity,  } from 'react-native-gesture-handler';
+import { TextInput, TouchableOpacity, TouchableHighlight,  } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
 import api from '../../services/api';
+import * as Facebook from 'expo-facebook';
 
 import { useDispatch } from 'react-redux'
-import axios from 'axios';
+
+import api_fb from '../../services/api_fb';
+
+
+import SocialMediaButtons from '../../components/SocialMediaButtons/Index';
 
 const Login = () => {
     const [email, setEmail] = useState('marcos.rodriiigues@gmail.com');
@@ -42,6 +47,56 @@ const Login = () => {
         }
     }
 
+    async function handleLoginFb() {
+        try {
+            await Facebook.initializeAsync();
+
+            const {
+                type,
+                token,
+            } = await Facebook.logInWithReadPermissionsAsync({
+                permissions: ['public_profile', 'email']
+            });
+
+            if (type == 'success') {
+                const fb_response = await api_fb.get(`/me?access_token=${token}&fields=id`);
+                const { id } = fb_response.data;
+
+                try {
+                    const response = await api.post(`/auth/facebook/${id}`)//, { fb_id: id });
+                    
+                    if (response.status === 200) {
+                        const { user } = response.data;
+                        const token_api = response.data.token;
+        
+                        if (user && token_api) {
+                            const oficialToken = `Bearer ${token_api}`;
+                            dispatch({ type: 'USER_ONLINE', user, token: oficialToken })
+                            navigation.navigate('Conta');  
+                            return;
+                        } 
+                    } else if (response.status === 400) {
+                        Alert.alert("Erro de autenticação", "Não foi possível realizar o login com o Facebook");
+                        return;
+                    }
+                } catch (error) {
+                    console.log("Error /auth/facebook/" + id + ": " + error);
+                    Alert.alert("Erro de autenticação", "Certifique de que sua conta está vinculada ao seu Facebook");
+                }
+
+            }
+
+            Alert.alert("Erro de autenticação", "Não foi possível realizar o login com o Facebook");
+            return;
+        } catch (error) {
+            if (error.status === 400) {
+                console.log(error.status);
+            }
+            Alert.alert("Facebook Login Error", error);
+        }
+        
+    }
+
     return (
         <ScrollView contentContainerStyle={style.container}>
             <View>
@@ -51,10 +106,7 @@ const Login = () => {
                 <Image source={require('../../assets/images/banner/banner_1.png')} ></Image>
             </View>
             <View style={style.content}>
-                <View style={style.socialMedia}>
-                    <Text style={style.white}>FB</Text>
-                    <Text style={style.white}>G+</Text>
-                </View>
+                <SocialMediaButtons handleFacebookClick={() => handleLoginFb()} />
                 <Text style={style.textOu}>ou</Text>
                 <View style={style.fields}>
                     <TextInput style={style.field} keyboardType="email-address" value={email} autoCapitalize="none" placeholderTextColor="#d2ae6c" placeholder="Endereço de email" onChangeText={text => setEmail(text)}  />

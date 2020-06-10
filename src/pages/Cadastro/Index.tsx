@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 
 import style from './Style';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Alert } from 'react-native';
 import { TouchableOpacity, TextInput, ScrollView } from 'react-native-gesture-handler';
 import HeaderStackMenu from '../../components/HeaderStackMenu/Index';
 import { useNavigation } from '@react-navigation/native';
 
 import api from '../../services/api';
+import SocialMediaButtons from '../../components/SocialMediaButtons/Index';
+
+import * as Facebook from 'expo-facebook';
+import api_fb from '../../services/api_fb';
+
 
 const Cadastro = () => {
     const [email, setEmail] = useState('');
@@ -27,6 +32,47 @@ const Cadastro = () => {
         })
     }
 
+    async function handleCadastrarFB() {
+        try {
+            await Facebook.initializeAsync();
+
+            const {
+                type,
+                token,
+            } = await Facebook.logInWithReadPermissionsAsync({
+                permissions: ['public_profile', 'email']
+            });
+
+            if (type == 'success') {
+                const fb_response = await api_fb.get(`/me?access_token=${token}&fields=id,name,picture,email`);
+                const { email, id, name, picture  } = fb_response.data;
+
+                const { url } = picture.data;
+
+                if (!email) {
+                    Alert.alert("Facebook Error", "Não foi possível obter seu e-mail");
+                    return;
+                }
+
+                const response = await api.post(
+                    'users', 
+                    { name, email, fb_id: id, image: url }
+                );
+
+                if (response.status === 200) {
+                    Alert.alert("Sucesso", "Agora é só fazer login")!
+                    navigation.navigate('Login');
+                } else {
+                    const { error } = response.data;
+                    Alert.alert("Cadastro Error!", error);
+                }
+            }
+        } catch (err) {
+            console.log(err);
+            Alert.alert("Facebook Login Error", err.message);
+        }
+    }
+
     return (
         <ScrollView contentContainerStyle={style.container}>
             <View>
@@ -37,10 +83,11 @@ const Cadastro = () => {
             </View>
             
             <View style={[style.content]}>
-                <View style={[style.section, style.media]}>
-                    <Text>FB</Text>
-                    <Text>G+</Text>
-                </View>
+                <SocialMediaButtons 
+                    handleFacebookClick={() => handleCadastrarFB()} 
+                    title={"Cadastre-se usando suas redes"}
+                />
+                    
                 <Text style={style.textOu}>ou</Text>
                 <View style={[style.section, style.fields]}>
                     <TextInput style={style.field} autoCapitalize="words" value={name} onChangeText={text => setName(text)} placeholderTextColor="#d2ae6c" placeholder="Nome social"  />
