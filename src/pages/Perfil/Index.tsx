@@ -10,16 +10,20 @@ import IUsuario from '../../interface/IUsuario';
 import { TextInputMask } from 'react-native-masked-text';
 import HeaderStackMenu from '../../components/HeaderStackMenu/Index';
 import api from '../../services/api';
+import { useNavigation, Link } from '@react-navigation/native';
+
+import NoUserPng from '../../assets/images/no-user.png';
 
 const Perfil = () => {
     const [user, setUser] = useState<IUsuario>({} as IUsuario)
     const selecter = useSelector((state: IStateRedux) => state);
     const dispatch = useDispatch();
 
+    const navigator = useNavigation();
+
     useEffect(() => {
         if (selecter.user) {
             setUser(selecter.user);
-            return;
         }
 
         try {
@@ -30,19 +34,19 @@ const Perfil = () => {
             })
         } catch (err) {
             Alert.alert("Atenção!", "Parece que você não está logado!");
+            navigator.goBack();
         }
-        
     }, [selecter])
 
     async function handleSaveClick() {
-        const { id, name, email, password, whatsapp, image } = user;
+        const { id, name, email, password, whatsapp, image, fb_id } = user;
         try {
             const { data } = await api.put(
                 'users', 
-                { id, name, email, password, whatsapp, image }
+                { id, name, email, password, whatsapp, image, fb_id }
             );
 
-            dispatch({ type: 'USER_UPDATE', user: user });
+            dispatch({ type: 'USER_UPDATE', user: data });
             Alert.alert("Sucesso", "`Suas informações foram atualizadas");    
         } catch (err) {
             Alert.alert("Atenção", "Houve um problema ao validar seus dados. Tente novamente.");
@@ -57,8 +61,11 @@ const Perfil = () => {
             </View>
             <View style={style.info}>
                 <View style={style.circle}>
-                    <Image source={require('../../assets/images/no-user.png')} 
-                        style={[style.image]}></Image>
+                    {user.image ? 
+                    <Image source={{ uri: user.image }} style={[style.image]} />
+                    :
+                    <Image source={NoUserPng} style={[style.image]}></Image>
+                    }
                 </View>
                 <View style={style.infoText}>
                     <Text style={style.text}>{user.name}</Text>

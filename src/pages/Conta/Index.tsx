@@ -12,6 +12,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import IStateRedux from '../../interface/IStateRedux';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
+import NoUserPng from '../../assets/images/no-user.png';
+
 const Conta = () => {
     const [isLogin, setIsLogin] = useState(false);
 
@@ -45,16 +47,12 @@ const Conta = () => {
                             {user.image ? 
                             <Image source={{ uri: user.image }} style={[style.image]} />
                             :
-                            <Image source={require('../../assets/images/no-user.png')} 
-                            style={[style.image]}></Image>
+                            <Image source={NoUserPng} style={[style.image]}></Image>
                             }
                         </View>
                         <View style={style.infoText}>
                             <Text style={style.text}>{user.name}</Text>
-                            <TouchableHighlight activeOpacity={0.9} onPress={() => handleMyProfile()}>
                             <Link to="/Perfil" style={style.text}> Meu perfil</Link>
-                            </TouchableHighlight>
-                            
                         </View>
                     </>
                 ) : ( 

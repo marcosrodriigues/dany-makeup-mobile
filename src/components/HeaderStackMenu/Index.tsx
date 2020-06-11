@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import IParamsHeaderStackMenu from '../../interface/IParamsHeaderStackMenu';
 
-const HeaderStackMenu:React.FC<IParamsHeaderStackMenu> = ({ title }) => {
+const HeaderStackMenu:React.FC<IParamsHeaderStackMenu> = ({ title, button = true }) => {
 
     const routes = useNavigation();
 
@@ -18,10 +18,15 @@ const HeaderStackMenu:React.FC<IParamsHeaderStackMenu> = ({ title }) => {
 
     return (
         <View style={style.header}>
-            <TouchableOpacity containerStyle={style.button} onPress={handleClickButton}>
-                <FontAwesome style={style.icon} name="arrow-left" ></FontAwesome>
-            </TouchableOpacity>
-            <View style={style.section}>
+            {button ? 
+                <TouchableOpacity containerStyle={style.button} onPress={handleClickButton}>
+                    <FontAwesome style={style.icon} name="arrow-left" ></FontAwesome>
+                </TouchableOpacity>
+            : 
+                <></>
+            }
+            
+            <View style={[style.section, !button ? { alignItems: 'center' } : { }]}>
                 <Text style={style.title}>{title}</Text>
             </View>
         </View>

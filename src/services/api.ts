@@ -1,8 +1,5 @@
 import axios from 'axios';
 
-import { useSelector } from 'react-redux'
-import IStateRedux from '../interface/IStateRedux';
-import { useEffect, useState } from 'react';
 import { AsyncStorage } from 'react-native';
 
 var api = axios.create({

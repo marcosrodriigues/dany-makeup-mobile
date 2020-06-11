@@ -1,3 +1,4 @@
 export default interface IParamsHeaderStackMenu {
-    title: string
+    title: string,
+    button?: boolean,
 }

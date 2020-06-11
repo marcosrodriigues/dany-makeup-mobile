@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, Image, ScrollView, Alert, AsyncStorage, ImageBackground } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, Image, ScrollView, Alert, AsyncStorage } from 'react-native';
 
 import style from './Style';
 import HeaderStackMenu from '../../components/HeaderStackMenu/Index';
-import { TextInput, TouchableOpacity, TouchableHighlight,  } from 'react-native-gesture-handler';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
 import api from '../../services/api';
@@ -68,9 +68,11 @@ const Login = () => {
                     if (response.status === 200) {
                         const { user } = response.data;
                         const token_api = response.data.token;
-        
+                        
                         if (user && token_api) {
                             const oficialToken = `Bearer ${token_api}`;
+
+                            AsyncStorage.setItem("TOKEN", oficialToken);
                             dispatch({ type: 'USER_ONLINE', user, token: oficialToken })
                             navigation.navigate('Conta');  
                             return;
