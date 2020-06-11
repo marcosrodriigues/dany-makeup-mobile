@@ -3,11 +3,15 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     header: {
         flex: 1,
-        width: '94%',
+        width: '100%',
         maxHeight: 40,
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
+        // borderBottomColor: '#d2ae6c',
+        // borderBottomWidth: 2,
+        // borderBottomStartRadius: 40,
+        // borderBottomEndRadius: 40,
     },
     button: {
         alignItems: 'center',

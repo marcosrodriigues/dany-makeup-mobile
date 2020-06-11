@@ -12,7 +12,6 @@ export default StyleSheet.create({
         paddingBottom: 16
     },
     main: {
-        backgroundColor: 'blue'
     },
     table: {
 

@@ -2,8 +2,9 @@ import React from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import style from './Style';
-import { Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import HeaderStackMenu from '../../components/HeaderStackMenu/Index';
+import BoxCarrinho from '../../components/BoxCarrinho/Index';
 
 const Carrinho = () => {
     return (
@@ -16,12 +17,8 @@ const Carrinho = () => {
             </View>
 
             <View style={style.main}>
-                <Text>
-                    Produtos
-                </Text>
-                <View style={style.table}>
-                    
-                </View>
+                <BoxCarrinho />
+                
             </View>
         </ScrollView>
     )
