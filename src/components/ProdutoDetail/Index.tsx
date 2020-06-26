@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, FlatList } from 'react-native';
+import { View, Text, Image, FlatList, Alert } from 'react-native';
 
 import style from './Style';
 
@@ -7,12 +7,32 @@ import AddCarrinho from '../AddCarrinho/Index'
 import NumberFormat from '../../util/NumberFormat';
 import IParamProduto from '../../interface/IParamProduto';
 import IProduct from '../../interface/IProduto';
+import api from '../../services/api';
 const ProdutoDetail:React.FC<IParamProduto> = ({ product }) => {
     const [produto, setProduto] = useState<IProduct>({} as IProduct)
 
     useEffect(() => {
         setProduto(product);
+
+        if (product.id) initProduct();
     }, [product])
+
+    async function initProduct() {
+        try {
+            const { data } = await api.get(`products/${product.id}`);
+
+            let api_product = data.product;
+            let images = data.images;
+
+            api_product.images = images.map((img: any) => img.url);
+
+            console.log(api_product);
+            setProduto(api_product);
+        } catch (err) {
+            console.log(err);
+            Alert.alert('Erro ao carregar informações do produto', err.message);
+        }
+    }
 
     function handleFlatImage(item: string) {
         return (

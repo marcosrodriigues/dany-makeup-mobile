@@ -6,11 +6,8 @@ import CategoriaImg from '../../assets/images/categorias/categoria.jpg';
 
 import style from './Style';
 
-interface ICategory {
-    id: number,
-    title: string,
-    image_url: string
-}
+import ICategory from '../../interface/ICategoria'
+
 interface Props {
     category: ICategory,
     onClickCategory: (category: ICategory) => void
@@ -25,6 +22,7 @@ const Categoria:React.FC<Props>  = ({ category, onClickCategory }) => {
         >
             <ImageBackground style={style.imageCategoria} source={CategoriaImg}>
             <Text style={style.titleCategoria}>{category.title}</Text>
+            <Text style={style.descriptionCategoria}>{category.description}</Text>
             </ImageBackground>
         </TouchableOpacity>
     )

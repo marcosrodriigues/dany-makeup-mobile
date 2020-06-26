@@ -6,6 +6,7 @@ export default interface IProduct {
     shortDescription: string,
     category?: ICategory[],
     images: string[],
+    mainImage: string,
     value: number,
     fullDescription: string
 }

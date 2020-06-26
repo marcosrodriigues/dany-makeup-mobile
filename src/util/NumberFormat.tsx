@@ -1,6 +1,8 @@
 import React from 'react';
-import { default as NF } from 'react-number-format';
-import { Text } from 'react-native';
+import { default as NumFormat } from 'react-number-format';
+import { Text, Alert } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
+import NumericInput from 'react-native-numeric-input';
 
 interface Props {
     value: number,
@@ -9,12 +11,11 @@ interface Props {
     thousandSeparator?: boolean,
     style: {}
 }
-const NumberFormat:React.FC<Props> = ({ value, format, thousandSeparator, style }) => {
+const NumberFormat:React.FC<Props> = ({ value, style }) => {
     return (
-        <NF 
+        <NumFormat 
             value={value} 
-            thousandSeparator={thousandSeparator ? thousandSeparator : true}
-            format={format ? format : '##.##'}
+            thousandSeparator={true}
             displayType={"text"}
             renderText={formattedValue => (
                 <Text style={style}>
@@ -24,5 +25,52 @@ const NumberFormat:React.FC<Props> = ({ value, format, thousandSeparator, style 
         />
     )
 }
+
+export const InputNumberFormat:React.FC<Props> = ({ value, format, thousandSeparator, style }) => {
+    return (
+        <NumFormat 
+            value={value} 
+            customInput={TextInput}
+            thousandSeparator={true}
+        />
+    )
+}
+
+import style from './Style';
+
+export const CustomNumericInput = ({ value = 0, 
+                                    onChange = (value: number) => { },
+                                    onRemove = () => { } }) => {
+    
+    function handleLimitReached(isMax: boolean, msg: string) {
+        if (!isMax) {
+            Alert.alert('Atenção', 'Você vai remover esse produto')
+            if (onRemove)
+                onRemove();
+        }
+    }   
+
+    return (
+        <NumericInput
+            value={value}
+            onLimitReached={handleLimitReached}
+            iconSize={32}
+            step={1}
+            minValue={0}
+            valueType="integer"
+            inputStyle={style.field}
+            rightButtonBackgroundColor="#d2ae6c"
+            leftButtonBackgroundColor='#d2ae6c'
+            maxValue={10}   
+            rounded
+            borderColor="black"
+
+            editable={false}
+            onChange={value => 
+                onChange(value)
+            }
+        />
+    )
+ }
 
 export default NumberFormat;

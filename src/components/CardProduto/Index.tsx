@@ -18,7 +18,7 @@ const CardProduto:React.FC<IParamsCardProduto> = ({ produto, onClickComponent })
                         activeOpacity={0.9} 
                         onPress={() => onClickComponent(produto.id)}
                     >
-                        <Image source={{ uri : produto.images[0] }} style={style.image}></Image>
+                        <Image source={{ uri : produto.mainImage }} style={style.image}></Image>
                     </TouchableOpacity>      
                 </View>
                 <View style={style.info}>

@@ -26,5 +26,11 @@ export default StyleSheet.create({
         color: "#d2ae6c",
         fontWeight: 'bold',
         paddingRight: 16
+    },
+    descriptionCategoria: {
+        fontSize: 16,
+        color: "#c3c3c3",
+        fontWeight: '100',
+        paddingRight: 16
     }
 })
