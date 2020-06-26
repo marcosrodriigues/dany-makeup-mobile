@@ -1,8 +1,9 @@
 export default interface IProdutoPromocao {
     id: number,
-    image: string
+    mainImage: string
     name: string,
     originalValue: number,
     promotionValue: number,
-    discount: string
+    discount: string,
+    discountType: string
 }

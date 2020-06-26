@@ -7,6 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
 import IProdutoPromocao from '../../interface/IProdutoPromocao';
+import api from '../../services/api';
 
 const Promocao = () => {
     const [promocoes, setPromocoes] = useState<IProdutoPromocao[]>([]);
@@ -14,21 +15,37 @@ const Promocao = () => {
     const navigation = useNavigation();
 
     function handleClick(item: IProdutoPromocao) {
-        console.log("Navegando pra produto " + item);
+        console.log("Navegando pra produto " + JSON.stringify(item));
         //navigation.navigate('Produto', { produto: item })
     }
+
+    async function loadPromotions() {
+        try {
+            const response = await api.get('mobile/promotions');
+            const { data } = response;
+            setPromocoes(data);
+        } catch (err) {
+            console.log('ERROR LOADING PROMOTIONS', err);
+        }
+    }
+
+    useEffect(() => {
+        loadPromotions();
+    }, [])
 
     function handleEachPromotion(item: IProdutoPromocao) {
         return (
             <Card containerStyle={styles.cardPromocao} >
                 <TouchableOpacity activeOpacity={0.9} onPress={() => handleClick(item)} >
-                    <Image source={require('../../assets/images/promocao/promocao.png')} style={styles.cardImage}></Image>
-                    <View style={styles.cardDescription}>
+                    <Image source={{ uri: item.mainImage }} style={styles.cardImage}></Image>
+                    <View style={[styles.cardDescription]}>
                         <Text style={styles.cardTitle}>{item.name}</Text>
                         <Text style={styles.cardOriginalValue}>De: R$ {item.originalValue}</Text>
-                        <View style={styles.inline}>
+                        <View style={[styles.inline]}>
                             <Text style={styles.cardNewValue}>Por: R$ {item.promotionValue}</Text>
-                            <Text style={styles.cardDiscount}>({item.discount} off)</Text>
+                            <Text style={[styles.cardDiscount]}>
+                                ({item.discountType} {item.discount} off)
+                            </Text>
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -36,52 +53,8 @@ const Promocao = () => {
         )
     }
 
-    useEffect(() => {
-        setPromocoes([
-            {
-                id: 1,
-                image: 'https://edbr.vteximg.com.br/arquivos/ids/160548-1000-1000/Batom_Soul_Kiss_Me_Mate_Nude_Carmin_819772_1.jpg?v=636552622351130000',
-                name: 'Produto 1',
-                originalValue: 59.00,
-                promotionValue: 49.00,
-                discount: '20%'
-            },
-            {
-                id: 2,
-                image: 'https://edbr.vteximg.com.br/arquivos/ids/160548-1000-1000/Batom_Soul_Kiss_Me_Mate_Nude_Carmin_819772_1.jpg?v=636552622351130000',
-                name: 'Produto 2',
-                originalValue: 48.00,
-                promotionValue: 35.00,
-                discount: '10%'
-            },
-            {
-                id: 3,
-                image: 'https://edbr.vteximg.com.br/arquivos/ids/160548-1000-1000/Batom_Soul_Kiss_Me_Mate_Nude_Carmin_819772_1.jpg?v=636552622351130000',
-                name: 'Produto 3',
-                originalValue: 48.00,
-                promotionValue: 35.00,
-                discount: '10%'
-            },
-            {
-                id: 4,
-                image: 'https://edbr.vteximg.com.br/arquivos/ids/160548-1000-1000/Batom_Soul_Kiss_Me_Mate_Nude_Carmin_819772_1.jpg?v=636552622351130000',
-                name: 'Produto 4',
-                originalValue: 48.00,
-                promotionValue: 35.00,
-                discount: '10%'
-            },
-            {
-                id: 5,
-                image: 'https://edbr.vteximg.com.br/arquivos/ids/160548-1000-1000/Batom_Soul_Kiss_Me_Mate_Nude_Carmin_819772_1.jpg?v=636552622351130000',
-                name: 'Produto 5',
-                originalValue: 48.00,
-                promotionValue: 35.00,
-                discount: '10%'
-            },
-        ]);
-    }, [])
-
     return (
+        promocoes.length > 0 && 
         <>
             <Text style={styles.title}>Confira nossas promoções</Text>
             <View style={styles.promocao}>

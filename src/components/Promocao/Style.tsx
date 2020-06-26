@@ -27,7 +27,7 @@ export default StyleSheet.create({
     },
     cardImage: {
         height: 150,
-        width: 150
+        width: '100%'
     },
     cardDescription: {
         marginTop: 15,
@@ -59,5 +59,9 @@ export default StyleSheet.create({
         flexDirection:'row',
         justifyContent: 'space-between'
     },
+    border: {
+        borderWidth: 1,
+        borderColor: 'red'
+    }
     
 })
