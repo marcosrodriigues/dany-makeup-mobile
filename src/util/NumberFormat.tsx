@@ -38,30 +38,24 @@ export const InputNumberFormat:React.FC<Props> = ({ value, format, thousandSepar
 
 import style from './Style';
 
-export const CustomNumericInput = ({ value = 0, 
-                                    onChange = (value: number) => { },
-                                    onRemove = () => { } }) => {
+export const CustomNumericInput = ({ 
+        value = 0, 
+        onChange = (value: number) => { },
+        maxValue = 10
+}) => {
     
-    function handleLimitReached(isMax: boolean, msg: string) {
-        if (!isMax) {
-            Alert.alert('Atenção', 'Você vai remover esse produto')
-            if (onRemove)
-                onRemove();
-        }
-    }   
-
     return (
         <NumericInput
             value={value}
-            onLimitReached={handleLimitReached}
             iconSize={32}
             step={1}
             minValue={0}
+            initValue={value}
             valueType="integer"
             inputStyle={style.field}
             rightButtonBackgroundColor="#d2ae6c"
             leftButtonBackgroundColor='#d2ae6c'
-            maxValue={10}   
+            maxValue={maxValue}   
             rounded
             borderColor="black"
 

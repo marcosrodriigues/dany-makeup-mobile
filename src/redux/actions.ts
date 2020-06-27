@@ -1,9 +1,7 @@
 import { createStore } from 'redux';
+import { INITIAL_STATE } from './initialState';
 
-const INITIAL_STATE = {
-    token: '',
-    user: { }
-}
+
 function userOnline(state = INITIAL_STATE, action) {
     switch(action.type) {
         case 'USER_ONLINE':
