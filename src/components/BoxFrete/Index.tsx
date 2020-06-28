@@ -5,9 +5,8 @@ import { TextInputMask } from 'react-native-masked-text';
 import { View, Text, Alert } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { RadioButton } from 'react-native-paper'
-import NumberFormat from '../../util/NumberFormat';
 import api from '../../services/api';
+import ButtonFrete from './Button';
 
 
 const BoxFrete = ({ 
@@ -17,7 +16,12 @@ const BoxFrete = ({
     }) => {
     const [cep, setCep] = useState("");
     const [optionSelected, setOptionSelected] = useState(0);
-    const [options, setOptions] = useState<any[]>([])
+    const [options, setOptions] = useState<any[]>([{
+        code: 1,
+        name: 'RETIRAR EM MÃOS',
+        value: 0,
+        deadline: 0
+    }])
 
     useEffect(() => {
         setCep(initialCep);
@@ -31,19 +35,27 @@ const BoxFrete = ({
 
     async function loadOptions() {
         if (cep === "") return;
+
         const params = { cep };
+        const opt = [options[0]];
 
         try {
             onClickCalculateButton(cep);
             const response = await api.get('correios/frete', { params });
-            setOptions(response.data)
+            const correios_services = response.data;
+            correios_services.map((serv: any) => {
+                opt.push(serv);
+            });
         } catch (err) {
             console.log('ERRO CALCULAR FRETE', err);
             Alert.alert('Falha ao carregar frete', err);
+            return;
         }
+        console.log(opt);
+        setOptions(opt)
     }
 
-    function handleCheckButtonSelected(option: any) {
+    function handleFreteSelected(option: any) {
         setOptionSelected(option.code);
         onSelected(option);
     }
@@ -83,39 +95,12 @@ const BoxFrete = ({
                 <View style={[style.options, style.center]}>
                     <Text style={style.title}>Escolha a melhor opção</Text>
                 { options.map(opt => (
-                    <TouchableOpacity
-                        style={style.optButton}
+                    <ButtonFrete 
                         key={opt.code}
-                        onPress={() => handleCheckButtonSelected(opt)}
-                    >
-                        <View style={style.optRadioBox}>
-                            <RadioButton 
-                                value={String(opt.code)}
-                                color={"#d2ae6c"}
-                                uncheckedColor={"#d2ae6c"}
-                                status={optionSelected === opt.code ? "checked" : "unchecked"}
-                                
-                            />  
-                        </View>
-                        <View style={style.optInfoBox}>
-                            <View style={style.optInfo}>
-                                <Text style={style.infoTitle}>TIPO DE ENCOMENDA</Text>
-                                <Text style={style.infoValue}>{opt.name}</Text>
-                            </View>
-                            <View style={style.optInfo}>
-                                <Text style={style.infoTitle}>VALOR</Text>
-                                <NumberFormat 
-                                    value={opt.value}
-                                    style={style.infoValue}
-                                />
-                                
-                            </View>
-                            <View style={style.optInfo}>
-                                <Text style={style.infoTitle}>ENTREGA EM ATÉ: </Text>
-                                <Text style={style.infoValue}>{opt.deadline} dias úteis</Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
+                        opt={opt}
+                        selected={optionSelected}
+                        onSelected={handleFreteSelected}
+                    />
                 ))}   
             </View>
             }

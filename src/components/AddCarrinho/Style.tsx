@@ -3,26 +3,33 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     button: {
         flexDirection: 'row',
-        width: '100%',
         borderRadius: 10,
         overflow: 'hidden',
-        alignItems: 'center',
         backgroundColor: '#000000',
-        justifyContent: 'flex-start'
     },
-    icon: {
+    vIcon: {
         color: '#d2ae6c',
-        height: 40,
-        width: 40,
         backgroundColor: 'rgba(210, 174, 108, 0.5)',
         justifyContent: 'center',
-        alignItems: 'center'
-    },
-    text: {
-        color: '#d2ae6c',
-        paddingLeft: 8,
         alignItems: 'center',
-        fontWeight: 'bold',
+        flexDirection: 'row',
+        width: '20%'
     },
+    icon: {
+        textAlign: 'center',
+        textAlignVertical: 'center'
+    },
+    vText: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        width: '80%'
+    },
+    textButton: {
+        fontWeight: 'bold',
+        color: '#d2ae6c',
+        width: '100%',
+        textAlign: 'center'
+    }
 
 })

@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import IProdutoPromocao from '../../interface/IProdutoPromocao';
 import api from '../../services/api';
+import AddCarrinho from '../AddCarrinho/Index';
 
 const Promocao = () => {
     const [promocoes, setPromocoes] = useState<IProdutoPromocao[]>([]);
@@ -36,7 +37,11 @@ const Promocao = () => {
     function handleEachPromotion(item: IProdutoPromocao) {
         return (
             <Card containerStyle={styles.cardPromocao} >
-                <TouchableOpacity activeOpacity={0.9} onPress={() => handleClick(item)} >
+                <TouchableOpacity
+                style={styles.card}
+                 activeOpacity={0.9} 
+                 onPress={() => handleClick(item)}
+                >
                     <Image source={{ uri: item.mainImage }} style={styles.cardImage}></Image>
                     <View style={[styles.cardDescription]}>
                         <Text style={styles.cardTitle}>{item.name}</Text>
@@ -48,6 +53,16 @@ const Promocao = () => {
                             </Text>
                         </View>
                     </View>
+
+                    <View style={styles.mt16}>
+                        <AddCarrinho
+                            item={item}
+                            size={2}
+                            text={"add carrinho"}
+                            type={"PROMOTIONS"}
+                        />
+                    </View>
+                    
                 </TouchableOpacity>
             </Card>
         )

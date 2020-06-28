@@ -25,9 +25,13 @@ export default StyleSheet.create({
         marginBottom: 15,
         alignItems: 'center',
     },
+    card: {
+        width: 200,
+    },
     cardImage: {
-        height: 150,
-        width: '100%'
+        height: 200,
+        width: '100%',
+        borderRadius: 50
     },
     cardDescription: {
         marginTop: 15,
@@ -57,11 +61,15 @@ export default StyleSheet.create({
     },
     inline: {
         flexDirection:'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        width: '100%'
     },
     border: {
         borderWidth: 1,
         borderColor: 'red'
+    },
+    mt16: {
+        marginTop: 16,
     }
     
 })

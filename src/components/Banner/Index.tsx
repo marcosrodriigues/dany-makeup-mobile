@@ -4,9 +4,7 @@ import { View, Image } from 'react-native';
 import Swiper from 'react-native-swiper';
 
 import styles from './Style';
-
 import IBanner from '../../interface/Banner'
-
 import api from '../../services/api';
 
 const Banner = () => {

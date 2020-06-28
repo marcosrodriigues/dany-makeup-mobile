@@ -1,6 +1,6 @@
 import React from 'react';
 import { default as NumFormat } from 'react-number-format';
-import { Text, Alert } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import NumericInput from 'react-native-numeric-input';
 
@@ -35,15 +35,24 @@ export const InputNumberFormat:React.FC<Props> = ({ value, format, thousandSepar
         />
     )
 }
-
-import style from './Style';
+ 
+const style = StyleSheet.create({
+    field: {
+        backgroundColor: 'black',
+        color: '#d2ae6c',
+        borderWidth: 1,
+        fontSize: 18,
+        alignSelf: 'center',
+        height: '100%'
+      },    
+});
 
 export const CustomNumericInput = ({ 
         value = 0, 
         onChange = (value: number) => { },
         maxValue = 10
 }) => {
-    
+   
     return (
         <NumericInput
             value={value}

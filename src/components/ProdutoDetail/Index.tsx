@@ -26,7 +26,6 @@ const ProdutoDetail:React.FC<IParamProduto> = ({ product }) => {
 
             api_product.images = images.map((img: any) => img.url);
 
-            console.log(api_product);
             setProduto(api_product);
         } catch (err) {
             console.log(err);
@@ -67,7 +66,10 @@ const ProdutoDetail:React.FC<IParamProduto> = ({ product }) => {
                         <Text style={style.preValue}>Por apenas:</Text>
                         <NumberFormat value={produto.value} style={style.value} />  
                     </View>
-                    <AddCarrinho product_id={produto.id} text={'Quero comprar'} size={3} />
+                    <AddCarrinho 
+                        item={produto} 
+                        type="PRODUCT" 
+                        text={'Quero comprar'} size={3} />
                 </View>
 
                 <Text style={style.fullDescription}>{produto.fullDescription}</Text>

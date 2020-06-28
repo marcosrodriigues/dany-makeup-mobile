@@ -91,9 +91,6 @@ const Login = () => {
             Alert.alert("Erro de autenticação", "Não foi possível realizar o login com o Facebook");
             return;
         } catch (error) {
-            if (error.status === 400) {
-                console.log(error.status);
-            }
             Alert.alert("Facebook Login Error", error);
         }
         

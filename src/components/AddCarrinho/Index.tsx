@@ -6,14 +6,49 @@ import { FontAwesome } from '@expo/vector-icons';
 import style from './Style';
 
 import IAddCarrinhoButton from '../../interface/IParamsAddCarrinhoButton';
+import { useSelector, useDispatch } from 'react-redux';
 
-const AddCarrinho:React.FC<IAddCarrinhoButton> = ({ product_id, text, size }) => {
+const AddCarrinho:React.FC<IAddCarrinhoButton> = ({ 
+        item, 
+        text = 'carrinho', 
+        size = 2, 
+        type = "PRODUCT" }) => {
 
-    const sizeFont = 13 + 2 * size;
+    const sizeFont = 14 + 2 * size;
     const sizeButton = 20 + 10 * size;
 
+    const items = useSelector((state: any) => state.items);
+    const dispatch = useDispatch();
+
     function handleClickAddCarrinho() {
-        console.log("Adicionando produto " + product_id + " ao carrinho");
+        const cartItem = {
+            id: item.id,
+            type: type,
+            name: item.name,
+            image: item.mainImage,
+            value: type === "PRODUCT" ? item.value : item.promotionValue,
+            quantity: 1,
+            amount: item.amount
+        }
+
+        let itemExistInItems = false;
+        const nItems = items.map((i: any) => {
+            if (i.type === cartItem.type && i.id === cartItem.id) {
+                itemExistInItems = true;
+                return {
+                    ...i,
+                    quantity : (i.quantity + 1)
+                }
+            } 
+            return i;
+        })
+
+        if (!itemExistInItems) {
+            dispatch({ type: 'ADD_ITEMS', items: cartItem});
+            return;
+        }
+
+        dispatch({ type: 'ALTER_ITEMS ', items: nItems});
     }
 
     return (
@@ -21,11 +56,16 @@ const AddCarrinho:React.FC<IAddCarrinhoButton> = ({ product_id, text, size }) =>
             style={[style.button, { height: sizeButton }]}
             onPress={handleClickAddCarrinho}
         >
-            <View style={[style.icon, { height: sizeButton, width: sizeButton }]}>
-                <FontAwesome name="plus" size={sizeFont}></FontAwesome>
+            <View style={[style.vIcon]}>
+                <FontAwesome
+                    name="plus" 
+                    size={sizeFont}
+                    style={[style.icon, { height: sizeButton, width: sizeButton }]}
+                ></FontAwesome>
             </View>
-
-            <Text style={[style.text, { fontSize: sizeFont }]}>{text}</Text>
+            <View style={[style.vText, { height: sizeButton  }]}>
+                <Text style={[style.textButton, { fontSize: sizeFont }]}>{text}</Text>
+            </View>
         </TouchableOpacity>
     )
 }

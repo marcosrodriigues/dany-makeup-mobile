@@ -6,6 +6,7 @@ import styles  from './Style' ;
 import Banner from '../../components/Banner/Index';
 import Promocao from '../../components/Promocao/Index'
 import MaisVendidos from '../../components/MaisVendidos/Index'
+import AddCarrinho from '../../components/AddCarrinho/Index';
 
 const Home = () => {
     return (

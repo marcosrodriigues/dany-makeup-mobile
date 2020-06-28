@@ -4,12 +4,10 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     cardProduto: {
         backgroundColor: '#d2ae6c',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
     },
     product: {
         width: '100%',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         flexDirection: 'row',
     },
     viewImage: {

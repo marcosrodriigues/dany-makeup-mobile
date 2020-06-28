@@ -7,50 +7,41 @@ import BoxFrete from '../BoxFrete/Index';
 import BoxResume from '../BoxResume/Index';
 import ItemCart from '../ItemCart/Index';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector, useDispatch } from 'react-redux';
 
 const BoxCarrinho = () => {
     const [carrinho, setCarrinho] = useState([] as any);
     const [frete, setFrete] = useState({} as any);
     const [cep, setCep] = useState("")
 
+    const redux_items = useSelector((state: any) => state.items);
+    const redux_user = useSelector((state: any) => state.user);
+    const dispatch = useDispatch();
+
     const [resume, setResume] = useState({
         subtotal: 0,
         frete: 0,
         total: 0
     })
-
+    
     const navigator = useNavigation();
+    
+    useEffect(() => {
+        setCarrinho(redux_items);
+    }, [redux_items])
 
     useEffect(() => {
-        setCarrinho([
-            {
-                id: 1,
-                image: 'http://192.168.2.14:3333/uploads/6d6a686291b3cd36_1592436812608_natura.jpeg',
-                name: 'Produto 1',
-                quantity: 3,
-                value: 28
-            },
-            {
-                id: 2,
-                image: 'http://192.168.2.14:3333/uploads/6d6a686291b3cd36_1592436812608_natura.jpeg',
-                name: 'Produto 2',
-                quantity: 3,
-                value: 28
-            },
-            {
-                id: 3,
-                image: 'http://192.168.2.14:3333/uploads/6d6a686291b3cd36_1592436812608_natura.jpeg',
-                name: 'Produto 3',
-                quantity: 3,
-                value: 28
-            },
-        ])
-        loadResume();
+        if (redux_user?.address?.cep !== undefined )
+            setCep(redux_user.address.cep);
     }, [])
 
     useEffect(() => {
         loadResume();
-    }, [carrinho, frete])
+    }, [frete])
+
+    useEffect(() => {
+        loadResume();
+    }, [carrinho])
 
     function loadResume() {
         let sum = 0;
@@ -73,6 +64,7 @@ const BoxCarrinho = () => {
             return c;
         });
 
+        dispatch({ type: 'ALTER_ITEMS', items: novos });
         setCarrinho(novos);
     }
 
@@ -85,7 +77,6 @@ const BoxCarrinho = () => {
     }
 
     function handleChangeAmount(cart: any, value: number) {
-        console.log('value',value);
         if (value !== 0) {
             updateCarrinho(cart.id, 'quantity', value);
             return;
@@ -100,6 +91,7 @@ const BoxCarrinho = () => {
                         setCarrinho(
                             carrinho.filter((item: any) => item.id !== cart.id )
                         )
+                        dispatch({ type: 'ALTER_ITEMS', items: carrinho.filter((item: any) => item.id !== cart.id ) });
                     }, 
                 },
                 {

@@ -1,5 +1,8 @@
+import IProduct from "./IProduto";
+
 export default interface IAddCarrinhoButton {
-    product_id: number,
+    item: any,
+    type: string,
     text: string,
     size: number
 }

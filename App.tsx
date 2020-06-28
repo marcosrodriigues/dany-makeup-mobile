@@ -9,7 +9,7 @@ import { Provider } from 'react-redux'
 import Routes from './src/routes';
 import { NavigationContainer } from '@react-navigation/native';
 
-import store from './src/redux/actions';
+import store from './src/store';
 
 export default function App() {
   // let [fontsLoader] = useFonts({
@@ -25,7 +25,7 @@ export default function App() {
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent/>
-      <Provider store={store} >
+      <Provider store={store}  >
         <NavigationContainer>
           <Routes />
         </NavigationContainer>

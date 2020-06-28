@@ -31,11 +31,11 @@ const CardProduto:React.FC<IParamsCardProduto> = ({ produto, onClickComponent })
 
                         <NumberFormat value={produto.value} style={style.value} />  
                     </TouchableOpacity>
-                    <AddCarrinho text={'Quero comprar'} product_id={produto.id} size={1} />
+                    <AddCarrinho text={'add carrinho'} type="PRODUCT" item={produto} size={1} />
                 </View>
                 
             </View>
-            </Card>
+        </Card>
     )
 }
 
