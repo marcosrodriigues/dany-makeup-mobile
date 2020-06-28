@@ -85,22 +85,25 @@ const BoxCarrinho = () => {
         Alert.alert(
             `Atenção`, 
             `Você vai remover ${cart.name} do seu carrinho`,[
-                {
-                    text: "Ok",
-                    onPress: () => {
-                        setCarrinho(
-                            carrinho.filter((item: any) => item.id !== cart.id )
-                        )
-                        dispatch({ type: 'ALTER_ITEMS', items: carrinho.filter((item: any) => item.id !== cart.id ) });
-                    }, 
-                },
-                {
-                    text: "Cancelar",
-                    onPress: () => {
-                        updateCarrinho(cart.id, 'quantity', 1);
-                    }
+            {
+                text: "Ok",
+                onPress: () => {
+                    setCarrinho(
+                        carrinho.filter((item: any) => item.id !== cart.id )
+                    )
+                    dispatch({ 
+                        type: 'ALTER_ITEMS', 
+                        items: carrinho.filter((item: any) => item.id !== cart.id ) 
+                    });
+                }, 
+            },
+            {
+                text: "Cancelar",
+                onPress: () => {
+                    updateCarrinho(cart.id, 'quantity', 1);
                 }
-            ])
+            }
+        ])
     }
 
     function handleAddProducts() {
@@ -117,6 +120,9 @@ const BoxCarrinho = () => {
             <View style={style.boxTitle}>
                 <Text style={style.title}>
                     Seu carrinho
+                </Text>
+                <Text style={style.subtitle}>
+                    {carrinho.length} produto{carrinho.length !== 1 && "s"} no carrinho
                 </Text>
             </View>
             <ScrollView contentContainerStyle={style.cartBox}>
@@ -172,7 +178,7 @@ const BoxCarrinho = () => {
             </View>
 
             <View style={style.section}>
-                <View style={style.boxTitle}>
+                <View>
                     <TouchableHighlight
                         style={style.button}
                         onPress={handleContinueToBuy}

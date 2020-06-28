@@ -15,14 +15,20 @@ export default StyleSheet.create({
     },
     boxTitle: {
         marginLeft: 8,
-        marginBottom: 8,
         fontSize: 16,
+        justifyContent: 'space-between',
+        flexDirection: 'row'
     },
+    
     title: {
         color: '#d2ae6c',
         fontSize: 24,
     },
-    
+    subtitle: {
+        color: '#d2ae6c',
+        fontSize: 16,
+        textAlignVertical: 'bottom'
+    },
     cartBox: {
         alignItems: 'center',
         marginBottom: 16,
@@ -43,7 +49,8 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        
     },
     textButton: {
         fontSize: 24,

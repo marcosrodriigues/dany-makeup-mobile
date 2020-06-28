@@ -10,7 +10,7 @@ import IUsuario from '../../interface/IUsuario';
 import { TextInputMask } from 'react-native-masked-text';
 import HeaderStackMenu from '../../components/HeaderStackMenu/Index';
 import api from '../../services/api';
-import { useNavigation, Link } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import NoUserPng from '../../assets/images/no-user.png';
 
@@ -29,7 +29,17 @@ const Perfil = () => {
         try {
             api.get('auth/me').then(response => {
                 const { data } = response;
-                setUser(data);
+                const { user, address } = data;;
+                setUser({
+                    email: user.email,
+                    name: user.name,
+                    password: user.password,
+                    fb_id: user.fb_id,
+                    id: user.id,
+                    image: user.image,
+                    whatsapp: user.whatsapp,
+                    address : address
+                });
                 return;
             })
         } catch (err) {
