@@ -25,6 +25,7 @@ export default StyleSheet.create({
     image: {
         width: '100%',
         height: '100%',
+        borderRadius: 25,
     },
     name: {
         fontSize: 24,
@@ -46,6 +47,7 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     priceInfo: {
+        width: '40%',
         alignItems: 'center',
         alignContent: 'center',
         textAlignVertical: 'center',
@@ -56,6 +58,9 @@ export default StyleSheet.create({
         color: 'green',
         fontWeight: 'bold',
         fontSize: 24,
+    },
+    addCarrinho: {
+        width: '60%',
     },
     preValue: {
         alignSelf: 'flex-start',

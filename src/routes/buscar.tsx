@@ -1,8 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Buscar from './pages/Buscar/Index'
-import Produto from './pages/Produto/Index'
+import Buscar from '../pages/Buscar/Index'
+import Produto from '../pages/Produto/Index'
 
 const BuscarStack = createStackNavigator();
 

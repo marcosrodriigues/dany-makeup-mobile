@@ -1,10 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Home from './pages/Home/Index'
-import RoutesBuscar from './routesBuscar';
-import RoutesConta from './routesConta';
-import Carrinho from './pages/Carrinho/Index'
+import Home from '../pages/Home/Index'
+import RoutesBuscar from './buscar';
+import RoutesConta from './conta';
+import Carrinho from '../pages/Carrinho/Index'
 
 import Ionicons from '@expo/vector-icons/Ionicons'
 
@@ -12,7 +12,6 @@ const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
     return (
-        <>
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
@@ -42,6 +41,5 @@ export default function TabNavigator() {
             <Tab.Screen name="Conta" component={RoutesConta} />
             <Tab.Screen name="Carrinho" component={Carrinho} />
         </Tab.Navigator>
-        </>
     )
 }

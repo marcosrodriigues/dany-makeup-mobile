@@ -6,7 +6,7 @@ export default StyleSheet.create({
         backgroundColor: '#d2ae6c',
         flexDirection: 'row',
         width: '98%',
-        height: 180
+        maxHeight: 200
     },
     boxImage: {
         width: '40%',
@@ -16,7 +16,8 @@ export default StyleSheet.create({
     },
     image: {
         width: '100%',
-        height: '100%'
+        height: '100%',
+        borderRadius: 10
     },
     infoName: {
         fontSize: 24,
@@ -30,7 +31,8 @@ export default StyleSheet.create({
     },
     boxInfo: {
         width: '60%',
-        padding: 8
+        padding: 8,
+        justifyContent: 'space-around'
     },
     value: {
         fontSize: 18

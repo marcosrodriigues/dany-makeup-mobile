@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
-import { Text, View, Image, ScrollView, Alert, AsyncStorage } from 'react-native';
+import { Text, View, Image, ScrollView, Alert } from 'react-native';
 
 import style from './Style';
 import HeaderStackMenu from '../../components/HeaderStackMenu/Index';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
-import api from '../../services/api';
-import * as Facebook from 'expo-facebook';
-
-import { useDispatch } from 'react-redux'
-
-import api_fb from '../../services/api_fb';
-
-
 import SocialMediaButtons from '../../components/SocialMediaButtons/Index';
+
+import { signIn, signInFacebook } from '../../services/auth';
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
     const [email, setEmail] = useState('marcos.rodriiigues@gmail.com');
@@ -29,18 +24,9 @@ const Login = () => {
 
     async function handleLoginClick() {
         try {
-            const { data } = await api.post('/auth/login', { email, password });
-            const { user, token } = data;
-
-            if (!token || !user) {
-                alert('Não foi possível realizar o login');
-                return;
-            }
-    
-            const oficialToken = `Bearer ${token}`;
-            dispatch({ type: 'USER_ONLINE', user, token: oficialToken});
-            AsyncStorage.setItem("TOKEN", oficialToken);
-            navigation.navigate('Conta');
+            const { user, token } = await signIn({ email, password });
+            dispatch({ type: 'USER_ONLINE', user, token: token});
+            navigation.navigate('Conta')
         } catch (err) {
             Alert.alert("Atenção", "Email e/ou senha inválidos. Verifique e tente novamente.")
             console.log(err);
@@ -49,47 +35,10 @@ const Login = () => {
 
     async function handleLoginFb() {
         try {
-            await Facebook.initializeAsync();
-
-            const {
-                type,
-                token,
-            } = await Facebook.logInWithReadPermissionsAsync({
-                permissions: ['public_profile', 'email']
-            });
-
-            if (type == 'success') {
-                const fb_response = await api_fb.get(`/me?access_token=${token}&fields=id`);
-                const { id } = fb_response.data;
-
-                try {
-                    const response = await api.post(`/auth/facebook/${id}`)//, { fb_id: id });
-                    
-                    if (response.status === 200) {
-                        const { user } = response.data;
-                        const token_api = response.data.token;
-                        
-                        if (user && token_api) {
-                            const oficialToken = `Bearer ${token_api}`;
-
-                            AsyncStorage.setItem("TOKEN", oficialToken);
-                            dispatch({ type: 'USER_ONLINE', user, token: oficialToken })
-                            navigation.navigate('Conta');  
-                            return;
-                        } 
-                    } else if (response.status === 400) {
-                        Alert.alert("Erro de autenticação", "Não foi possível realizar o login com o Facebook");
-                        return;
-                    }
-                } catch (error) {
-                    console.log("Error /auth/facebook/" + id + ": " + error);
-                    Alert.alert("Erro de autenticação", "Certifique de que sua conta está vinculada ao seu Facebook");
-                }
-
-            }
-
-            Alert.alert("Erro de autenticação", "Não foi possível realizar o login com o Facebook");
-            return;
+            const { user, token } = await signInFacebook();
+            dispatch({ type: 'USER_ONLINE', user, token: token});
+            navigation.navigate('Conta');
+            
         } catch (error) {
             Alert.alert("Facebook Login Error", error);
         }

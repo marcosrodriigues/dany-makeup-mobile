@@ -23,18 +23,10 @@ const ItemCart = ({
             <View style={style.boxInfo}>
                 <Text style={style.infoName}>{item.name}</Text>
                 <View style={style.row}>
-                    <Text style={style.text}>unidade: </Text>
+                    <Text style={style.text}>{item.quantity}x </Text>
                     <NumberFormat
                         style={style.value}
                         value={item.value}
-                    />
-                </View>
-                <View style={style.row}>
-                    <Text style={style.text}>quantidade: </Text>
-                    <CustomNumericInput
-                        value={item.quantity}
-                        maxValue={item.amount}
-                        onChange={value => onChangeAmount(value)}
                     />
                 </View>
                 <View style={style.row}>
@@ -42,6 +34,14 @@ const ItemCart = ({
                     <NumberFormat
                         style={style.value}
                         value={Number(item.value * item.quantity)}
+                    />
+                </View>
+
+                <View style={style.row}>
+                    <CustomNumericInput
+                        value={item.quantity}
+                        maxValue={item.amount}
+                        onChange={value => onChangeAmount(value)}
                     />
                 </View>
             </View>

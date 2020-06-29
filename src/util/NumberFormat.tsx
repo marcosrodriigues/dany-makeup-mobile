@@ -43,8 +43,15 @@ const style = StyleSheet.create({
         borderWidth: 1,
         fontSize: 18,
         alignSelf: 'center',
-        height: '100%'
-      },    
+        height: '100%',
+      },  
+      container: {
+          width: '100%',
+          alignItems: 'center',
+          textAlign: 'center',
+          borderWidth: 1,
+          borderColor: 'blue'
+      }  
 });
 
 export const CustomNumericInput = ({ 
@@ -59,6 +66,9 @@ export const CustomNumericInput = ({
             iconSize={32}
             step={1}
             minValue={0}
+            separatorWidth={16}
+            textColor={"red"}
+            totalWidth={150}
             initValue={value}
             valueType="integer"
             inputStyle={style.field}
@@ -67,7 +77,7 @@ export const CustomNumericInput = ({
             maxValue={maxValue}   
             rounded
             borderColor="black"
-
+            containerStyle={style.container}
             editable={false}
             onChange={value => 
                 onChange(value)

@@ -66,10 +66,12 @@ const ProdutoDetail:React.FC<IParamProduto> = ({ product }) => {
                         <Text style={style.preValue}>Por apenas:</Text>
                         <NumberFormat value={produto.value} style={style.value} />  
                     </View>
-                    <AddCarrinho 
-                        item={produto} 
-                        type="PRODUCT" 
+                    <View style={style.addCarrinho}>
+                        <AddCarrinho 
+                            item={produto} 
+                            type="PRODUCT" 
                         text={'Quero comprar'} size={3} />
+                    </View>
                 </View>
 
                 <Text style={style.fullDescription}>{produto.fullDescription}</Text>
