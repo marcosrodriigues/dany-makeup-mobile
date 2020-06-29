@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import SocialMediaButtons from '../../components/SocialMediaButtons/Index';
 
-import { signIn, signInFacebook } from '../../services/auth';
+import { signIn, signInFacebook, onSignIn } from '../../services/auth';
 import { useDispatch } from 'react-redux';
 
 const Login = () => {

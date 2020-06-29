@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { AsyncStorage, Alert } from 'react-native';
+import { getToken } from './auth';
 
 var api = axios.create({
     baseURL: 'http://192.168.2.14:3333',
@@ -17,7 +18,7 @@ api.interceptors.response.use(config => {
 })
 
  api.interceptors.request.use(async function(config) {
-    const token = await AsyncStorage.getItem('TOKEN') || undefined;
+    const token = await getToken();
 
     if (token) {
         if (config.method !== 'OPTIONS') {

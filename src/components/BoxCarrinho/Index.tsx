@@ -16,7 +16,9 @@ const BoxCarrinho = () => {
 
     const redux_items = useSelector((state: any) => state.items);
     const redux_user = useSelector((state: any) => state.user);
+    
     const dispatch = useDispatch();
+    const navigation = useNavigation();
 
     const [resume, setResume] = useState({
         subtotal: 0,
@@ -69,7 +71,13 @@ const BoxCarrinho = () => {
     }
 
     function handleContinueToBuy(event: any) {
-        Alert.alert('Clicou em continuar')
+        const purchase = {
+            items: carrinho,
+            entrega: frete,
+            resumo: resume
+        };
+
+        navigation.navigate('Compra', { purchase })
     }
 
     function handleChangeAmount(cart: any, value: number) {

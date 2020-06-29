@@ -9,7 +9,7 @@ import AddCarrinho from '../AddCarrinho/Index';
 
 import IParamsCardProduto from '../../interface/IParamsCardProduto';
 
-const CardProduto:React.FC<IParamsCardProduto> = ({ produto, onClickComponent }) => {
+const CardProduto:React.FC<IParamsCardProduto> = ({ produto, onClickComponent, showAddCart = true }) => {
     return (
         <Card key={produto.id} containerStyle={style.cardProduto}  >
             <View style={style.product}>
@@ -31,7 +31,11 @@ const CardProduto:React.FC<IParamsCardProduto> = ({ produto, onClickComponent })
 
                         <NumberFormat value={produto.value} style={style.value} />  
                     </TouchableOpacity>
-                    <AddCarrinho text={'add carrinho'} type="PRODUCT" item={produto} size={1} />
+
+                    {
+                        showAddCart && 
+                            <AddCarrinho text={'add carrinho'} type="PRODUCT" item={produto} size={1} />
+                    }
                 </View>
                 
             </View>

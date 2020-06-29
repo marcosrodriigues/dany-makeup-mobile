@@ -10,9 +10,9 @@ import IUsuario from '../../interface/IUsuario';
 
 import { useSelector, useDispatch } from 'react-redux';
 import IStateRedux from '../../interface/IStateRedux';
-import { TouchableHighlight } from 'react-native-gesture-handler';
 
 import NoUserPng from '../../assets/images/no-user.png';
+import { onSignOut, isSignedIn } from '../../services/auth';
 
 const Conta = () => {
     const [isLogin, setIsLogin] = useState(false);
@@ -23,19 +23,13 @@ const Conta = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (token !== '' && user)
-            setIsLogin(true);
-        else
-            setIsLogin(false);
-    }, [user, token])
+        isSignedIn().then(sign => setIsLogin(sign))
+    }, [user])
 
     function handleLogoutClick() {
+        onSignOut();
         dispatch({ type: 'USER_OFFLINE' });
-        AsyncStorage.removeItem("TOKEN");
-    }
-
-    function handleMyProfile() {
-
+        setIsLogin(false);
     }
 
     return (

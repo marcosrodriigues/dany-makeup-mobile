@@ -20,6 +20,21 @@ export async function isSignedIn() {
     return (token !== null) ? true : false;
 }
 
+export async function getToken() {
+    const token = await AsyncStorage.getItem(TOKEN_KEY);
+    return (token !== null) ? token : undefined;
+}
+
+export async function getUserOnline() {
+    try {
+        const { data } = await api.get('auth/me');
+        const { user, address } = data;
+        return { user, address }
+    } catch (err) {
+        throw err;
+    }
+}
+
 export async function signIn(userData: any) {
     try {
         const body = { email: userData.email, password: userData.passowrd }
@@ -38,7 +53,6 @@ export async function signIn(userData: any) {
     }
 }
     
-
 export async function signInFacebook() {
     try {
         await Facebook.initializeAsync();
