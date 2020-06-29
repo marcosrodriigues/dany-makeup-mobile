@@ -51,17 +51,16 @@ const WidgetPromocoes = () => {
                             </Text>
                         </View>
                     </View>
-
-                    <View style={styles.mt16}>
-                        <AddCarrinho
-                            item={item}
-                            size={2}
-                            text={"add carrinho"}
-                            type={"PROMOTIONS"}
-                        />
-                    </View>
-                    
                 </TouchableOpacity>
+
+                <View style={[styles.mt16, styles.card]}>
+                    <AddCarrinho
+                        item={item}
+                        size={2}
+                        text={"add carrinho"}
+                        type={"PROMOTIONS"}
+                    />
+                </View>
             </Card>
         )
     }

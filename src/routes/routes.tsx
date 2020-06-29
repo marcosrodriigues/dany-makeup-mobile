@@ -5,18 +5,22 @@ import RoutesHome from './home';
 import RoutesBuscar from './buscar';
 import RoutesConta from './conta';
 import Carrinho from '../pages/Carrinho/Index'
-
-import Ionicons from '@expo/vector-icons/Ionicons'
+import IconWithBadge from '../util/IconWithBadge';
+import { useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
+
+    const cartList = useSelector((state: any) => state.items)
+
     return (
     <>
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
+                    let badgeCount = 0;
                     if (route.name === 'Home') {
                         iconName = 'ios-home';
                     } else if (route.name === 'Buscar') {
@@ -25,9 +29,15 @@ export default function TabNavigator() {
                         iconName = 'ios-person';
                     } else if (route.name === 'Carrinho') {
                         iconName = 'ios-cart';
+                        badgeCount = cartList.length;
                     }
 
-                    return <Ionicons name={iconName} size={size} color={color} />;
+                    return <IconWithBadge
+                        name={iconName}
+                        color={color}
+                        size={size}
+                        badgeCount={badgeCount}
+                    />
                 }
             })}
             tabBarOptions={{

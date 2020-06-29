@@ -36,25 +36,21 @@ const BoxCarrinho = () => {
     }, [])
 
     useEffect(() => {
+        function loadResume() {
+            let sum = 0;
+            carrinho.map((cart: any) =>  {
+                sum = sum + Number(cart.value * cart.quantity);
+            });
+    
+            let sub = sum || 0
+            let fValue = frete.value || 0
+            let tot = sub + fValue || 0
+    
+            setResume({ subtotal: sub, frete: fValue, total: tot });
+        }
+        
         loadResume();
-    }, [frete])
-
-    useEffect(() => {
-        loadResume();
-    }, [carrinho])
-
-    function loadResume() {
-        let sum = 0;
-        carrinho.map((cart: any) =>  {
-            sum = sum + Number(cart.value * cart.quantity);
-        });
-
-        let sub = sum || 0
-        let fValue = frete.value || 0
-        let tot = sub + fValue || 0
-
-        setResume({ subtotal: sub, frete: fValue, total: tot });
-    }
+    }, [carrinho, frete])
 
     function updateCarrinho(item_id = 0, field = '', value = 0) {
         const novos = carrinho.map((c:any) => {

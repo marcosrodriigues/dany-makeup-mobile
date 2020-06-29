@@ -31,7 +31,9 @@ const PromocaoDetail = ({
                 Alert.alert('Erro ao carregar informações da promoção', err.message);
             }
         }
-        initPromotion();
+
+        if (promotion_id !== 0)
+            initPromotion();
     }, [promotion_id])
 
 

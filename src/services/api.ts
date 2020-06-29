@@ -11,6 +11,7 @@ api.interceptors.response.use(config => {
     return config;   
 }, function(error) {
     console.log('ERROR API INTERCEPTOS RESPONSE', error)
+    console.log(JSON.stringify(error))
     Alert.alert('Falha na conexão', error.message);
     return Promise.reject(error);
 })
