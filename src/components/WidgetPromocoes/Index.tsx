@@ -6,18 +6,16 @@ import styles from './Style';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
-import IProdutoPromocao from '../../interface/IProdutoPromocao';
 import api from '../../services/api';
 import AddCarrinho from '../AddCarrinho/Index';
 
-const Promocao = () => {
-    const [promocoes, setPromocoes] = useState<IProdutoPromocao[]>([]);
+const WidgetPromocoes = () => {
+    const [promocoes, setPromocoes] = useState<any[]>([]);
 
     const navigation = useNavigation();
 
-    function handleClick(item: IProdutoPromocao) {
-        console.log("Navegando pra produto " + JSON.stringify(item));
-        //navigation.navigate('Produto', { produto: item })
+    function handleClick(item: any) {
+        navigation.navigate('Promocao', { promotion : item })
     }
 
     async function loadPromotions() {
@@ -34,7 +32,7 @@ const Promocao = () => {
         loadPromotions();
     }, [])
 
-    function handleEachPromotion(item: IProdutoPromocao) {
+    function handleEachPromotion(item: any) {
         return (
             <Card containerStyle={styles.cardPromocao} >
                 <TouchableOpacity
@@ -69,7 +67,7 @@ const Promocao = () => {
     }
 
     return (
-        promocoes.length > 0 && 
+        promocoes.length > 0 ? 
         <>
             <Text style={styles.title}>Confira nossas promoções</Text>
             <View style={styles.promocao}>
@@ -84,7 +82,9 @@ const Promocao = () => {
                 </FlatList>
             </View>
         </>
+        :
+        <></>
     )
 }
 
-export default Promocao;
+export default WidgetPromocoes;

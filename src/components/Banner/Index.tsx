@@ -25,7 +25,8 @@ const Banner = () => {
     }, [])
 
     return (
-        banner.length > 0 && <View style={styles.banner}>
+        banner.length > 0 ?
+        <View style={styles.banner}>
             <Swiper 
                 style={styles.swipper} 
                 showsButtons={true} 
@@ -47,6 +48,8 @@ const Banner = () => {
                     })}
             </Swiper>
         </View>
+        :
+        <></>
     )
 }
 

@@ -4,9 +4,8 @@ import { View, ScrollView, ImageBackground } from 'react-native';
 import styles  from './Style' ;
 
 import Banner from '../../components/Banner/Index';
-import Promocao from '../../components/Promocao/Index'
+import WidgetPromocoes from '../../components/WidgetPromocoes/Index'
 import MaisVendidos from '../../components/MaisVendidos/Index'
-import AddCarrinho from '../../components/AddCarrinho/Index';
 
 const Home = () => {
     return (
@@ -15,7 +14,7 @@ const Home = () => {
           <Banner />
           <View style={styles.content}>
             <View style={styles.section}>
-              <Promocao></Promocao>
+              <WidgetPromocoes ></WidgetPromocoes>
             </View>
             <View style={styles.section}>
               <MaisVendidos></MaisVendidos>
