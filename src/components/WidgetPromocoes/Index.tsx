@@ -8,8 +8,10 @@ import { useNavigation } from '@react-navigation/native';
 
 import api from '../../services/api';
 import AddCarrinho from '../AddCarrinho/Index';
+import GifLoading from '../GifLoading/Index';
 
 const WidgetPromocoes = () => {
+    const [isLoading, changeLoading] = useState(true);
     const [promocoes, setPromocoes] = useState<any[]>([]);
 
     const navigation = useNavigation();
@@ -19,10 +21,12 @@ const WidgetPromocoes = () => {
     }
 
     async function loadPromotions() {
+        changeLoading(true);
         try {
             const response = await api.get('mobile/promotions');
             const { data } = response;
             setPromocoes(data);
+            changeLoading(false);
         } catch (err) {
             console.log('ERROR LOADING PROMOTIONS', err);
         }
@@ -40,7 +44,7 @@ const WidgetPromocoes = () => {
                  activeOpacity={0.9} 
                  onPress={() => handleClick(item)}
                 >
-                    <Image source={{ uri: item.mainImage }} style={styles.cardImage}></Image>
+                    <Image source={{ uri: item.image_url }} style={styles.cardImage}></Image>
                     <View style={[styles.cardDescription]}>
                         <Text style={styles.cardTitle}>{item.name}</Text>
                         <Text style={styles.cardOriginalValue}>De: R$ {item.originalValue}</Text>
@@ -66,7 +70,7 @@ const WidgetPromocoes = () => {
     }
 
     return (
-        promocoes.length > 0 ? 
+        promocoes.length > 0 && !isLoading ? 
         <>
             <Text style={styles.title}>Confira nossas promoções</Text>
             <View style={styles.promocao}>
@@ -81,6 +85,9 @@ const WidgetPromocoes = () => {
                 </FlatList>
             </View>
         </>
+        :
+        isLoading ? 
+            <GifLoading />
         :
         <></>
     )
