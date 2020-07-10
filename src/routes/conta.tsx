@@ -21,8 +21,6 @@ export default function ContaRoutes() {
             }}
         >
             <ContaStack.Screen name="Conta" component={Conta} />
-            <ContaStack.Screen name="Login" component={Login} />
-            <ContaStack.Screen name="Cadastro" component={Cadastro} />
             <ContaStack.Screen name="Perfil" component={Perfil} />
             
         </ContaStack.Navigator>

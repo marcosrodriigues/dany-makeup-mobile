@@ -61,7 +61,11 @@ const Cadastro = () => {
 
                 if (response.status === 200) {
                     Alert.alert("Sucesso", "Agora é só fazer login")!
-                    navigation.navigate('Login');
+                    navigation.navigate('LoginRoutes', {
+                        screen: {
+                            name: "Login"
+                        }
+                    });
                 } else {
                     const { error } = response.data;
                     Alert.alert("Cadastro Error!", error);

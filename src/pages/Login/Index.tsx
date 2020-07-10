@@ -19,7 +19,7 @@ const Login = () => {
     const dispatch = useDispatch();
 
     function handleClickCadastre() {
-        navigation.navigate('Cadastro');
+        navigation.navigate("Register");
     }
 
     async function handleLoginClick() {

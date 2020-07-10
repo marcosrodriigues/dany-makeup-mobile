@@ -14,7 +14,7 @@ import IStateRedux from '../../interface/IStateRedux';
 import NoUserPng from '../../assets/images/no-user.png';
 import { onSignOut, isSignedIn } from '../../services/auth';
 
-const Conta = () => {
+const Conta = ({ navigation }) => {
     const [isLogin, setIsLogin] = useState(false);
 
     const user = useSelector((state:IStateRedux) => state.user) as IUsuario;
@@ -57,7 +57,14 @@ const Conta = () => {
                     </View>
                     <View style={style.infoText}>
                         <Text style={style.text}>convidado</Text>
-                        <Link to="/Login" style={style.text}><FontAwesome name="user" size={20} /> Fazer login</Link>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('LoginRoutes', {
+                                screen: {
+                                    name: 'Login'
+                                }
+                            })}>
+                        <Text style={style.text}><FontAwesome name="user" size={20} /> Fazer login</Text>
+                        </TouchableOpacity>
                     </View>
                     </> 
                 )}
