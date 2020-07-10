@@ -38,8 +38,8 @@ const Conta = ({ navigation }) => {
                 {isLogin ? (
                     <>
                         <View style={style.circle}>
-                            {user.image ? 
-                            <Image source={{ uri: user.image }} style={[style.image]} />
+                            {user.avatar ? 
+                            <Image source={{ uri: user.avatar }} style={[style.image]} />
                             :
                             <Image source={NoUserPng} style={[style.image]}></Image>
                             }

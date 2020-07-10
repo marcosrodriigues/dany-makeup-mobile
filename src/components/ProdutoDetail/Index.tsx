@@ -8,7 +8,9 @@ import NumberFormat from '../../util/NumberFormat';
 import IParamProduto from '../../interface/IParamProduto';
 import IProduct from '../../interface/IProduto';
 import api from '../../services/api';
+import GifLoading from '../GifLoading/Index';
 const ProdutoDetail:React.FC<IParamProduto> = ({ product }) => {
+    const [isLoading, changeLoading] = useState(false);
     const [produto, setProduto] = useState<IProduct>({} as IProduct)
 
     useEffect(() => {
@@ -19,6 +21,7 @@ const ProdutoDetail:React.FC<IParamProduto> = ({ product }) => {
 
     async function initProduct() {
         try {
+            changeLoading(true);
             const { data } = await api.get(`products/${product.id}`);
 
             let api_product = data.product;
@@ -27,6 +30,7 @@ const ProdutoDetail:React.FC<IParamProduto> = ({ product }) => {
             api_product.images = images.map((img: any) => img.url);
 
             setProduto(api_product);
+            changeLoading(false);
         } catch (err) {
             console.log(err);
             Alert.alert('Erro ao carregar informações do produto', err.message);
@@ -41,6 +45,7 @@ const ProdutoDetail:React.FC<IParamProduto> = ({ product }) => {
         )
     }
     return (
+        !isLoading ? 
         <View style={style.content}>
             {
             produto.images ? 
@@ -76,6 +81,10 @@ const ProdutoDetail:React.FC<IParamProduto> = ({ product }) => {
 
                 <Text style={style.fullDescription}>{produto.fullDescription}</Text>
             </View>
+        </View>
+        :
+        <View style={style.content}>
+            <GifLoading />
         </View>
     )
 }

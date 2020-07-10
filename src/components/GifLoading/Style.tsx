@@ -2,11 +2,12 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
     container: {
-        backgroundColor: '#d2ae6c',
+        backgroundColor: 'transparent',
         justifyContent: 'center',
         alignItems: 'center',
         height: 200,
-        borderRadius: 15
+        borderRadius: 15,
+        width: '100%'
     },
     gif: {
         backgroundColor: 'transparent',

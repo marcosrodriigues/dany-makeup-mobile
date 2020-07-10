@@ -3,7 +3,7 @@ export default interface Usuario {
     name: string,
     email: string,
     password: string,
-    image?: string,
+    avatar?: string,
     whatsapp?: string,
     fb_id?: string,
     address?: {}

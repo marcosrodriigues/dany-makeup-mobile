@@ -11,9 +11,11 @@ import CardProduto from '../../components/CardProduto/Index'
 import ICategory from '../../interface/ICategoria';
 import IProduct from '../../interface/IProduto';
 import api from '../../services/api';
+import GifLoading from '../../components/GifLoading/Index';
 
 
 const Buscar = () => {
+    const [isLoading, changeLoading] = useState(false)
     const [categorys, setCategorys] = useState<ICategory[]>([]);
     const [search, setSearch] = useState<string>('');
     const [categorySelected, setCategorySelected] = useState<ICategory>({} as ICategory);
@@ -27,12 +29,14 @@ const Buscar = () => {
     }, [])
 
     async function loadCategorys() {
+      changeLoading(true);
       let params = {
         filter: false
       }
       const response = await api.get('categorys', { params });
       const { data } = response;
       setCategorys(data);
+      changeLoading(false)
     }
 
     useEffect(() => {
@@ -43,9 +47,11 @@ const Buscar = () => {
       }
 
       if (categorySelected.id !== undefined || search !== '') {
+        changeLoading(true);
         api.get('mobile/products', { params }).then(response => {
           const { data } = response;
           setProdutos(data);
+          changeLoading(false);
         })
       }
 
@@ -70,23 +76,28 @@ const Buscar = () => {
       <View style={style.dataContainer}>
           <HeaderSearchBar onClickSearch={handleSearchButton} />
           <ScrollView contentContainerStyle={style.searchScrollView}>
-            { showList ? 
-                <>
-                  <Text style={style.subtitle}>Exibindo resultados para</Text>
-                  <Text style={style.title}>{categorySelected.title? categorySelected.title + ' > ' : ''}{search}</Text>
+            {
+              !isLoading ? 
+                showList ?
+                  <>
+                    <Text style={style.subtitle}>Exibindo resultados para</Text>
+                    <Text style={style.title}>{categorySelected.title? categorySelected.title + ' > ' : ''}{search}</Text>
 
-                  {produtos.map(product => (
-                    <CardProduto key={product.id} produto={product} onClickComponent={() => onClickProduct(product)} />
-                  ))}
-                </>
-              :
+                    {produtos.map(product => (
+                      <CardProduto key={product.id} produto={product} onClickComponent={() => onClickProduct(product)} />
+                    ))}
+                  </>
+                :
                 <>
                   <Text style={style.title}>Todas as categorias</Text>
-
                   { categorys.map(cat => (
                     <Categoria key={cat.id} category={cat} onClickCategory={handleSelectedCategory} />
                   ))}
                 </>
+              :
+              <>
+                <GifLoading />
+              </>
             }
           </ScrollView>
           </View>

@@ -56,7 +56,7 @@ const Cadastro = () => {
 
                 const response = await api.post(
                     'users', 
-                    { name, email, fb_id: id, image: url }
+                    { name, email, fb_id: id, avatar: url }
                 );
 
                 if (response.status === 200) {
