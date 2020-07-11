@@ -31,13 +31,7 @@ const Perfil = () => {
                 const { data } = response;
                 const { user, address } = data;;
                 setUser({
-                    email: user.email,
-                    name: user.name,
-                    password: user.password,
-                    fb_id: user.fb_id,
-                    id: user.id,
-                    image: user.image,
-                    whatsapp: user.whatsapp,
+                    ...user,
                     address : address
                 });
                 return;
@@ -49,11 +43,11 @@ const Perfil = () => {
     }, [selecter])
 
     async function handleSaveClick() {
-        const { id, name, email, password, whatsapp, image, fb_id } = user;
+        const { id, name, email, password, whatsapp, avatar, fb_id } = user;
         try {
             const { data } = await api.put(
                 'users', 
-                { id, name, email, password, whatsapp, image, fb_id }
+                { id, name, email, password, whatsapp, avatar, fb_id }
             );
 
             dispatch({ type: 'USER_UPDATE', user: data });
@@ -71,8 +65,8 @@ const Perfil = () => {
             </View>
             <View style={style.info}>
                 <View style={style.circle}>
-                    {user.image ? 
-                    <Image source={{ uri: user.image }} style={[style.image]} />
+                    {user.avatar ? 
+                    <Image source={{ uri: user.avatar }} style={[style.image]} />
                     :
                     <Image source={NoUserPng} style={[style.image]}></Image>
                     }
