@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { Text, View, TouchableOpacity, Alert } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 
 import { Camera } from 'expo-camera';
 
@@ -46,7 +46,7 @@ if (hasPermission === null) {
     if (cameraRef !== null) {
       await cameraRef.takePictureAsync({
         quality: 0,
-        onPictureSaved: (data) => {
+        onPictureSaved: (data: object) => {
           onTakePicture(data)
         }
       })
