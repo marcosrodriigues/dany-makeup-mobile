@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, Image, Alert } from 'react-native';
+import { View, Text, ScrollView, Image, Alert, ImageBackground, CameraRoll } from 'react-native';
 
 import style from './Style';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
@@ -14,42 +14,58 @@ import { useNavigation } from '@react-navigation/native';
 
 import NoUserPng from '../../assets/images/no-user.png';
 
+import MyCamera from '../../components/MyCamera/Index';
+
 const Perfil = () => {
     const [user, setUser] = useState<IUsuario>({} as IUsuario)
     const selecter = useSelector((state: IStateRedux) => state);
-    const dispatch = useDispatch();
 
+    const dispatch = useDispatch();
     const navigator = useNavigation();
 
+    const [showCamera, setShowCamera] = useState(false);
+
     useEffect(() => {
-        if (selecter.user) {
-            setUser(selecter.user);
+        async function initUser() {
+            try {
+                const response = await api.get('auth/me');
+                const { user } = response.data;
+                setUser(user);
+            } catch (err) {
+                Alert.alert("Atenção!", "Parece que você não está logado!");
+                navigator.goBack();
+            }
         }
 
-        try {
-            api.get('auth/me').then(response => {
-                const { data } = response;
-                const { user, address } = data;;
-                setUser({
-                    ...user,
-                    address : address
-                });
-                return;
-            })
-        } catch (err) {
-            Alert.alert("Atenção!", "Parece que você não está logado!");
-            navigator.goBack();
-        }
+        initUser();
     }, [selecter])
 
-    async function handleSaveClick() {
-        const { id, name, email, password, whatsapp, avatar, fb_id } = user;
-        try {
-            const { data } = await api.put(
-                'users', 
-                { id, name, email, password, whatsapp, avatar, fb_id }
-            );
+    async function handleUpload(file: object) {
+        setUser({
+            ...user,
+            avatar: file.uri
+        })
+        setShowCamera(false);
+    }
 
+    async function handleSaveClick() {
+        const formData = new FormData();
+        formData.append('data_user', JSON.stringify(user));
+        console.log('data_user', user);
+        //return;
+
+        if (user.avatar?.startsWith('file://')) {
+            const filename = user.avatar?.substring(user.avatar?.lastIndexOf('/'), user.avatar.length);
+            formData.append('avatar_image', {
+                uri: user.avatar,
+                name: filename,
+                type: 'image/jpg'
+            });
+        }
+
+        try {
+            const { data } = await api.put('users', formData);
+            console.log('data', data)
             dispatch({ type: 'USER_UPDATE', user: data });
             Alert.alert("Sucesso", "`Suas informações foram atualizadas");    
         } catch (err) {
@@ -58,6 +74,9 @@ const Perfil = () => {
         }
     }
 
+    function cancelCamera() {
+        setShowCamera(false);
+    }
     return (
         <ScrollView contentContainerStyle={style.container}>
             <View style={style.header}>
@@ -65,14 +84,29 @@ const Perfil = () => {
             </View>
             <View style={style.info}>
                 <View style={style.circle}>
-                    {user.avatar ? 
-                    <Image source={{ uri: user.avatar }} style={[style.image]} />
-                    :
-                    <Image source={NoUserPng} style={[style.image]}></Image>
+                    {
+                        !showCamera ?
+
+                            <TouchableOpacity
+                                activeOpacity={0.6}
+                                style={style.image}
+                                onPress={() => setShowCamera(!showCamera)}
+                            >
+                                <Image
+                                    source={ user.avatar ? { uri: user.avatar} : NoUserPng }
+                                    style={style.image}                        
+                                />
+                            </TouchableOpacity>
+                        :
+                            <MyCamera
+                                onCancel={cancelCamera}
+                                onTakePicture={handleUpload}
+
+                            />
                     }
-                </View>
+                    </View>
                 <View style={style.infoText}>
-                    <Text style={style.text}>{user.name}</Text>
+                    <Text style={style.text}>{user.name} </Text>
                 </View>
             </View>
 

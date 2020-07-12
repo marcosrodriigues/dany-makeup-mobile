@@ -12,8 +12,8 @@ import { signIn, signInFacebook } from '../../services/auth';
 import { useDispatch } from 'react-redux';
 
 const Login = () => {
-    const [email, setEmail] = useState('marcos.rodriiigues@gmail.com');
-    const [password, setPassword] = useState('123456');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
 
     const navigation = useNavigation();
     const dispatch = useDispatch();
@@ -57,8 +57,15 @@ const Login = () => {
                 <SocialMediaButtons handleFacebookClick={() => handleLoginFb()} />
                 <Text style={style.textOu}>ou</Text>
                 <View style={style.fields}>
-                    <TextInput style={style.field} keyboardType="email-address" value={email} autoCapitalize="none" placeholderTextColor="#d2ae6c" placeholder="Endereço de email" onChangeText={text => setEmail(text)}  />
-                    <TextInput  style={style.field} secureTextEntry={true} value={password}   placeholderTextColor="#d2ae6c" placeholder="Senha" onChangeText={text => setPassword(text)}  /> 
+                    <TextInput 
+                        style={style.field} 
+                        keyboardType="email-address" 
+                        value={email} autoCapitalize="none" 
+                        placeholderTextColor="#d2ae6c" 
+                        placeholder="Endereço de email" 
+                        onChangeText={text => setEmail(text)}  
+                    />
+                    <TextInput style={style.field} secureTextEntry={true} value={password}   placeholderTextColor="#d2ae6c" placeholder="Senha" onChangeText={text => setPassword(text)}  /> 
 
                     <TouchableOpacity style={[style.button]} onPress={() => handleLoginClick()}>
                         <Text style={style.textButton}>Entrar</Text>
@@ -66,7 +73,7 @@ const Login = () => {
                 </View>
                 <Text style={style.textOu}>ou</Text>
                 <View style={style.fields}>
-                    <TouchableOpacity style={[style.button]} onPress={handleClickCadastre}>
+                    <TouchableOpacity style={[style.button]} onPress={() => handleClickCadastre()}>
                         <Text style={style.textButton}>Cadastre-se</Text>
                     </TouchableOpacity>
                 </View>
