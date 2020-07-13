@@ -23,13 +23,27 @@ const Conta = ({ navigation }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        isSignedIn().then(sign => setIsLogin(sign))
+        async function isSign () {
+            const sign = await isSignedIn();
+            setIsLogin(sign);
+            console.log(sign, user)
+        }
+        isSign();
     }, [user])
 
     function handleLogoutClick() {
         onSignOut();
         dispatch({ type: 'USER_OFFLINE' });
         setIsLogin(false);
+    }
+
+    function navigate(route: string, screen = '') {
+        if (screen === '') navigation.navigate(route);
+        navigation.navigate(route, {
+            screen: {
+                name: screen
+            }
+        })
     }
 
     return (
@@ -58,11 +72,7 @@ const Conta = ({ navigation }) => {
                     <View style={style.infoText}>
                         <Text style={style.text}>convidado</Text>
                         <TouchableOpacity
-                            onPress={() => navigation.navigate('LoginRoutes', {
-                                screen: {
-                                    name: 'Login'
-                                }
-                            })}>
+                            onPress={() => navigate('LoginRoutes', 'Login')}>
                         <Text style={style.text}><FontAwesome name="user" size={20} /> Fazer login</Text>
                         </TouchableOpacity>
                     </View>
@@ -88,6 +98,29 @@ const Conta = ({ navigation }) => {
                                 <FontAwesome name="heart" size={32} />
                             </View>
                             <Text style={style.textMain}>Favoritos</Text>
+                            <View style={style.icon}>
+                                <FontAwesome name="arrow-right" size={32} />
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={0.9} style={style.button} 
+                        onPress={() => navigate('Enderecos')} >
+                        <View style={style.inline}>
+                            <View style={style.icon}>
+                                <FontAwesome name="address-card" size={32} />
+                            </View>
+                            <Text style={style.textMain}>Endereços</Text>
+                            <View style={style.icon}>
+                                <FontAwesome name="arrow-right" size={32} />
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={0.9} style={style.button} onPress={() => console.log("click")}>
+                        <View style={style.inline}>
+                            <View style={style.icon}>
+                                <FontAwesome name="credit-card" size={32} />
+                            </View>
+                            <Text style={style.textMain}>Cartão de crédito</Text>
                             <View style={style.icon}>
                                 <FontAwesome name="arrow-right" size={32} />
                             </View>

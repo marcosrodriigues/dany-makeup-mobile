@@ -32,7 +32,7 @@ export default function NodeNavigator() {
         loadingUser();
     }, [])
 
-    if (loading) return <AppLoading/>
+    //if (loading) return <AppLoading/>
 
     return (
     <>

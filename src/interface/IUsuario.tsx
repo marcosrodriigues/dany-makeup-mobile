@@ -6,5 +6,4 @@ export default interface Usuario {
     avatar?: string,
     whatsapp?: string,
     fb_id?: string,
-    address?: {}
 }

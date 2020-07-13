@@ -28,8 +28,8 @@ export async function getToken() {
 export async function getUserOnline() {
     try {
         const { data } = await api.get('auth/me');
-        const { user, address } = data;
-        return { user, address }
+        const { user } = data;
+        return user;
     } catch (err) {
         throw err;
     }
@@ -40,7 +40,6 @@ export async function signIn(userData: any) {
         const body = { email: userData.email, password: userData.passowrd }
         const { data } = await api.post('/auth/login', body);
         const { user, token } = data;
-
         if (!token || !user) {
             throw "Não foi possível realizar o login"
         }
