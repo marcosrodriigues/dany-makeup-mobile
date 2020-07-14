@@ -92,7 +92,7 @@ const Conta = ({ navigation }) => {
                             </View>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={0.9} style={style.button} onPress={() => console.log("click")}>
+                    {/* <TouchableOpacity activeOpacity={0.9} style={style.button} onPress={() => console.log("click")}>
                         <View style={style.inline}>
                             <View style={style.icon}>
                                 <FontAwesome name="heart" size={32} />
@@ -102,7 +102,7 @@ const Conta = ({ navigation }) => {
                                 <FontAwesome name="arrow-right" size={32} />
                             </View>
                         </View>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <TouchableOpacity activeOpacity={0.9} style={style.button} 
                         onPress={() => navigate('Enderecos')} >
                         <View style={style.inline}>
@@ -115,7 +115,8 @@ const Conta = ({ navigation }) => {
                             </View>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={0.9} style={style.button} onPress={() => console.log("click")}>
+                    <TouchableOpacity activeOpacity={0.9} style={style.button} 
+                        onPress={() => navigate('CreditCard')}>
                         <View style={style.inline}>
                             <View style={style.icon}>
                                 <FontAwesome name="credit-card" size={32} />
