@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card } from 'react-native-elements';
 
 import style from './Style';
 import { View, Text } from 'react-native';

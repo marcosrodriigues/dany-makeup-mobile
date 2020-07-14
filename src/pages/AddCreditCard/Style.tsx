@@ -44,9 +44,6 @@ export default StyleSheet.create({
         height: 48,
         width: '100%'
     },
-    selectField: {
-        color: '#d2ae6c',
-    },
     button: {
         height: 48,
         backgroundColor: '#d2ae6c',

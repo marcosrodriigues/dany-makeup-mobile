@@ -8,9 +8,9 @@ import GifLoading from '../../components/GifLoading/Index';
 import api from '../../services/api';
 import { Alert, Text, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import BoxAddress from '../../components/BoxAddress/Index';
 import style from './Style'
 import ICreditCard from '../../interface/ICreditCard';
+import BoxCreditCard from '../../components/BoxCreditCard/Index';
 
 const CreditCard = ({ navigation, route }) => {
     const user = useSelector((state: IStateRedux) => state.user);
@@ -30,7 +30,7 @@ const CreditCard = ({ navigation, route }) => {
         } catch (err) {
             Alert.alert("Atenção!", 'Problema de conexão com o servidor');
             console.log('ERROR CREDIT CARD USER', err);
-            navigation.goBack();
+            //navigation.goBack();
         }
     }
 
@@ -66,11 +66,11 @@ const CreditCard = ({ navigation, route }) => {
         handleParamCreditCard();
     }, [route.params?.creditCard])
 
-    function handleClickAddress(creditcard: any) {
+    function handleClickCreditCard(creditcard: any) {
         navigation.navigate('AddCreditCard', { creditcard })
     }
 
-    async function handleRemoveAddress(creditcard: any) {
+    async function handleRemoveCreditCard(creditcard: any) {
         try {
             isLoading(true);
             await api.delete(`creditcard/${creditcard.id}`);
@@ -89,11 +89,11 @@ const CreditCard = ({ navigation, route }) => {
                 loading ? <GifLoading /> : 
                 creditCards.length > 0 ?
                 creditCards.map(cc => (
-                        <BoxAddress 
+                        <BoxCreditCard 
                             key={cc.id}
-                            address={cc}
-                            onClick={handleClickAddress}
-                            onRemove={handleRemoveAddress}
+                            credit_card={cc}
+                            onClick={handleClickCreditCard}
+                            onRemove={handleRemoveCreditCard}
                         />
                     ))
                 :

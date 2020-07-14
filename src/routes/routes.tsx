@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import IStateRedux from '../interface/IStateRedux';
 import { getUserOnline } from '../services/auth';
 import { AppLoading } from 'expo';
-import { Alert } from 'react-native';
 
 const Screen = createStackNavigator();
 
@@ -32,7 +31,6 @@ export default function NodeNavigator() {
         }
         loadingUser();
     }, [token])
-
     if (loading) return <AppLoading />
 
     return (

@@ -12,4 +12,7 @@ export default interface ICreditCard {
     expiration_date: string
     date_created: Date
     date_updated: Date
+
+    card_number?: string
+    card_cvv?: string
 }
