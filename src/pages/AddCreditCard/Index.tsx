@@ -35,7 +35,9 @@ const AddCreditCard = ({ navigation, route }) => {
         
         isLoading(true);
         try {
-            await api.post('credit_card/user', { credit_card: creditCard, user_id: user.id })
+            if (!creditCard.id)
+                await api.post('credit_card/user', { credit_card: creditCard, user_id: user.id })
+                
             route.params.onGoBack();
             navigation.goBack();
         } catch (err) {
