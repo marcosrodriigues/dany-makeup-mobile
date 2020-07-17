@@ -10,28 +10,39 @@ import ICreditCard from '../../interface/ICreditCard';
 import CustomCreditCard from '../../components/CustomCreditCard/Index';
 
 import PagarMe from '../../services/pagarme';
+import api from '../../services/api';
+import IStateRedux from '../../interface/IStateRedux';
+import { useSelector } from 'react-redux';
 
 
 const AddCreditCard = ({ navigation, route }) => {
     const [loading, isLoading] = useState(false);
     const [creditCard, setCreditCard] = useState<ICreditCard>({} as ICreditCard);
+    const user = useSelector((state: IStateRedux) => state.user);
 
     useEffect(() => {
-        if (route.params?.creditCard) {
-            const current = route.params.creditCard;
+        if (route.params?.creditcard) {
+            const current = route.params.creditcard;
             setCreditCard(current);
-            console.log(current)
         }
     }, [route.params?.creditCard])
 
-    function handleAdd() {
-        if (PagarMe.isCreditCardValid(creditCard)) {
-            const hash = PagarMe.generateHash(creditCard);
-            console.log('FINAL_HASH', hash)
+    async function handleAdd() {
+        if (!PagarMe.isCreditCardValid(creditCard.card_number)) {
+            Alert.alert('Atenção', 'Número do cartão de crédito inválido. Tente novamente');
+            return;
         }
-
-        Alert.alert('Ops', 'Verifique os dados do seu cartão')
-        //navigation.navigate('CreditCard', { creditCard })
+        
+        isLoading(true);
+        try {
+            await api.post('credit_card/user', { credit_card: creditCard, user_id: user.id })
+            route.params.onGoBack();
+            navigation.goBack();
+        } catch (err) {
+            Alert.alert('Hey', 'Ocorreu um erro tentando salvar seus dados. Tente novamente');
+            console.log('ERR ADD CREDIT CARD', err)
+        }
+        isLoading(false);
     }
 
     function handleCreditCard(name: string, value: string) {
@@ -45,7 +56,7 @@ const AddCreditCard = ({ navigation, route }) => {
         <>
         <ScrollView contentContainerStyle={style.container}>
             {loading ? <View style={style.loading}><GifLoading /></View>  : <></>}
-            <HeaderStackMenu title="Novo cartão" />
+            <HeaderStackMenu title="Dados do cartão" />
             <CustomCreditCard
                 credit_card={creditCard}
             />
@@ -60,15 +71,6 @@ const AddCreditCard = ({ navigation, route }) => {
                     />
                 </View>
                 <View style={style.fields}>
-                    <TextInput
-                        placeholder="Nome no cartão"
-                        placeholderTextColor="#d2ae6c"
-                        style={style.field}
-                        value={creditCard.holder_name}
-                        onChangeText={text => handleCreditCard('holder_name', text)}
-                    />
-                </View>
-                <View style={style.fields}>
                     <TextInputMask
                         placeholder="Número do cartão"
                         placeholderTextColor="#d2ae6c"
@@ -79,34 +81,47 @@ const AddCreditCard = ({ navigation, route }) => {
                     />
                 </View>
                 <View style={style.fields}>
+                    <TextInput
+                        placeholder="Nome no cartão"
+                        placeholderTextColor="#d2ae6c"
+                        style={style.field}
+                        value={creditCard.holder_name}
+                        onChangeText={text => handleCreditCard('holder_name', text)}
+                    />
+                </View>
+                <View style={style.fieldsInline}>
                     <TextInputMask
                         type="custom"
                         options={{
-                            mask: '99/99'
+                            mask: '99/99',
                         }}
+                        keyboardType="numeric"
                         placeholder="Data de validade"
                         placeholderTextColor="#d2ae6c"
-                        style={style.field}
+                        style={style.fieldInline}
                         value={creditCard.expiration_date}
                         onChangeText={text => handleCreditCard('expiration_date', text)}
                     />
-                </View>
-                <View style={style.fields}>
-                <TextInputMask
+
+                    <TextInputMask
                         type="only-numbers"
-                        maxLength={3}
-                        
+                        maxLength={4}
                         placeholder="Codigo verificador"
                         placeholderTextColor="#d2ae6c"
-                        style={style.field}
+                        style={style.fieldInline}
                         value={creditCard.card_cvv}
                         onChangeText={text => handleCreditCard('card_cvv', text)}
                     />
                 </View>
-                
-                <TouchableOpacity style={style.button} onPress={handleAdd}>
-                    <Text style={style.textButton}>Salvar</Text>
-                </TouchableOpacity>
+                {creditCard.id === undefined &&
+                    <TouchableOpacity 
+                        style={style.button} 
+                        onPress={handleAdd}
+                        disabled={!(creditCard.id === undefined)}
+                    >
+                        <Text style={style.textButton}>Salvar</Text>
+                    </TouchableOpacity>
+                }
             </View>
         </ScrollView>
         </>

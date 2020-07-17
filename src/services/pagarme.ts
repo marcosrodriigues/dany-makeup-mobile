@@ -1,4 +1,3 @@
-import pagarme from 'pagarme';
 import ICreditCard from '../interface/ICreditCard';
 
 const PagarMe = {
@@ -6,36 +5,33 @@ const PagarMe = {
     generateHash
 }
 
-async function isCreditCardValid(credit_card : ICreditCard) {
-    if (
-        credit_card.holder_name === '' ||
-        credit_card.expiration_date === '' ||
-        credit_card.card_number === '' ||
-        credit_card.card_cvv === ''
-    ) return false;
+function isCreditCardValid(value : string) {
+    if (/[^0-9-\s]+/.test(value)) return false;
 
+	// The Luhn Algorithm. It's so pretty.
+	let nCheck = 0, bEven = false;
+	value = value.replace(/\D/g, "");
 
-    const card = {
-        card_holder_name: credit_card.holder_name,
-        card_expiration_date: credit_card.expiration_date,
-        card_number: credit_card.card_number,
-        card_cvv: credit_card.card_cvv
-    };
+	for (var n = value.length - 1; n >= 0; n--) {
+		var cDigit = value.charAt(n),
+			  nDigit = parseInt(cDigit, 10);
 
-    const card_validation = await pagarme.validate({ card })
+		if (bEven && (nDigit *= 2) > 9) nDigit -= 9;
 
-    if (!card_validation.card.card_number) return false; //número do cartão inválido
+		nCheck += nDigit;
+		bEven = !bEven;
+	}
 
-    return true;
+	return (nCheck % 10) == 0;
 }
 
 async function generateHash(credit_card: ICreditCard) {
-    const card_hash = await pagarme.connect({
-        encryption_key: 'SUA_ENCRYPTION_KEY'
-    }).then(client => client.security.encrypt(credit_card));
+    // const card_hash = await pagarme.connect({
+    //     encryption_key: 'SUA_ENCRYPTION_KEY'
+    // }).then(client => client.security.encrypt(credit_card));
 
-    console.log('card_hash', card_hash);
-    return card_hash;
+    // console.log('card_hash', card_hash);
+    // return card_hash;
 }
 
 export default PagarMe

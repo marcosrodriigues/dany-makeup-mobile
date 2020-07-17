@@ -13,6 +13,6 @@ export default interface ICreditCard {
     date_created: Date
     date_updated: Date
 
-    card_number?: string
-    card_cvv?: string
+    card_number: string
+    card_cvv: string
 }

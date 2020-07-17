@@ -24,61 +24,38 @@ const CreditCard = ({ navigation, route }) => {
     async function loadCreditCards() {
         isLoading(true);
         try {
-            const { data } = await api.get(`creditcard/user/${user.id}`);
+            const { data } = await api.get(`credit_card/user/${user.id}`);
             setCreditCards(data);
-            isLoading(false);
         } catch (err) {
             Alert.alert("Atenção!", 'Problema de conexão com o servidor');
             console.log('ERROR CREDIT CARD USER', err);
-            //navigation.goBack();
         }
+        isLoading(false);
     }
 
     function handleAddCreditCard() {
-        navigation.navigate('AddCreditCard')
+        navigation.navigate('AddCreditCard', {
+            onGoBack: loadCreditCards
+        })
     }
 
-    useEffect(() => {
-        async function handleParamCreditCard() {
-            if (route.params?.creditCard) {
-                const cc = route.params.creditCard;
-
-                try {
-                    isLoading(true);
-
-                    if (cc.id === undefined)
-                        await api.post('creditcard/user', { credit_card: cc, user_id: user.id })
-                    else
-                        await api.put('creditcard/user', { credit_card: cc })
-
-                    const response = await api.get(`creditcard/user/${user.id}`);
-                    const updated_creditcards = response.data;
-                    setCreditCards(updated_creditcards);
-                    isLoading(false);
-                } catch (err) {
-                    Alert.alert('Hey', 'Aconteceu algum problema com o seu cadastro. Tente novamente');
-                    console.log('ERR ADD CREDIT CARD', err)
-                }
-                
-            }
-        }
-
-        handleParamCreditCard();
-    }, [route.params?.creditCard])
-
     function handleClickCreditCard(creditcard: any) {
-        navigation.navigate('AddCreditCard', { creditcard })
+        navigation.navigate('AddCreditCard', { 
+            creditcard
+         })
     }
 
     async function handleRemoveCreditCard(creditcard: any) {
         try {
             isLoading(true);
-            await api.delete(`creditcard/${creditcard.id}`);
-            loadCreditCards();
+            await api.delete(`credit_card/${creditcard.id}`);
+            await loadCreditCards();
         } catch (err) {
             Alert.alert("Hey", "Ocorreu um erro ao deletar seu cartão");
             console.log('ERR REMOVE CREDITCARD', creditcard, err);
         }
+
+        isLoading(false);
     }
 
     return (

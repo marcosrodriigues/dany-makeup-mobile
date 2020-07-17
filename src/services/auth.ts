@@ -37,7 +37,7 @@ export async function getUserOnline() {
 
 export async function signIn(userData: any) {
     try {
-        const body = { email: userData.email, password: userData.passowrd }
+        const body = { email: userData.email, password: userData.password }
         const { data } = await api.post('/auth/login', body);
         const { user, token } = data;
         if (!token || !user) {

@@ -11,11 +11,10 @@ import SocialMediaButtons from '../../components/SocialMediaButtons/Index';
 import { signIn, signInFacebook } from '../../services/auth';
 import { useDispatch } from 'react-redux';
 
-const Login = () => {
+const Login = ({ navigation }) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    const navigation = useNavigation();
     const dispatch = useDispatch();
 
     function handleClickCadastre() {
@@ -26,7 +25,8 @@ const Login = () => {
         try {
             const { user, token } = await signIn({ email, password });
             dispatch({ type: 'USER_ONLINE', user, token: token});
-            navigation.navigate('Conta')
+            //navigation.navigate('Conta')
+            navigation.goBack();
         } catch (err) {
             Alert.alert("Atenção", "Email e/ou senha inválidos. Verifique e tente novamente.")
             console.log(err);
@@ -37,7 +37,7 @@ const Login = () => {
         try {
             const { user, token } = await signInFacebook();
             dispatch({ type: 'USER_ONLINE', user, token: token});
-            navigation.navigate('Conta');
+            navigation.goBack();
             
         } catch (error) {
             Alert.alert("Facebook Login Error", error);

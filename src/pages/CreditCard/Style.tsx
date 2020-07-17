@@ -10,13 +10,12 @@ export default StyleSheet.create({
         justifyContent: 'space-between'
     },
     scrollView: {
-        width: '100%',
+        width: '98%',
     },
     card: {
         height: 100,
         backgroundColor: '#d2ae6c',
         borderRadius: 10,
-        width: '100%',
         margin: 16,
         justifyContent: 'center'
     },
@@ -40,6 +39,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         width: '20%',
+        borderRadius: 10,
     },
     icon: {
         fontSize: 24,

@@ -6,7 +6,6 @@ export default StyleSheet.create({
         paddingTop: Constants.statusBarHeight,
         backgroundColor: '#000',
         alignItems: 'center',
-        paddingBottom: 16,
     },
     loading: {
         backgroundColor: 'rgba(0,0,0,0)',
@@ -25,6 +24,11 @@ export default StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
     },
+    fieldsInline: {
+        width: '100%',
+        justifyContent: 'space-between',
+        flexDirection: 'row'
+    },
     field: {
         alignSelf: 'center',
         height: 48,
@@ -37,6 +41,18 @@ export default StyleSheet.create({
         paddingLeft: 16,
         borderRadius: 16,
         width: '100%'
+    },
+    fieldInline: {
+        alignSelf: 'center',
+        height: 48,
+        backgroundColor: 'black',
+        borderColor: '#d2ae6c',
+        color: '#d2ae6c',
+        borderWidth: 1,
+        marginBottom: 10,
+        fontSize: 18,
+        paddingLeft: 16,
+        borderRadius: 16,
     },
     viewSelect: {
         borderColor: '#d2ae6c',

@@ -5,6 +5,7 @@ import { View, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ICreditCard from '../../interface/ICreditCard';
+import BrandCreditCard from '../BrandCreditCard/Index';
 
 const BoxCreditCard = ({
     credit_card = {} as ICreditCard,
@@ -19,27 +20,30 @@ const BoxCreditCard = ({
                 onPress={() => onClick(credit_card)}
             >
                 <View style={style.iconView}>
-                    <FontAwesome name="home" style={style.icon} size={40} />
+                    <BrandCreditCard brand={credit_card.brand} />
                 </View>
                 <View style={style.infoView}>
                     <View style={style.view}>
                         <Text style={style.textName}>
                             {credit_card.name}
-                            {/* {credit_card.cep && `- ${credit_card.cep}` } */}
                         </Text>
                     </View>
 
-                    {/* <View style={style.viewColumn}>
+                    <View style={style.view}>
                         <Text style={style.textAddress}>
-                            {credit_card.street}, 
-                            nº: {credit_card.number} 
-                            {credit_card.complement && `, ${credit_card.complement}`}
-                            {credit_card.neighborhood && `, ${credit_card.neighborhood}`}.
+                            {credit_card.card_number}
                         </Text>
+                    </View>
+
+                    <View style={style.viewColumn}>
                         <Text style={style.textAddress}>
-                            {credit_card.city} - {credit_card.uf}
+                            {credit_card.holder_name}
                         </Text>
-                    </View> */}
+
+                        <Text style={style.textAddress}>
+                            {credit_card.expiration_date}
+                        </Text>
+                    </View>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity

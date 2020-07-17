@@ -36,7 +36,9 @@ export default StyleSheet.create({
         flexDirection: 'row',
     },
     viewColumn: {
-        width: '100%'
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     textName: {
         alignSelf: 'flex-start',
