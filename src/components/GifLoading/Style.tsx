@@ -7,7 +7,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         height: 200,
         borderRadius: 15,
-        width: '100%'
+        width: '100%',
     },
     gif: {
         backgroundColor: 'transparent',

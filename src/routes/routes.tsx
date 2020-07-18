@@ -16,21 +16,22 @@ export default function NodeNavigator() {
     const [loading, isLoading] = useState(false);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        async function loadingUser() {
-            if (token) {
-                isLoading(true);
-                const user = await getUserOnline();
-                if (user !== undefined)
-                    dispatch({ type: 'USER_ONLINE', user, token});
+    // useEffect(() => {
+    //     async function loadingUser() {
+    //         if (token) {
+    //             isLoading(true);
+    //             const user = await getUserOnline();
+    //             if (user !== undefined)
+    //                 dispatch({ type: 'USER_ONLINE', user, token});
 
-                isLoading(false);
-                return;
-            }
-            dispatch({ type: 'USER_OFFLINE' });
-        }
-        loadingUser();
-    }, [token])
+    //             isLoading(false);
+    //             return;
+    //         }
+    //         dispatch({ type: 'USER_OFFLINE' });
+    //     }
+    //     loadingUser();
+    // }, [token])
+
     if (loading) return <AppLoading />
 
     return (
@@ -38,6 +39,7 @@ export default function NodeNavigator() {
         <Screen.Navigator
             headerMode="none"
             mode="modal"
+            initialRouteName="MainRoutes"
         >
             <Screen.Screen name="MainRoutes" component={MainRoutes} />
             <Screen.Screen name="LoginRoutes" component={LoginRoutes} />

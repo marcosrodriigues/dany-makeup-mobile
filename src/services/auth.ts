@@ -68,7 +68,7 @@ export async function signInFacebook() {
             const { id } = fb_response.data;
 
             try {
-                const response = await api.post(`/auth/facebook/${id}`)//, { fb_id: id });
+                const response = await api.post(`/auth/facebook/${id}`)
                 const { user } = response.data;
                 const token_api = response.data.token;
 

@@ -1,47 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, Image, ScrollView, Alert } from 'react-native';
 
 import style from './Style';
 import HeaderStackMenu from '../../components/HeaderStackMenu/Index';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
 
 import SocialMediaButtons from '../../components/SocialMediaButtons/Index';
 
 import { signIn, signInFacebook } from '../../services/auth';
 import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import GifLoading from '../../components/GifLoading/Index';
 
-const Login = ({ navigation }) => {
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+const Login = ({ route }) => {
+    const [loading, isLoading] = useState(false)
+    const [email, setEmail] = useState<string>('marcos.rodriiigues@gmail.com');
+    const [password, setPassword] = useState<string>('123456');
 
     const dispatch = useDispatch();
+    const navigation = useNavigation()
 
     function handleClickCadastre() {
         navigation.navigate("Register");
     }
 
     async function handleLoginClick() {
+        isLoading(true);
         try {
             const { user, token } = await signIn({ email, password });
-            dispatch({ type: 'USER_ONLINE', user, token: token});
-            //navigation.navigate('Conta')
-            navigation.goBack();
+            dispatch({ type: 'USER_ONLINE', user, token });
+
+            const { onSignIn, RedirectTo } = route.params;
+             if (onSignIn) onSignIn(user);
+            RedirectTo ? navigation.navigate(RedirectTo) : navigation.goBack();
         } catch (err) {
             Alert.alert("Atenção", "Email e/ou senha inválidos. Verifique e tente novamente.")
             console.log(err);
         }
+        isLoading(false);
     }
 
     async function handleLoginFb() {
+        isLoading(true);
         try {
             const { user, token } = await signInFacebook();
-            dispatch({ type: 'USER_ONLINE', user, token: token});
-            navigation.goBack();
-            
+            dispatch({ type: 'USER_ONLINE', user, token });
+
+            const { onSignIn, RedirectTo } = route.params;
+             if (onSignIn) onSignIn(user);
+            RedirectTo ? navigation.navigate(RedirectTo) : navigation.goBack();
         } catch (error) {
             Alert.alert("Facebook Login Error", error);
         }
+        isLoading(false);
         
     }
 
@@ -53,6 +64,9 @@ const Login = ({ navigation }) => {
             <View style={style.header}>
                 <Image source={require('../../assets/images/banner/banner_1.png')} ></Image>
             </View>
+            
+            { loading ? <View style={style.all}><GifLoading /></View> : <></> }
+
             <View style={style.content}>
                 <SocialMediaButtons handleFacebookClick={() => handleLoginFb()} />
                 <Text style={style.textOu}>ou</Text>
@@ -67,13 +81,13 @@ const Login = ({ navigation }) => {
                     />
                     <TextInput style={style.field} secureTextEntry={true} value={password}   placeholderTextColor="#d2ae6c" placeholder="Senha" onChangeText={text => setPassword(text)}  /> 
 
-                    <TouchableOpacity style={[style.button]} onPress={() => handleLoginClick()}>
+                    <TouchableOpacity style={[style.button]} onPress={handleLoginClick}>
                         <Text style={style.textButton}>Entrar</Text>
                     </TouchableOpacity>
                 </View>
                 <Text style={style.textOu}>ou</Text>
                 <View style={style.fields}>
-                    <TouchableOpacity style={[style.button]} onPress={() => handleClickCadastre()}>
+                    <TouchableOpacity style={[style.button]} onPress={handleClickCadastre}>
                         <Text style={style.textButton}>Cadastre-se</Text>
                     </TouchableOpacity>
                 </View>

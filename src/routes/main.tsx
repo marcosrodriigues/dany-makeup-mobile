@@ -47,10 +47,10 @@ export default function MainRoutes() {
                 inactiveTintColor: 'gray'
             }}
         >
-            <Tab.Screen name="Home" component={RoutesHome} />
-            <Tab.Screen name="Buscar" component={RoutesBuscar} />
-            <Tab.Screen name="Conta" component={RoutesConta} />
-            <Tab.Screen name="Carrinho" component={CarrinhoRoutes} />
+            <Tab.Screen name="MainHome" component={RoutesHome} />
+            <Tab.Screen name="MainBuscar" component={RoutesBuscar} />
+            <Tab.Screen name="MainConta" component={RoutesConta} />
+            <Tab.Screen name="MainCarrinho" component={CarrinhoRoutes} />
         </Tab.Navigator>
     </>
     )

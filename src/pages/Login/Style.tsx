@@ -11,6 +11,13 @@ export default StyleSheet.create({
     header: {
         flex: 1,
     },
+    all: {
+        flex: 1,
+        zIndex: 10,
+        position: 'absolute',
+        height: '100%',
+        justifyContent: 'center'
+    },
     content: {
         width: '100%',
         justifyContent: 'center',

@@ -11,6 +11,13 @@ export default StyleSheet.create({
     header: {
         flex: 0,
     },
+    all: {
+        flex: 1,
+        zIndex: 10,
+        position: 'absolute',
+        height: '100%',
+        justifyContent: 'center'
+    },
     content: {
         backgroundColor: '#d2ae6c',
         width: '96%',
@@ -51,7 +58,6 @@ export default StyleSheet.create({
     field: {
         height: 48,
         backgroundColor: 'black',
-        borderColor: 'white',
         color: '#d2ae6c',
         borderWidth: 1,
         marginBottom: 10,

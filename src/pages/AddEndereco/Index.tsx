@@ -11,14 +11,25 @@ import { api_ibge } from '../../services/api_ibge';
 import {Picker} from 'react-native';
 import { api_cep } from '../../services/api_cep';
 import GifLoading from '../../components/GifLoading/Index';
+import { useSelector } from 'react-redux';
+import IStateRedux from '../../interface/IStateRedux';
+import api from '../../services/api';
 
 
 const AddEndereco = ({ navigation, route }) => {
     const [loading, isLoading] = useState(false);
     const [address, setAddress] = useState<IAddress>({} as IAddress);
-
+    const user = useSelector((state: IStateRedux) => state.user);
+    
     const [ufs, setUfs] = useState([]);
     const [citys, setCitys] = useState([]);
+
+    useEffect(() => {
+        if (route.params?.address) {
+            const current = route.params.address;
+            setAddress(current);
+        }
+    }, [route.params?.address])
 
     useEffect(() => {
         const params = {
@@ -39,26 +50,42 @@ const AddEndereco = ({ navigation, route }) => {
     }, [])
 
     useEffect(() => {
-        isLoading(true);
-        api_ibge.get(`estados/${address.uf}/municipios`).then(response => {
-            const { data } = response;
-
-            const all_citys = data.map((city) => city.nome);
-            setCitys(all_citys);
-            isLoading(false);
-        })
+        async function loadState() {
+            if (address.uf !== '') {
+                isLoading(true);
+                try {
+                    const { data } = await api_ibge.get(`estados/${address.uf}/municipios`);
+                    const all_citys = data.map((city) => city.nome);
+                    setCitys(all_citys);
+                } catch (error) {
+                    Alert.alert('Hey', 'Erro de conexão com IBGE')
+                    console.log('')
+                }
+                isLoading(false)
+            }
+        }
+        loadState();
     }, [address.uf])
 
-    useEffect(() => {
-        if (route.params?.address) {
-            const current = route.params.address;
-            setAddress(current);
-            console.log(current)
-        }
-    }, [route.params?.address])
+    async function handleAdd() {
 
-    function handleAdd() {
-        navigation.navigate('Enderecos', { address })
+        isLoading(true);
+
+        try {
+            isLoading(true);
+
+            if (!address.id)
+                await api.post('address/user', { address, user_id: user.id })
+            else
+                await api.put('address/user', { address })
+
+            route.params.onGoBack();
+            navigation.goBack();
+        } catch (err) {
+            Alert.alert('Hey', 'Aconteceu algum problema com o seu cadastro. Tente novamente');
+            console.log('ERR ADD ENDERECOS', err)
+        }
+        isLoading(false);
     }
 
     function handleAddress(name: string, value: string) {

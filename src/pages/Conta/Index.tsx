@@ -4,7 +4,7 @@ import { Text, View, Image, ScrollView, TouchableOpacity, AsyncStorage } from 'r
 import style from './Style'
 import { FontAwesome, MaterialIcons, Ionicons, Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Link } from '@react-navigation/native';
+import { Link, useNavigation } from '@react-navigation/native';
 
 import IUsuario from '../../interface/IUsuario';
 
@@ -12,41 +12,66 @@ import { useSelector, useDispatch } from 'react-redux';
 import IStateRedux from '../../interface/IStateRedux';
 
 import NoUserPng from '../../assets/images/no-user.png';
-import { onSignOut, isSignedIn } from '../../services/auth';
+import { onSignOut, isSignedIn, signIn, getUserOnline } from '../../services/auth';
+import GifLoading from '../../components/GifLoading/Index';
 
-const Conta = ({ navigation }) => {
+const Conta = ({ navigation, route }) => {
     const [isLogin, setIsLogin] = useState(false);
-
-    const user = useSelector((state:IStateRedux) => state.user) as IUsuario;
-    const token = useSelector((state:IStateRedux)=> state.token);
+    const [loading, isLoading] = useState(false);
+    const [user, setUser] = useState<IUsuario>({} as IUsuario)
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        async function isSign () {
-            const sign = await isSignedIn();
-            setIsLogin(sign);
-            console.log(sign, user)
-        }
-        isSign();
-    }, [user])
+        isSign()
+    }, []);
 
-    function handleLogoutClick() {
-        onSignOut();
+    async function isSign () {
+        isLoading(true);
+        const sign = await isSignedIn();
+        setIsLogin(sign);
+
+        if(sign) {
+            const me = await getUserOnline();
+            setUser(me);
+        }
+        isLoading(false);
+    }
+
+    async function handleLogoutClick() {
+        isLoading(true);
+        await onSignOut();
         dispatch({ type: 'USER_OFFLINE' });
         setIsLogin(false);
+        isLoading(false);
     }
 
     function navigate(route: string, screen = '') {
         if (screen === '') navigation.navigate(route);
-        navigation.navigate(route, {
-            screen: {
-                name: screen
-            }
-        })
+        
+        const params = {
+            screen
+        }
+        navigation.navigate(route, params);
+    }
+
+    async function onSignIn(user: IUsuario) {
+        isLoading(true);
+        if (user !== undefined) {
+            setUser(user);
+            setIsLogin(true);
+        }
+        isLoading(false);
     }
 
     return (
+        loading ? 
+        <ScrollView contentContainerStyle={[style.container, { flex: 1, justifyContent: 'center' }]}>
+            <View style={[style.info, { borderBottomWidth: 0 }]}>
+                <GifLoading />
+            </View>    
+        </ScrollView>
+        :
         <ScrollView contentContainerStyle={style.container}>
             <View style={style.info}>
                 {isLogin ? (
@@ -72,7 +97,15 @@ const Conta = ({ navigation }) => {
                     <View style={style.infoText}>
                         <Text style={style.text}>convidado</Text>
                         <TouchableOpacity
-                            onPress={() => navigate('LoginRoutes', 'Login')}>
+                            onPress={() => {
+                                navigation.navigate('LoginRoutes', {
+                                    screen: 'Login',
+                                    params: {
+                                        onSignIn,
+                                        RedirectTo: 'MainRoutes'
+                                    }
+                                })
+                            }}>
                         <Text style={style.text}><FontAwesome name="user" size={20} /> Fazer login</Text>
                         </TouchableOpacity>
                     </View>

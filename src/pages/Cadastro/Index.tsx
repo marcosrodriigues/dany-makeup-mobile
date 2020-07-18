@@ -11,28 +11,32 @@ import SocialMediaButtons from '../../components/SocialMediaButtons/Index';
 
 import * as Facebook from 'expo-facebook';
 import api_fb from '../../services/api_fb';
+import GifLoading from '../../components/GifLoading/Index';
 
 
 const Cadastro = () => {
+    const [loading, isLoading] = useState(false)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
 
     const navigation = useNavigation();
 
-    function handleCadastrarButton() {
-        api.post('users', { name, email, password }).then(response => {
-            if (response.status === 200) {
-                console.log(response.data);
-                alert('Usuário criado!');
-                navigation.goBack();
-            }
-        }, err =>{
-            alert('Ocorreu um erro ao cadastrar!\n' + err);
-        })
+    async function handleCadastrarButton() {
+        isLoading(true)
+        try {
+            const response = await api.post('users', { name, email, password });
+            Alert.alert("Sucesso", "Agora é só fazer login!")
+            navigation.navigate('Login');
+        } catch (error) {
+            Alert.alert('Hey', 'Ocorreu um erro ao cadastrar\n' + error);
+            console.log('ERROR SAVE USER', error)
+        }
+        isLoading(false)
     }
 
     async function handleCadastrarFB() {
+        isLoading(true)
         try {
             await Facebook.initializeAsync();
 
@@ -75,6 +79,7 @@ const Cadastro = () => {
             console.log(err);
             Alert.alert("Facebook Login Error", err.message);
         }
+        isLoading(false)
     }
 
     return (
@@ -86,6 +91,8 @@ const Cadastro = () => {
                 <Image source={require('../../assets/images/banner/banner_1.png')} ></Image>
             </View>
             
+            { loading ? <View style={style.all}><GifLoading /></View> : <></> }
+
             <View style={[style.content]}>
                 <SocialMediaButtons 
                     handleFacebookClick={() => handleCadastrarFB()} 

@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import Constants from 'expo-constants'
+
+const width = Dimensions.get('window').width;
 
 export default StyleSheet.create({
     container: {
@@ -7,7 +9,9 @@ export default StyleSheet.create({
         backgroundColor: '#000',
         alignItems: 'center',
         flex: 1,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        width
+        
     },
     scrollView: {
         width: '98%',
@@ -17,7 +21,8 @@ export default StyleSheet.create({
         backgroundColor: '#d2ae6c',
         borderRadius: 10,
         margin: 16,
-        justifyContent: 'center'
+        width: '100%',
+        justifyContent: 'center',
     },
     noAddressText: {
         fontSize: 18,

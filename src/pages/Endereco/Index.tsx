@@ -35,39 +35,16 @@ const Enderecos = ({ navigation, route }) => {
     }
 
     function handleAddAddress() {
-        navigation.navigate('AddEndereco')
+        navigation.navigate('AddEndereco', {
+            onGoBack: loadAddress
+        })
     }
 
-    useEffect(() => {
-        async function handleParamAddress() {
-            if (route.params?.address) {
-                const add = route.params.address;
-
-                try {
-                    isLoading(true);
-
-                    if (add.id === undefined)
-                        await api.post('address/user', { address: add, user_id: user.id })
-                    else
-                        await api.put('address/user', { address: add })
-
-                    const response = await api.get(`address/user/${user.id}`);
-                    const updated_address = response.data;
-                    setAddress(updated_address);
-                    isLoading(false);
-                } catch (err) {
-                    Alert.alert('Hey', 'Aconteceu algum problema com o seu cadastro. Tente novamente');
-                    console.log('ERR ADD ENDERECOS', err)
-                }
-                
-            }
-        }
-
-        handleParamAddress();
-    }, [route.params?.address])
-
     function handleClickAddress(address: IAddress) {
-        navigation.navigate('AddEndereco', { address })
+        navigation.navigate('AddEndereco', { 
+            address, 
+            onGoBack: loadAddress
+        })
     }
 
     async function handleRemoveAddress(address: IAddress) {
