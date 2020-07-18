@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import { View, Alert,} from 'react-native';
 
 import style from './Style';
@@ -9,10 +9,15 @@ import AccordionItems from '../../components/AccordionItems/Index';
 import AccordionDelivery from '../../components/AccordionDelivery/Index';
 import AccordionResume from '../../components/AccordionResume/Index';
 import CheckUserOnline from '../../util/checkUser';
+import { useSelector } from 'react-redux';
+import IStateRedux from '../../interface/IStateRedux';
+import { isSignedIn } from '../../services/auth';
 
 const Compra = () => {
     const route = useRoute();
     const params = (route.params as any).purchase;
+    const user = useSelector((state: IStateRedux) => state.user);
+    const navigation = useNavigation();
     
     const [purchase, setPurchase] = useState({
         delivery: { },
@@ -20,7 +25,16 @@ const Compra = () => {
         resume: { subtotal: 0, frete: 0, total: 0 },
     });
     
-    CheckUserOnline();
+    useEffect(() => {
+        async function checkUser() {
+            if (!(await isSignedIn())) {
+                Alert.alert('Atenção', 'Você precisa se autenticar para acessar essa seção');
+                navigation.navigate('Carrinho');
+                return;
+            }
+        }
+        checkUser();   
+    }, [user])
 
     useEffect(() => {
         setPurchase({

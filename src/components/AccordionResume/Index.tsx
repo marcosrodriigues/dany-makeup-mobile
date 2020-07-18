@@ -19,6 +19,7 @@ const AccordionResume:React.FC<Props> = ({
     const [fa, setFA] = useState('arrow-down')
 
     useEffect(() => {
+        console.log(resume)
         setFA(isCollapsed ? "arrow-up" : "arrow-down" )
     }, [isCollapsed])
 
@@ -36,7 +37,7 @@ const AccordionResume:React.FC<Props> = ({
             <CollapseBody>
                 <BoxResume 
                     subtotal={resume.subtotal}
-                    frete={resume.delivery}
+                    frete={resume.frete}
                     total={resume.total}
                 />
             </CollapseBody>

@@ -19,12 +19,17 @@ const Conta = ({ navigation, route }) => {
     const [isLogin, setIsLogin] = useState(false);
     const [loading, isLoading] = useState(false);
     const [user, setUser] = useState<IUsuario>({} as IUsuario)
+    const stateUser = useSelector((state: IStateRedux) => state.user) as IUsuario
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         isSign()
     }, []);
+
+    useEffect(() => {
+        isSign()
+    }, [stateUser])
 
     async function isSign () {
         isLoading(true);

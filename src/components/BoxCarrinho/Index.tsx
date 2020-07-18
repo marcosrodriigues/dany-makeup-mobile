@@ -8,6 +8,7 @@ import BoxResume from '../BoxResume/Index';
 import ItemCart from '../ItemCart/Index';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
+import { isSignedIn } from '../../services/auth';
 
 const BoxCarrinho = () => {
     const [carrinho, setCarrinho] = useState([] as any);
@@ -70,14 +71,27 @@ const BoxCarrinho = () => {
         setFrete(option);
     }
 
-    function handleContinueToBuy(event: any) {
+    async function handleContinueToBuy(event: any) {
         const purchase = {
             items: carrinho,
             entrega: frete,
             resumo: resume
         };
 
-        navigation.navigate('Compra', { purchase })
+        const isSignIn = await isSignedIn();
+        if (isSignIn) {
+            navigation.navigate('Compra', { purchase })
+        } else {
+            navigation.navigate('LoginRoutes', { 
+                screen: 'Login',
+                params: {
+                    RedirectTo: 'Compra',
+                    params: {
+                        purchase 
+                    }
+                }
+            })
+        }
     }
 
     function handleChangeAmount(cart: any, value: number) {

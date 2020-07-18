@@ -28,9 +28,10 @@ const Login = ({ navigation, route }) => {
             const { user, token } = await signIn({ email, password });
             dispatch({ type: 'USER_ONLINE', user, token });
 
-            const { onSignIn, RedirectTo } = route.params;
+            const { onSignIn, RedirectTo, params } = route.params;
+
             onSignIn && onSignIn(user);
-            RedirectTo ? navigation.navigate(RedirectTo) : navigation.goBack();
+            RedirectTo ? navigation.navigate(RedirectTo, params) : navigation.goBack();
         } catch (err) {
             Alert.alert("Atenção", "Email e/ou senha inválidos. Verifique e tente novamente.")
             console.log(err);
@@ -43,9 +44,11 @@ const Login = ({ navigation, route }) => {
         try {
             const { user, token } = await signInFacebook();
             dispatch({ type: 'USER_ONLINE', user, token });
-            const { onSignIn, RedirectTo } = route.params;
+            const { onSignIn, RedirectTo, params } = route.params;
+
+            console.log('params', route.params)
             onSignIn && onSignIn(user);
-            RedirectTo ? navigation.navigate(RedirectTo) : navigation.goBack();
+            RedirectTo ? navigation.navigate(RedirectTo, params) : navigation.goBack();
         } catch (error) {
             Alert.alert("Facebook Login Error", error);
         }
