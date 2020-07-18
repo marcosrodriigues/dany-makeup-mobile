@@ -9,16 +9,14 @@ import SocialMediaButtons from '../../components/SocialMediaButtons/Index';
 
 import { signIn, signInFacebook } from '../../services/auth';
 import { useDispatch } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
 import GifLoading from '../../components/GifLoading/Index';
 
-const Login = ({ route }) => {
+const Login = ({ navigation, route }) => {
     const [loading, isLoading] = useState(false)
     const [email, setEmail] = useState<string>('marcos.rodriiigues@gmail.com');
     const [password, setPassword] = useState<string>('123456');
-
+    
     const dispatch = useDispatch();
-    const navigation = useNavigation()
 
     function handleClickCadastre() {
         navigation.navigate("Register");
@@ -31,7 +29,7 @@ const Login = ({ route }) => {
             dispatch({ type: 'USER_ONLINE', user, token });
 
             const { onSignIn, RedirectTo } = route.params;
-             if (onSignIn) onSignIn(user);
+            onSignIn && onSignIn(user);
             RedirectTo ? navigation.navigate(RedirectTo) : navigation.goBack();
         } catch (err) {
             Alert.alert("Atenção", "Email e/ou senha inválidos. Verifique e tente novamente.")
@@ -45,9 +43,8 @@ const Login = ({ route }) => {
         try {
             const { user, token } = await signInFacebook();
             dispatch({ type: 'USER_ONLINE', user, token });
-
             const { onSignIn, RedirectTo } = route.params;
-             if (onSignIn) onSignIn(user);
+            onSignIn && onSignIn(user);
             RedirectTo ? navigation.navigate(RedirectTo) : navigation.goBack();
         } catch (error) {
             Alert.alert("Facebook Login Error", error);

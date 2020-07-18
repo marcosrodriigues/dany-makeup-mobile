@@ -21,13 +21,14 @@ export default function MainRoutes() {
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
                     let badgeCount = 0;
-                    if (route.name === 'Home') {
+                    const name = route.name.replace('Main', '');
+                    if (name === 'Home') {
                         iconName = 'ios-home';
-                    } else if (route.name === 'Buscar') {
+                    } else if (name === 'Buscar') {
                         iconName = "ios-search"
-                    } else if (route.name === 'Conta') {
+                    } else if (name === 'Conta') {
                         iconName = 'ios-person';
-                    } else if (route.name === 'Carrinho') {
+                    } else if (name === 'Carrinho') {
                         iconName = 'ios-cart';
                         badgeCount = cartList.length;
                     }
@@ -47,10 +48,10 @@ export default function MainRoutes() {
                 inactiveTintColor: 'gray'
             }}
         >
-            <Tab.Screen name="MainHome" component={RoutesHome} />
-            <Tab.Screen name="MainBuscar" component={RoutesBuscar} />
-            <Tab.Screen name="MainConta" component={RoutesConta} />
-            <Tab.Screen name="MainCarrinho" component={CarrinhoRoutes} />
+            <Tab.Screen name="MainHome" options={{title: 'Home' }} component={RoutesHome} />
+            <Tab.Screen name="MainBuscar" options={{title: 'Buscar'}} component={RoutesBuscar} />
+            <Tab.Screen name="MainConta" options={{title: 'Conta'}} component={RoutesConta} />
+            <Tab.Screen name="MainCarrinho" options={{title: 'Carrinho'}} component={CarrinhoRoutes} />
         </Tab.Navigator>
     </>
     )

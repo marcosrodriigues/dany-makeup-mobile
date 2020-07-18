@@ -101,8 +101,7 @@ const Conta = ({ navigation, route }) => {
                                 navigation.navigate('LoginRoutes', {
                                     screen: 'Login',
                                     params: {
-                                        onSignIn,
-                                        RedirectTo: 'MainRoutes'
+                                        onSignIn
                                     }
                                 })
                             }}>
