@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import { View, Alert,} from 'react-native';
+import { View, Alert, Text,} from 'react-native';
 
 import style from './Style';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -12,12 +12,11 @@ import CheckUserOnline from '../../util/checkUser';
 import { useSelector } from 'react-redux';
 import IStateRedux from '../../interface/IStateRedux';
 import { isSignedIn } from '../../services/auth';
+import BoxPayment from '../../components/BoxPayment/Index';
 
-const Compra = () => {
-    const route = useRoute();
+const Compra = ({ navigation, route }) => {
     const params = (route.params as any).purchase;
     const user = useSelector((state: IStateRedux) => state.user);
-    const navigation = useNavigation();
     
     const [purchase, setPurchase] = useState({
         delivery: { },
@@ -29,7 +28,7 @@ const Compra = () => {
         async function checkUser() {
             if (!(await isSignedIn())) {
                 Alert.alert('Atenção', 'Você precisa se autenticar para acessar essa seção');
-                navigation.navigate('Carrinho');
+                navigation.goBack();
                 return;
             }
         }
@@ -67,7 +66,7 @@ const Compra = () => {
                 </View>
 
                 <View style={style.section}>
-                    
+                    <BoxPayment purchase={purchase} />
                 </View>
             </View>
         </ScrollView>

@@ -25,7 +25,7 @@ const AddCarrinho:React.FC<IAddCarrinhoButton> = ({
             id: item.id,
             type: type,
             name: item.name,
-            image: item.mainImage,
+            image: item.image_url,
             value: type === "PRODUCT" ? item.value : item.promotionValue,
             quantity: 1,
             amount: item.amount

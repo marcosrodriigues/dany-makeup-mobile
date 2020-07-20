@@ -7,6 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import api from '../../services/api';
 import ButtonFrete from './Button';
+import GifLoading from '../GifLoading/Index';
 
 
 const BoxFrete = ({ 
@@ -14,6 +15,7 @@ const BoxFrete = ({
         onClickCalculateButton = (cep: string) => {},
         onSelected = (selected: any) => {}
     }) => {
+    const [loading, isLoading] = useState(false);
     const [cep, setCep] = useState("");
     const [optionSelected, setOptionSelected] = useState(0);
     const [options, setOptions] = useState<any[]>([{
@@ -39,6 +41,7 @@ const BoxFrete = ({
         const params = { cep };
         const opt = [options[0]];
 
+        isLoading(true);
         try {
             onClickCalculateButton(cep);
             const response = await api.get('correios/frete', { params });
@@ -51,8 +54,8 @@ const BoxFrete = ({
             Alert.alert('Falha ao carregar frete', err);
             return;
         }
-        console.log(opt);
         setOptions(opt)
+        isLoading(false);
     }
 
     function handleFreteSelected(option: any) {
@@ -91,7 +94,9 @@ const BoxFrete = ({
                 </View>
             </View>
 
-            { options.length > 0 &&
+            { 
+            loading ? <GifLoading /> :
+            options.length > 0 &&
                 <View style={[style.options, style.center]}>
                     <Text style={style.title}>Escolha a melhor opção</Text>
                 { options.map(opt => (

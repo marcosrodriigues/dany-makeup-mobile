@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     card: {
         backgroundColor: '#d2ae6c',
-        height: 150
+        height: 150,
     },
     product: {
         flexDirection: 'row',
