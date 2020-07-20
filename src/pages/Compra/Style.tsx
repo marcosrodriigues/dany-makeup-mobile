@@ -19,4 +19,20 @@ export default StyleSheet.create({
     section: {
         padding: 8
     },
+    button: {
+        flexDirection: 'row',
+        borderRadius: 10,
+        backgroundColor: 'black',
+        height: 60,
+        padding: 8,
+        margin: 8,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    btnText: {
+        fontSize: 24,
+        color: '#d2ae6c',
+        fontWeight: 'bold',
+
+    }
 })

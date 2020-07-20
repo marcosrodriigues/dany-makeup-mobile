@@ -28,7 +28,7 @@ const AddCarrinho:React.FC<IAddCarrinhoButton> = ({
             image: item.image_url,
             value: type === "PRODUCT" ? item.value : item.promotionValue,
             quantity: 1,
-            amount: item.amount
+            amount: item.amount || 1
         }
 
         let itemExistInItems = false;

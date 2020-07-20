@@ -18,7 +18,7 @@ const CardItem:React.FC<Props> = ({
                 <View style={style.info}>
                     <View>
                         <Text style={style.title}>{item.quantity}x {item.name}</Text>
-                        <Text style={style.subtitle}>{item.description || "ehuehe"}</Text>
+                        <Text style={style.subtitle}>{item.description}</Text>
                     </View>
                     <NumberFormat value={item.value} style={style.value} />  
                 </View>

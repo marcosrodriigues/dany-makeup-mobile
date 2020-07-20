@@ -75,7 +75,8 @@ const BoxCarrinho = () => {
         const purchase = {
             items: carrinho,
             entrega: frete,
-            resumo: resume
+            resumo: resume,
+            cep
         };
 
         const isSignIn = await isSignedIn();

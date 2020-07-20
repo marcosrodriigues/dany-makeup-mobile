@@ -22,7 +22,8 @@ const BoxFrete = ({
         code: 1,
         name: 'RETIRAR EM MÃOS',
         value: 0,
-        deadline: 0
+        deadline: 0,
+        cep: ''
     }])
 
     useEffect(() => {
@@ -40,13 +41,13 @@ const BoxFrete = ({
 
         const params = { cep };
         const opt = [options[0]];
-
         isLoading(true);
         try {
             onClickCalculateButton(cep);
             const response = await api.get('correios/frete', { params });
             const correios_services = response.data;
             correios_services.map((serv: any) => {
+                serv.cep = cep;
                 opt.push(serv);
             });
         } catch (err) {

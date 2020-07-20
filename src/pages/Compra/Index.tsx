@@ -3,21 +3,32 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { View, Alert, Text,} from 'react-native';
 
 import style from './Style';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import HeaderStackMenu from '../../components/HeaderStackMenu/Index';
 import AccordionItems from '../../components/AccordionItems/Index';
 import AccordionDelivery from '../../components/AccordionDelivery/Index';
 import AccordionResume from '../../components/AccordionResume/Index';
-import CheckUserOnline from '../../util/checkUser';
 import { useSelector } from 'react-redux';
 import IStateRedux from '../../interface/IStateRedux';
-import { isSignedIn } from '../../services/auth';
+import { isSignedIn, getUserOnline } from '../../services/auth';
 import BoxPayment from '../../components/BoxPayment/Index';
+import ListAddress from '../../components/ListAddress/Index';
+import IAddress from '../../interface/IAddress';
+import IUsuario from '../../interface/IUsuario';
+import api from '../../services/api';
+import GifLoading from '../../components/GifLoading/Index';
 
 const Compra = ({ navigation, route }) => {
     const params = (route.params as any).purchase;
-    const user = useSelector((state: IStateRedux) => state.user);
-    
+    const userState = useSelector((state: IStateRedux) => state.user);
+    const [user, setUser] = useState({} as IUsuario);
+    const [address, setAddress] = useState<IAddress>({} as IAddress);
+    const [payment, setPayment] = useState({
+
+    })
+
+    const [loadingInfo, isLoadingInfo] = useState(false);
+
     const [purchase, setPurchase] = useState({
         delivery: { },
         items: [ ],
@@ -31,9 +42,11 @@ const Compra = ({ navigation, route }) => {
                 navigation.goBack();
                 return;
             }
+            const me = await getUserOnline();
+            setUser(me);
         }
         checkUser();   
-    }, [user])
+    }, [userState])
 
     useEffect(() => {
         setPurchase({
@@ -42,6 +55,62 @@ const Compra = ({ navigation, route }) => {
             resume: params.resumo,
         })
     }, [params]);
+
+    async function handleConfirmClick() {
+        if (!user.id ||
+            !address.id ||
+            params.items.length <= 0 || 
+            (payment.payment_method !== 'credit_card' && payment.payment_method !== 'boleto') ||
+            (payment.credit_card.id === undefined && payment.boleto.name === '')
+        ) {
+            Alert.alert("Hey", 'Seus dados estão inválidos!')
+            return;
+        }
+
+        const order = {
+            address,
+            payment,
+            user,
+            items: params.items,
+            frete: params.entrega
+        }
+
+        if (params.entrega.cep !== address.cep) {
+        }
+        //console.log(order);
+    }
+
+    useEffect(() => {
+        async function loadFrete() {
+            isLoadingInfo(true)
+            try {
+                const params = {
+                    cep: address.cep
+                }
+                const response = await api.get('correios/frete', { params });
+                const correios_services = response.data[0];
+                correios_services.cep=address.cep;
+                const nPurch = {
+                    ...purchase,
+                    delivery: correios_services,
+                    resume: {
+                        ...purchase.resume,
+                        frete: correios_services.value,
+                        total: purchase.resume.subtotal + correios_services.value
+                    }
+                }
+                setPurchase(nPurch)
+            } catch (err) {
+                console.log('ERRO CALCULAR FRETE', err);
+                Alert.alert('Falha ao carregar frete', err);
+                return;
+            }
+            isLoadingInfo(false);
+        };
+        if (address.cep !== undefined && address.cep !== '' && purchase.delivery.code !== 1) {
+            loadFrete();
+        }
+    }, [address])
 
     return (
         <ScrollView contentContainerStyle={style.container}>
@@ -54,6 +123,19 @@ const Compra = ({ navigation, route }) => {
 
             <View style={style.main}>
                 <View style={style.section}>
+                    <BoxPayment onChangePayment={setPayment} user={user} />
+                </View>
+
+                <View style={style.section}>
+                    <ListAddress 
+                        selectedCep={purchase.delivery.cep}
+                        onChangeAddress={setAddress} user={user} 
+                    />
+                </View>
+
+            {loadingInfo ? <GifLoading /> : 
+                <>
+                <View style={style.section}>
                     <AccordionItems value={purchase.resume.subtotal} items={purchase.items} />
                 </View>
 
@@ -65,9 +147,17 @@ const Compra = ({ navigation, route }) => {
                     <AccordionResume value={purchase.resume.total} resume={purchase.resume} />
                 </View>
 
+                </>
+            }
+
                 <View style={style.section}>
-                    <BoxPayment purchase={purchase} />
-                </View>
+                    <TouchableOpacity 
+                        style={style.button}
+                        onPress={() => handleConfirmClick()}
+                    >
+                        <Text style={style.btnText}>Revisão do pedido</Text>
+                    </TouchableOpacity>
+                </View>                
             </View>
         </ScrollView>
     )

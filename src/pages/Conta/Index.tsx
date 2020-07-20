@@ -33,12 +33,17 @@ const Conta = ({ navigation, route }) => {
 
     async function isSign () {
         isLoading(true);
-        const sign = await isSignedIn();
-        setIsLogin(sign);
-
-        if(sign) {
-            const me = await getUserOnline();
-            setUser(me);
+        try {
+            const sign = await isSignedIn();
+            setIsLogin(sign);
+    
+            if(sign) {
+                const me = await getUserOnline();
+                setUser(me);
+            }
+        } catch (err) {
+            setIsLogin(false);
+            setUser({});
         }
         isLoading(false);
     }

@@ -26,12 +26,12 @@ const Enderecos = ({ navigation, route }) => {
         try {
             const { data } = await api.get(`address/user/${user.id}`);
             setAddress(data);
-            isLoading(false);
         } catch (err) {
             Alert.alert("Atenção!", 'Problema de conexão com o servidor');
             console.log('ERROR ADDRESS USER', err);
             navigation.goBack();
         }
+        isLoading(false);
     }
 
     function handleAddAddress() {
