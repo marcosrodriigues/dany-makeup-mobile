@@ -7,14 +7,21 @@ export default StyleSheet.create({
         backgroundColor: '#000',
         alignItems: 'center',
         justifyContent: 'space-between',
+        flexDirection: 'column',
+        height: '100%'
+    },
+    top: {
+        width: '100%',
     },
     header: {
-        paddingBottom: 16
+        paddingBottom: 16,
     },
     main: {
         width: '100%',
-        flexDirection: 'column',
-        backgroundColor: '#d2ae6c'
+        backgroundColor: '#d2ae6c',
+    },
+    footer: {
+        alignContent: 'flex-end',
     },
     section: {
         padding: 8
@@ -37,10 +44,4 @@ export default StyleSheet.create({
         fontWeight: 'bold',
 
     },
-    top: {
-        width: '100%'
-    },
-    bottom: {
-        width: '100%'
-    }
 })
