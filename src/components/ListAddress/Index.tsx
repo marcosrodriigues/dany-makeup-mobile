@@ -37,8 +37,11 @@ const ListAddress = ({
 
     function onClickAddress(address: any) {
         setSelected(address);
-        onChangeAddress(address)
     }
+    
+    useEffect(() => {
+        onChangeAddress(selected)
+    }, [selected])
 
     useEffect(() => {
         address.map(add => {
@@ -51,6 +54,7 @@ const ListAddress = ({
         loading ? <GifLoading /> :
         <View style={style.addressList}>
             <Text style={style.header}>Endereço de cobrança</Text>
+            <Text style={style.subtitle}>Escolha o endereço da cobrança</Text>
             {address.map(add => {
                 return (
                     <View style={

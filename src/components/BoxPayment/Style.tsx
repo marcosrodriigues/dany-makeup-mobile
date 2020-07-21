@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
     box: {
         borderColor: 'black',
-        borderBottomWidth: 1
+        borderWidth: 1
     },
     header: {
         flexDirection: 'row',
@@ -47,8 +47,8 @@ export default StyleSheet.create({
         textAlign: 'center'
     },
     selectedCard: {
-        borderColor: 'black',
-        borderWidth: 1
+        borderColor: 'green',
+        borderWidth: 2
     },
     button: {
         flexDirection: 'row',

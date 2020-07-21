@@ -21,6 +21,8 @@ const AccordionDelivery:React.FC<Props> = ({
         setFA(isCollapsed ? "arrow-up" : "arrow-down" )
     }, [isCollapsed])
 
+    console.log(delivery)
+
     return (
         <Collapse style={style.collapse} onToggle={() => setCollapded(!isCollapsed)} >
             <CollapseHeader style={style.header}>

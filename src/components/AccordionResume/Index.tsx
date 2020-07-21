@@ -19,7 +19,6 @@ const AccordionResume:React.FC<Props> = ({
     const [fa, setFA] = useState('arrow-down')
 
     useEffect(() => {
-        console.log(resume)
         setFA(isCollapsed ? "arrow-up" : "arrow-down" )
     }, [isCollapsed])
 

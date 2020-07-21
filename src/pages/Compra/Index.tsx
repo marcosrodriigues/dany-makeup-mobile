@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useRoute, useNavigation } from '@react-navigation/native';
 import { View, Alert, Text,} from 'react-native';
 
 import style from './Style';
@@ -17,12 +16,16 @@ import IAddress from '../../interface/IAddress';
 import IUsuario from '../../interface/IUsuario';
 import api from '../../services/api';
 import GifLoading from '../../components/GifLoading/Index';
+import isOrderValid from '../../util/Order';
+import ListStore from '../../components/ListStore/Index';
 
 const Compra = ({ navigation, route }) => {
     const params = (route.params as any).purchase;
     const userState = useSelector((state: IStateRedux) => state.user);
     const [user, setUser] = useState({} as IUsuario);
     const [address, setAddress] = useState<IAddress>({} as IAddress);
+    const [store, setStore] = useState<any>();
+
     const [payment, setPayment] = useState({
 
     })
@@ -57,27 +60,29 @@ const Compra = ({ navigation, route }) => {
     }, [params]);
 
     async function handleConfirmClick() {
-        if (!user.id ||
-            !address.id ||
-            params.items.length <= 0 || 
-            (payment.payment_method !== 'credit_card' && payment.payment_method !== 'boleto') ||
-            (payment.credit_card.id === undefined && payment.boleto.name === '')
-        ) {
-            Alert.alert("Hey", 'Seus dados estão inválidos!')
-            return;
-        }
+        const n_purchase = 
+            purchase.delivery.code === 1 ?
+            { ...purchase, delivery: { ...purchase.delivery, store } } 
+            :
+            { ...purchase };
 
         const order = {
-            address,
-            payment,
             user,
-            items: params.items,
-            frete: params.entrega
-        }
+            payment: {
+                payment,
+                address
+            },
+            purchase: n_purchase,
+        };
 
-        if (params.entrega.cep !== address.cep) {
+        if (!isOrderValid(order)) {
+            Alert.alert("Hey", 'Verifique se você preencheu a forma de pagamento e o endereço de entrega!')
+            return;
         }
-        //console.log(order);
+        
+        navigation.navigate('ConfirmPurchase', {
+            order
+        })
     }
 
     useEffect(() => {
@@ -107,17 +112,20 @@ const Compra = ({ navigation, route }) => {
             }
             isLoadingInfo(false);
         };
-        if (address.cep !== undefined && address.cep !== '' && purchase.delivery.code !== 1) {
+        if (address.cep !== undefined && address.cep !== '' && purchase.delivery.code !== 1 && purchase.delivery.cep !== address.cep) {
             loadFrete();
         }
     }, [address])
+
+    useEffect(() => {
+        console.log('new store', store)
+    }, [store])
 
     return (
         <ScrollView contentContainerStyle={style.container}>
             <View style={style.header}>
                 <HeaderStackMenu 
                     title="Sua compra" 
-                    button={false}
                 />
             </View>
 
@@ -132,6 +140,14 @@ const Compra = ({ navigation, route }) => {
                         onChangeAddress={setAddress} user={user} 
                     />
                 </View>
+
+                {
+                purchase.delivery.code === 1 && 
+                <View style={style.section}>
+                    <ListStore onSelected={setStore} />
+                </View>
+                }
+
 
             {loadingInfo ? <GifLoading /> : 
                 <>

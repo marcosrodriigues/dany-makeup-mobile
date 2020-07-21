@@ -1,17 +1,17 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-    addressList: {
+    stores: {
         borderColor: 'black',
         borderWidth: 1
-    },
-    selected: {
-        borderWidth: 2,
-        borderColor: 'green'
     },
     header: {
         fontSize: 24,
         fontWeight: 'bold'
+    },
+    selected: {
+        borderWidth: 2,
+        borderColor: 'green'
     },
     subtitle: {
         fontSize: 16,
