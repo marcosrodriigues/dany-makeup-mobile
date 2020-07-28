@@ -21,8 +21,6 @@ const ConfirmPurchase = ({
     async function handleConfirm() {
         try {
             await api.post('orders', { order });
-
-            console.log('order', order);
         } catch (err) {
             console.log(err);
             Alert.alert('Hey', 'Não foi possível criar o pedido. Verifique seus dados e tente novamente.\n' + err);
