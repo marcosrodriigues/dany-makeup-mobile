@@ -51,8 +51,6 @@ const Perfil = () => {
     async function handleSaveClick() {
         const formData = new FormData();
         formData.append('data_user', JSON.stringify(user));
-        console.log('data_user', user);
-        //return;
 
         if (user.avatar?.startsWith('file://')) {
             const filename = user.avatar?.substring(user.avatar?.lastIndexOf('/'), user.avatar.length);
@@ -65,8 +63,7 @@ const Perfil = () => {
 
         try {
             const { data } = await api.put('users', formData);
-            console.log('data', data)
-            dispatch({ type: 'USER_UPDATE', user: data });
+            dispatch({ type: 'USER_UPDATE', user });
             Alert.alert("Sucesso", "`Suas informações foram atualizadas");    
         } catch (err) {
             Alert.alert("Atenção", "Houve um problema ao validar seus dados. Tente novamente.");
@@ -132,13 +129,21 @@ const Perfil = () => {
                         options={{
                             maskType: 'BRL',
                             withDDD: true,
-                            dddMask: '(99) '
+                            dddMask: '+55 (99) '
                         }}
                         style={style.field} 
                         value={user.whatsapp} 
                         onChangeText={(whatsapp) => setUser({...user, whatsapp })} 
                         placeholderTextColor="#d2ae6c" 
                         placeholder="Whatsapp"
+                    />
+                    <TextInputMask
+                        type="cpf"
+                        style={style.field} 
+                        value={user.cpf} 
+                        onChangeText={(cpf) => setUser({...user, cpf })} 
+                        placeholderTextColor="#d2ae6c" 
+                        placeholder="CPF"
                     />
                     
                     <TextInput

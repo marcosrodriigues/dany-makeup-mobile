@@ -30,6 +30,7 @@ const BoxCarrinho = () => {
     const navigator = useNavigation();
     
     useEffect(() => {
+        console.log("novo redux", redux_items)
         setCarrinho(redux_items);
     }, [redux_items])
 

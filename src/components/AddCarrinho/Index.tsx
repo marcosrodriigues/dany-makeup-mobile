@@ -36,10 +36,14 @@ const AddCarrinho:React.FC<IAddCarrinhoButton> = ({
         const nItems = items.map((i: any) => {
             if (i.type === cartItem.type && i.id === cartItem.id) {
                 itemExistInItems = true;
-                return {
-                    ...i,
-                    quantity : (i.quantity + 1)
+
+                if(i.quantity + 1 <= i.amount) {
+                    return {
+                        ...i,
+                        quantity : (i.quantity + 1)
+                    }
                 }
+                return i;
             } 
             return i;
         })
@@ -48,8 +52,7 @@ const AddCarrinho:React.FC<IAddCarrinhoButton> = ({
             dispatch({ type: 'ADD_ITEMS', items: cartItem});
             return;
         }
-
-        dispatch({ type: 'ALTER_ITEMS ', items: nItems});
+        dispatch({ type: 'ALTER_ITEMS', items: nItems});
     }
 
     return (
