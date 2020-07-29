@@ -13,6 +13,7 @@ import AccordionAddress from '../../components/AccordionAddress/Index';
 import AccordionStore from '../../components/AccordionStore/Index';
 import GifLoading from '../../components/GifLoading/Index';
 import { useDispatch } from 'react-redux';
+import isOrderValid from '../../util/Order';
 
 const ConfirmPurchase = ({
     navigation,
@@ -24,13 +25,18 @@ const ConfirmPurchase = ({
     const dispatch = useDispatch();
 
     async function handleConfirm() {
+        if (!isOrderValid(order)) {
+            console.log('orderNotValid')
+            Alert.alert("Hey", 'Verifique os dados do seu pedido (items, entrega e pagamento) antes de continuar.')
+        }
+        
         isLoading(true);
         try {
             await api.post('orders', { order });
             dispatch({ type: 'CLEAR_ITEMS' })
             navigation.navigate('PurchaseDone', { order });
         } catch (err) {
-            console.log(err);
+            console.log('ERROR CONFIRM ORDER', err);
             Alert.alert('Hey', 'Não foi possível criar o pedido. Verifique seus dados e tente novamente.\n' + err);
         }
         isLoading(false);

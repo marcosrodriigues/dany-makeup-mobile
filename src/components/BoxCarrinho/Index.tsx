@@ -78,6 +78,12 @@ const BoxCarrinho = () => {
             resumo: resume,
             cep
         };
+        
+        if (purchase.items.length === 0 || resume.total === 0) {
+            console.log('NO ITEMS OR RESUME EMPTY');
+            Alert.alert("Hey", "Aidicone produtos ao seu carrinho antes de continuar")
+            return;
+        }
 
         const isSignIn = await isSignedIn();
         if (isSignIn) {

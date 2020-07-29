@@ -8,7 +8,6 @@ const ItemCart = ({
     value = {},
     onChangeAmount = (value: number) => { }
 }) => {
-
     const [item, setItem] = useState<any>({});
 
     useEffect(() => {
@@ -18,7 +17,7 @@ const ItemCart = ({
     return (
         <View style={style.productBox}>
             <View style={style.boxImage}>
-                <Image source={{ uri: item.image }} style={style.image} />
+                <Image source={{ uri: item.image_url }} style={style.image} />
             </View>
             <View style={style.boxInfo}>
                 <Text style={style.infoName}>{item.name}</Text>

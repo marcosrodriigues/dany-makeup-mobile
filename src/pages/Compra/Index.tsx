@@ -60,6 +60,11 @@ const Compra = ({ navigation, route }) => {
     }, [params]);
 
     async function handleConfirmClick() {
+        if (purchase.items.length === 0) {
+            Alert.alert("Hey", "Aidicone produtos ao seu carrinho antes de continuar")
+            return;
+        }
+
         const n_purchase = 
             purchase.delivery.code === 1 ?
             { ...purchase, delivery: { ...purchase.delivery, store } } 

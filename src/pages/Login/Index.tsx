@@ -34,7 +34,7 @@ const Login = ({ navigation, route }) => {
             RedirectTo ? navigation.navigate(RedirectTo, params) : navigation.goBack();
         } catch (err) {
             Alert.alert("Atenção", "Email e/ou senha inválidos. Verifique e tente novamente.")
-            console.log(err);
+            console.log('ERROR LOGIN', err);
         }
         isLoading(false);
     }
@@ -46,11 +46,11 @@ const Login = ({ navigation, route }) => {
             dispatch({ type: 'USER_ONLINE', user, token });
             const { onSignIn, RedirectTo, params } = route.params;
 
-            console.log('params', route.params)
             onSignIn && onSignIn(user);
             RedirectTo ? navigation.navigate(RedirectTo, params) : navigation.goBack();
         } catch (error) {
             Alert.alert("Facebook Login Error", error);
+            console.log('ERROR LOGIN FACEBOOK', error)
         }
         isLoading(false);
         

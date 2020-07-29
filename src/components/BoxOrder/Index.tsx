@@ -60,8 +60,8 @@ const BoxOrder = ({
                         ]}>
                                 {
                                     order.transaction ? 
-                                        (order.transaction.status === 'paid' ? "PAGO" : "PENDENTE")
-                                    : 'EM ANÁLISE'
+                                        (order.transaction.status === 'paid' ? "PAGO" : "ANÁLISE")
+                                    : 'PENDENTE'
                                 }
                         </Text>
                     </View>

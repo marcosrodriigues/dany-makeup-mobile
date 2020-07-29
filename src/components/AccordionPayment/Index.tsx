@@ -27,7 +27,7 @@ const AccordionPayment:React.FC<Props> = ({
                     <Text style={style.title}>Pagamento</Text>
                 </View>
                 <View style={style.header}>
-                    <Text style={style.sideValue}>{name === 'credit_card' ? 'Cartão de crédito' : 'Boleto'}</Text>
+                    <Text style={style.sideValue}>{name === 'credit_card' ? 'Cartão de crédito' : 'Em aberto'}</Text>
                     <FontAwesome name={fa} size={24} />
                 </View>
             </CollapseHeader>
@@ -37,24 +37,30 @@ const AccordionPayment:React.FC<Props> = ({
                 <View>
                     <View style={style.row}>
                         <Text style={style.strong}>Cartão de crédito:</Text>
-                        <Text style={style.strong}>{payment.credit_card.name}</Text>
+                        <Text style={style.strong}>{payment.credit_card.name || ''}</Text>
                     </View>
                     <View style={style.row}>
                         <Text style={style.strong}>Nome no cartão:</Text>
-                        <Text style={style.strong}>{payment.credit_card.holder_name}</Text>
+                        <Text style={style.strong}>{payment.credit_card.holder_name || ''}</Text>
                     </View>
                     <View style={style.row}>
                         <Text style={style.strong}>Final:</Text>
-                        <Text style={style.strong}>{payment.credit_card.last_digits}</Text>
+                        <Text style={style.strong}>{payment.credit_card.last_digits || ''}</Text>
                     </View>
+                    {payment.credit_card.expiration_date && 
                     <View style={style.row}>
                         <Text style={style.strong}>Validade:</Text>
-                        <Text style={style.strong}>{payment.credit_card.expiration_date}</Text>
+                        <Text style={style.strong}>{payment.credit_card.expiration_date || ''}</Text>
                     </View>
+                    }
                 </View>
                 :
                 <View>
                     <View style={style.row}>
+                        <Text style={style.strong}>Pagamento:</Text>
+                        <Text style={style.strong}>Em aberto</Text>
+                    </View>
+                    {/* <View style={style.row}>
                         <Text style={style.strong}>Nome no boleto:</Text>
                         <Text style={style.strong}>{payment.boleto.name}</Text>
                     </View>
@@ -69,7 +75,7 @@ const AccordionPayment:React.FC<Props> = ({
                     <View style={style.row}>
                         <Text style={style.strong}>Contato:</Text>
                         <Text style={style.strong}>{payment.boleto.phone}</Text>
-                    </View>
+                    </View> */}
                 </View>
             }
             </CollapseBody>

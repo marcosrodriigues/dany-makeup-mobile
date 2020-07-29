@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import AddEndereco from '../pages/AddEndereco/Index';
 import Orders from '../pages/Orders/Index';
+import Order from '../pages/Order/Index';
 
 const OrderStack = createStackNavigator();
 
@@ -13,7 +13,7 @@ export default function OrderRoutes () {
             headerMode="none"
         >
             <OrderStack.Screen name="Orders" component={Orders} />
-            <OrderStack.Screen name="ShowOrder" component={AddEndereco} />
+            <OrderStack.Screen name="ShowOrder" component={Order} />
         </OrderStack.Navigator>
     )
 }

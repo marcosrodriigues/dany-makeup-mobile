@@ -14,7 +14,7 @@ const CardItem:React.FC<Props> = ({
     return (
         <Card containerStyle={style.card}  >
             <View style={style.product}>
-                <Image source={{ uri : item.image }} style={style.image}></Image>
+                <Image source={{ uri : item.image_url }} style={style.image}></Image>
                 <View style={style.info}>
                     <View>
                         <Text style={style.title}>{item.quantity}x {item.name}</Text>
