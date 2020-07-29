@@ -123,7 +123,7 @@ const Conta = ({ navigation, route }) => {
             </View>
             {isLogin ? 
                 <View style={style.main}>
-                    <TouchableOpacity activeOpacity={0.9} style={style.button} onPress={() => console.log("click")}>
+                    <TouchableOpacity activeOpacity={0.9} style={style.button} onPress={() => navigate('Orders')}>
                         <View style={style.inline}>
                             <View style={style.icon}>
                                 <Ionicons name="ios-cart" size={32} />

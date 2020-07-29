@@ -20,12 +20,12 @@ export default StyleSheet.create({
         height: 100,
         backgroundColor: '#d2ae6c',
         borderRadius: 10,
-        marginTop: 16,
-        width,
         justifyContent: 'center',
+        width,
+        marginTop: 16
     },
-    noAddressText: {
-        fontSize: 18,
+    noInfo: {
+        fontSize: 20,
         fontWeight: 'bold',
         alignSelf: 'center',
     },

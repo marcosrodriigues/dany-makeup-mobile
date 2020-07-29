@@ -5,6 +5,7 @@ import Conta from '../pages/Conta/Index'
 import Perfil from '../pages/Perfil/Index';
 import AddressRoutes from './address';
 import CreditCardRoutes from './creditcard';
+import OrderRoutes from './order';
 
 const ContaStack = createStackNavigator();
 
@@ -22,6 +23,7 @@ export default function ContaRoutes() {
         >
             <ContaStack.Screen name="Conta" component={Conta} />
             <ContaStack.Screen name="Perfil" component={Perfil} />
+            <ContaStack.Screen name="Orders" component={OrderRoutes} />
             <ContaStack.Screen name="Enderecos" component={AddressRoutes} />
             <ContaStack.Screen name="CreditCard" component={CreditCardRoutes} />
             

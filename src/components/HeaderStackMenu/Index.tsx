@@ -26,8 +26,8 @@ const HeaderStackMenu:React.FC<IParamsHeaderStackMenu> = ({ title, button = true
                 <></>
             }
             
-            <View style={[style.section, !button ? { alignItems: 'center' } : { }]}>
-                <Text style={style.title}>{title}</Text>
+            <View style={[style.section, !button ? { alignItems: 'center', justifyContent: 'center' } : { }]}>
+                <Text style={[style.title]}>{title}</Text>
             </View>
         </View>
     )

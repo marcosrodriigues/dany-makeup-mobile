@@ -20,8 +20,8 @@ export default StyleSheet.create({
         height: 100,
         backgroundColor: '#d2ae6c',
         borderRadius: 10,
-        margin: 16,
-        width: '100%',
+        marginTop: 16,
+        width,
         justifyContent: 'center',
     },
     noAddressText: {

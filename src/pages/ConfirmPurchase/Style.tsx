@@ -44,4 +44,15 @@ export default StyleSheet.create({
         fontWeight: 'bold',
 
     },
+
+    loading: {
+        flex: 1, 
+        backgroundColor: 'rgba(0,0,0,0.3)', 
+        width: '100%', 
+        height: '100%', 
+        zIndex: 10,
+        position: 'absolute', 
+        justifyContent: 'center', 
+        alignItems: 'center'
+    }
 })

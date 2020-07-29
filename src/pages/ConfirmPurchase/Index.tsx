@@ -11,24 +11,30 @@ import AccordionResume from '../../components/AccordionResume/Index';
 import AccordionPayment from '../../components/AccordionPayment/Index';
 import AccordionAddress from '../../components/AccordionAddress/Index';
 import AccordionStore from '../../components/AccordionStore/Index';
+import GifLoading from '../../components/GifLoading/Index';
 
 const ConfirmPurchase = ({
     navigation,
     route
 }) => {
     const order = route.params.order; 
+    const [loading, isLoading] = useState(false);
 
     async function handleConfirm() {
+        isLoading(true);
         try {
+            navigation.navigate('PurchaseDone', { order });
+            return;
             await api.post('orders', { order });
         } catch (err) {
             console.log(err);
             Alert.alert('Hey', 'Não foi possível criar o pedido. Verifique seus dados e tente novamente.\n' + err);
-            navigation.goBack();
         }
+        isLoading(false);
     }
 
     return (
+        
         <View style={style.container}>
             <ScrollView style={style.top}>
                 <View style={style.header}>
@@ -38,6 +44,11 @@ const ConfirmPurchase = ({
                 </View>
 
                 <View style={style.main}>
+                    {loading && 
+                        <View style={style.loading}>
+                            <GifLoading />
+                        </View>
+                    }
                     <View style={style.section}>
                         <AccordionItems value={order.purchase.resume.subtotal} items={order.purchase.items} />
                     </View>
@@ -64,6 +75,7 @@ const ConfirmPurchase = ({
 
             <View style={style.footer}>
                 <TouchableOpacity 
+                        disabled={loading}
                         style={style.button}
                         onPress={() => handleConfirm()}
                     >

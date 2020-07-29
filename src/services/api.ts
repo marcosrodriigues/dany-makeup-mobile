@@ -1,9 +1,11 @@
 import axios from 'axios';
 
-import { AsyncStorage, Alert } from 'react-native';
+import { AsyncStorage } from 'react-native';
+
+const baseURL = 'http://192.168.2.14:3333';
 
 var api = axios.create({
-    baseURL: 'http://192.168.2.14:3333',
+    baseURL 
 });
 
 

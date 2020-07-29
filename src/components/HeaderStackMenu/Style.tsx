@@ -23,7 +23,7 @@ export default StyleSheet.create({
         color: '#d2ae6c',
     },
     section: {
-        width: '85%',
+        width: '100%',
         justifyContent: 'flex-start',
     },
     title: {
