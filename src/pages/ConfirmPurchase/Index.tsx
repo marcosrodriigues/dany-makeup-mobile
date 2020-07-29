@@ -23,9 +23,8 @@ const ConfirmPurchase = ({
     async function handleConfirm() {
         isLoading(true);
         try {
-            navigation.navigate('PurchaseDone', { order });
-            return;
             await api.post('orders', { order });
+            navigation.navigate('PurchaseDone', { order });
         } catch (err) {
             console.log(err);
             Alert.alert('Hey', 'Não foi possível criar o pedido. Verifique seus dados e tente novamente.\n' + err);
