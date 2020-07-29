@@ -62,7 +62,7 @@ const WidgetPromocoes = () => {
                         item={item}
                         size={2}
                         text={"add carrinho"}
-                        type={"PROMOTIONS"}
+                        type={"PROMOTION"}
                     />
                 </View>
             </Card>

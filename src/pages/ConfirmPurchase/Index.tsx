@@ -12,6 +12,7 @@ import AccordionPayment from '../../components/AccordionPayment/Index';
 import AccordionAddress from '../../components/AccordionAddress/Index';
 import AccordionStore from '../../components/AccordionStore/Index';
 import GifLoading from '../../components/GifLoading/Index';
+import { useDispatch } from 'react-redux';
 
 const ConfirmPurchase = ({
     navigation,
@@ -20,10 +21,13 @@ const ConfirmPurchase = ({
     const order = route.params.order; 
     const [loading, isLoading] = useState(false);
 
+    const dispatch = useDispatch();
+
     async function handleConfirm() {
         isLoading(true);
         try {
             await api.post('orders', { order });
+            dispatch({ type: 'CLEAR_ITEMS' })
             navigation.navigate('PurchaseDone', { order });
         } catch (err) {
             console.log(err);

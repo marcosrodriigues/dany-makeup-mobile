@@ -117,10 +117,6 @@ const Compra = ({ navigation, route }) => {
         }
     }, [address])
 
-    useEffect(() => {
-        console.log('new store', store)
-    }, [store])
-
     return (
         <ScrollView contentContainerStyle={style.container}>
             <View style={style.header}>

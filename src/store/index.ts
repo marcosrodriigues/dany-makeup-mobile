@@ -17,6 +17,8 @@ function storeApp(state = INITIAL_STATE, action) {
             return { ...state, items: [...state.items, action.items] }
         case 'ALTER_ITEMS':
             return { ...state, items: action.items }
+        case 'CLEAR_ITEMS':
+            return { ...state, items: [] }
         default:
             return state;
      }
