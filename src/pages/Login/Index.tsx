@@ -58,7 +58,7 @@ const Login = ({ navigation, route }) => {
 
     return (
         <ScrollView contentContainerStyle={style.container}>
-            <View>
+            <View style={{width: '100%', paddingBottom: 8}}>
                 <HeaderStackMenu title="Login" />
             </View>
             <View style={style.header}>

@@ -84,7 +84,7 @@ const Cadastro = () => {
 
     return (
         <ScrollView contentContainerStyle={style.container}>
-            <View>
+            <View style={{width: '100%', paddingBottom: 8}}>
                 <HeaderStackMenu title="Cadastro" />
             </View>
             <View style={style.header}>

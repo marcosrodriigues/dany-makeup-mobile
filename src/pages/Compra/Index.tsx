@@ -124,7 +124,7 @@ const Compra = ({ navigation, route }) => {
 
     return (
         <ScrollView contentContainerStyle={style.container}>
-            <View style={style.header}>
+            <View style={{width: '100%', paddingBottom: 8}}>
                 <HeaderStackMenu 
                     title="Sua compra" 
                 />

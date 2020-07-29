@@ -14,6 +14,8 @@ export default StyleSheet.create({
     borderBottomStartRadius: 20,
     borderBottomWidth: 2,
     borderBottomEndRadius: 20,
+    width: '100%',
+    paddingBottom: 8
   },
   info: {
     width: '100%',

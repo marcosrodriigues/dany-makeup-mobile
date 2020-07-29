@@ -14,7 +14,7 @@ export default StyleSheet.create({
         width: '100%',
     },
     header: {
-        paddingBottom: 16,
+        paddingBottom: 8,
     },
     main: {
         width: '100%',
