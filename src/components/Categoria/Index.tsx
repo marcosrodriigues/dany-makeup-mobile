@@ -2,8 +2,6 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ImageBackground, Text } from 'react-native';
 
-import CategoriaImg from '../../assets/images/categorias/categoria.jpg';
-
 import style from './Style';
 
 import ICategory from '../../interface/ICategoria'
