@@ -16,6 +16,7 @@ const Orders = ({ navigation }) => {
     const [orders, setOrders] = useState<any[]>([]);
 
     useEffect(() => {
+        console.log(user);
         loadOrders();
     }, [user])
 

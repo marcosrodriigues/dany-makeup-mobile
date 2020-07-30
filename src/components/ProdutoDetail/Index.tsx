@@ -15,7 +15,6 @@ const ProdutoDetail:React.FC<IParamProduto> = ({ product }) => {
 
     useEffect(() => {
         setProduto(product);
-
         if (product.id) initProduct();
     }, [product])
 
@@ -64,7 +63,7 @@ const ProdutoDetail:React.FC<IParamProduto> = ({ product }) => {
             <View style={style.sectionDescription}>
 
                 <Text style={style.name}>{produto.name}</Text>
-                <Text style={style.shortDescription}>{produto.shortDescription}</Text>
+                <Text style={style.shortDescription}>{produto.short_description}</Text>
 
                 <View style={style.viewCarrinho}>
                     <View style={style.priceInfo}>
@@ -79,7 +78,7 @@ const ProdutoDetail:React.FC<IParamProduto> = ({ product }) => {
                     </View>
                 </View>
 
-                <Text style={style.fullDescription}>{produto.fullDescription}</Text>
+                <Text style={style.fullDescription}>{produto.full_description}</Text>
             </View>
         </View>
         :

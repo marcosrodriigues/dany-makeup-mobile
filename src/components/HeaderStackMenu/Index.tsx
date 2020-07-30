@@ -8,12 +8,19 @@ import { useNavigation } from '@react-navigation/native';
 
 import IParamsHeaderStackMenu from '../../interface/IParamsHeaderStackMenu';
 
-const HeaderStackMenu:React.FC<IParamsHeaderStackMenu> = ({ title, button = true }) => {
+const HeaderStackMenu:React.FC<IParamsHeaderStackMenu> = ({ 
+    title = '', 
+    button =  true, 
+    handleBack 
+}) => {
 
     const routes = useNavigation();
 
     function handleClickButton() {
-        routes.goBack();
+        if (handleBack) {
+            handleBack();
+        } else
+            routes.goBack();
     }
 
     return (
