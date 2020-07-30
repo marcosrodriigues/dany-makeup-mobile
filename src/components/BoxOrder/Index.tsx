@@ -6,8 +6,10 @@ import style from './Style';
 import { View, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
-import NumberFormat from '../../util/NumberFormat';
+import NumberFormat, { InputNumberFormat } from '../../util/NumberFormat';
 import { TextInputMask } from 'react-native-masked-text';
+import { TextMask } from 'react-native-masked-text'
+
 
 
 const BoxOrder = ({
@@ -43,8 +45,8 @@ const BoxOrder = ({
                         </Text>
                     </View>
                     <View style={style.bottom}>
-                        <TextInputMask 
-                            type="datetime"
+                        <TextMask 
+                            type={'datetime'}
                             options={
                                 {
                                     format: 'DD/MM/YYYY HH:mm',

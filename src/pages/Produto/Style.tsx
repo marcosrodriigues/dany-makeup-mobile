@@ -6,7 +6,8 @@ export default StyleSheet.create({
         paddingTop: Constants.statusBarHeight,
         backgroundColor: '#000',
         alignItems: 'center',
-        paddingBottom: 16
+        paddingBottom: 16,
+        minHeight: '100%'
     },
     imageBackground: {
         width: '100%',

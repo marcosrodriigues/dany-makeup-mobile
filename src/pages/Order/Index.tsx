@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import style from './Style';
 import { Alert, View } from 'react-native';
 import api from '../../services/api';
-import Loading from '../../components/Loading/Index';
 import HeaderStackMenu from '../../components/HeaderStackMenu/Index';
 import AccordionItems from '../../components/AccordionItems/Index';
 import AccordionDelivery from '../../components/AccordionDelivery/Index';
