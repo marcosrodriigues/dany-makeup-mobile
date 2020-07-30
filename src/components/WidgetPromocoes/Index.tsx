@@ -16,8 +16,7 @@ const WidgetPromocoes = () => {
             isLoading(true);
             try {
                 const { data }= await api.get('mobile/promotions');
-                if(data)
-                    setPromocoes(data)
+                setPromocoes(data)
             } catch (err) {
                 console.log('ERROR LOADING PROMOTIONS', err);
             }
@@ -27,11 +26,11 @@ const WidgetPromocoes = () => {
 
 
     return (
-        loading ? <GifLoading /> : 
         <>
             <Text style={styles.title}>Confira nossas promoções</Text>
             <View style={styles.promocao}>
             {
+            loading ? <GifLoading /> : 
             promocoes.length > 0 ?
                 <FlatList 
                     contentContainerStyle={styles.flatList}

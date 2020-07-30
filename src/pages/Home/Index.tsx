@@ -11,13 +11,13 @@ const Home = () => {
     return (
       <ScrollView contentContainerStyle={styles.container}>
           <ImageBackground style={styles.imageBackground} source={require('../../../src/assets/images/dany-makeup-169h.png')}  />
-          {/* <Banner /> */}
+          <Banner />
           <View style={styles.content}>
             <View style={styles.section}>
               <WidgetPromocoes />
             </View>
             <View style={styles.section}>
-              {/* <MaisVendidos /> */}
+              <MaisVendidos />
             </View>
           </View>
       </ScrollView>

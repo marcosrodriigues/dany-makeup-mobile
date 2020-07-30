@@ -14,7 +14,7 @@ const Banner = () => {
     const [loading, isLoading] = useState(false);
 
     useEffect(() => {
-        async function load() {
+        (async function load() {
             isLoading(true);
             try {
                 const { data } = await api.get('mobile/banners');
@@ -24,9 +24,7 @@ const Banner = () => {
                 console.log('error loading banner', error);
             }
             isLoading(false);
-        }
-
-        load();
+        })()
     }, []) 
 
     return (
