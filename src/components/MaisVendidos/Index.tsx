@@ -47,7 +47,7 @@ const MaisVendidos = () => {
 
     function handleMaisVendidos(item: IProdutoMaisVendidos) {
         return (
-            <Card containerStyle={Style.cardPromocao}  >
+            <Card containerStyle={Style.cardPromocao}>
                 <TouchableOpacity
                 style={Style.card}
                 activeOpacity={0.9} 
