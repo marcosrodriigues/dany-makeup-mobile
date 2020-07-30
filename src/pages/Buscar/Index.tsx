@@ -76,11 +76,11 @@ const Buscar = () => {
       <View style={style.dataContainer}>
           <HeaderSearchBar onClickSearch={handleSearchButton} />
           <ScrollView contentContainerStyle={style.searchScrollView}>
+            <Text style={style.subtitle}>Exibindo resultados para</Text>
             {
               !isLoading ? 
                 showList ?
                   <>
-                    <Text style={style.subtitle}>Exibindo resultados para</Text>
                     <Text style={style.title}>{categorySelected.title? categorySelected.title : ''}{search && ` > ${search}`}</Text>
 
                     {produtos.map(product => (

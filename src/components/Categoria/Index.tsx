@@ -20,7 +20,7 @@ const Categoria:React.FC<Props>  = ({ category, onClickCategory }) => {
             key={category.id} 
             onPress={() => onClickCategory(category)}
         >
-            <ImageBackground style={style.imageCategoria} source={CategoriaImg}>
+            <ImageBackground style={style.imageCategoria} source={{ uri : category.image_url }}>
             <Text style={style.titleCategoria}>{category.title}</Text>
             <Text style={style.descriptionCategoria}>{category.description}</Text>
             </ImageBackground>
