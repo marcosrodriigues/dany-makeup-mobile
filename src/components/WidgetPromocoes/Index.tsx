@@ -26,10 +26,10 @@ const WidgetPromocoes = () => {
             const response = await api.get('mobile/promotions');
             const { data } = response;
             setPromocoes(data);
-            changeLoading(false);
         } catch (err) {
             console.log('ERROR LOADING PROMOTIONS', err);
         }
+        changeLoading(false);
     }
 
     useEffect(() => {
@@ -70,10 +70,11 @@ const WidgetPromocoes = () => {
     }
 
     return (
-        promocoes.length > 0 && !isLoading ? 
         <>
             <Text style={styles.title}>Confira nossas promoções</Text>
             <View style={styles.promocao}>
+            {
+            promocoes.length > 0 && !isLoading ? 
                 <FlatList 
                     contentContainerStyle={styles.flatList}
                     showsHorizontalScrollIndicator={false}
@@ -83,13 +84,16 @@ const WidgetPromocoes = () => {
                     keyExtractor={item => String(item.id)}
                     >
                 </FlatList>
+                :
+                isLoading ? 
+                    <GifLoading />
+                :
+                <View style={{justifyContent: 'center', alignItems: 'center', width: '100%'}}> 
+                    <Text style={{fontSize: 20}}>Sem promoções no momento</Text>
+                </View>
+            }
             </View>
         </>
-        :
-        isLoading ? 
-            <GifLoading />
-        :
-        <></>
     )
 }
 
