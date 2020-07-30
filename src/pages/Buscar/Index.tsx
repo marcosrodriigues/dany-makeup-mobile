@@ -40,22 +40,22 @@ const Buscar = () => {
     }
 
     useEffect(() => {
-      setProdutos([]);
-      const params = {
-        category_id: categorySelected.id,
-        search: search
-      }
-
-      if (categorySelected.id !== undefined || search !== '') {
-        changeLoading(true);
-        api.get('mobile/products', { params }).then(response => {
-          const { data } = response;
+      async function load() {
+        setProdutos([]);
+        const params = {
+          category_id: categorySelected.id,
+          search
+        }
+  
+        if (categorySelected.id !== undefined || search !== '') {
+          changeLoading(true);
+          const { data } = await api.get('mobile/products', { params });
           setProdutos(data);
           changeLoading(false);
-        })
+        }
+        setShowList(!(categorySelected.id === undefined && search === ''))
       }
-
-      setShowList(!(categorySelected.id === undefined && search === ''))
+      load();
     }, [categorySelected, search]);
 
     function handleSelectedCategory (id: ICategory) {
@@ -81,7 +81,7 @@ const Buscar = () => {
                 showList ?
                   <>
                     <Text style={style.subtitle}>Exibindo resultados para</Text>
-                    <Text style={style.title}>{categorySelected.title? categorySelected.title + ' > ' : ''}{search}</Text>
+                    <Text style={style.title}>{categorySelected.title? categorySelected.title : ''}{search && ` > ${search}`}</Text>
 
                     {produtos.map(product => (
                       <CardProduto key={product.id} produto={product} onClickComponent={() => onClickProduct(product)} />

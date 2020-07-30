@@ -16,7 +16,7 @@ export default StyleSheet.create({
         paddingBottom: 24,
     },
     title: {
-        fontSize: 24,
+        fontSize: 20,
         color: '#d2ae6c',
         fontWeight: 'bold'
     },

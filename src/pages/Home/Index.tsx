@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, ScrollView, ImageBackground } from 'react-native';
 
 import styles  from './Style' ;
@@ -11,13 +11,13 @@ const Home = () => {
     return (
       <ScrollView contentContainerStyle={styles.container}>
           <ImageBackground style={styles.imageBackground} source={require('../../../src/assets/images/dany-makeup-169h.png')}  />
-          <Banner />
+          {/* <Banner /> */}
           <View style={styles.content}>
             <View style={styles.section}>
-              <WidgetPromocoes ></WidgetPromocoes>
+              <WidgetPromocoes />
             </View>
             <View style={styles.section}>
-              <MaisVendidos></MaisVendidos>
+              {/* <MaisVendidos /> */}
             </View>
           </View>
       </ScrollView>
