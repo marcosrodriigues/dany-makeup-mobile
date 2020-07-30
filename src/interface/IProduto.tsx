@@ -8,5 +8,5 @@ export default interface IProduct {
     images: string[],
     image_url: string,
     value: number,
-    fullD_description: string
+    full_description: string
 }
