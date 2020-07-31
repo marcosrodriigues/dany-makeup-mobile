@@ -55,7 +55,7 @@ const BoxPayment = ({
         navigation.navigate('MainCarrinho', {
             screen: 'Compra',
         });
-        loadCreditCards();
+        await loadCreditCards();
     }
 
     function handlePaymentMethod(payment_method: string) {
@@ -101,9 +101,10 @@ const BoxPayment = ({
         <View style={style.box}>
             <View style={style.header}>
                 <Text style={style.title}>Pagamento</Text>
+                <Text style={style.subtitle}>Escolha o cartão de pagamento</Text>
             </View>  
 
-            <View style={style.switch}>
+            {/* <View style={style.switch}>
                 <Button 
                     style={[style.btnSwitch, payment.payment_method === 'credit_card' && style.switchActive]} 
                     onPress={() => handlePaymentMethod('credit_card')}
@@ -120,7 +121,7 @@ const BoxPayment = ({
                         style={[style.switchText, payment.payment_method === 'boleto' && style.switchActiveText]} 
                     >Boleto</Text>
                 </Button>
-            </View>
+            </View> */}
         
         {
         payment.payment_method === 'credit_card' ? 
@@ -143,10 +144,10 @@ const BoxPayment = ({
                         )})}
                     </View>
                     :
-                    <Text style={style.noCreditCard}>Você não tem cartão de crédito cadastrado</Text>
+                    <Text style={style.noInfo}>Cadastre seus cartões em Perfil > Cartões</Text>
                 }
 
-                <TouchableOpacity style={style.button}
+                {/* <TouchableOpacity style={style.button}
                     onPress={handleAddCreditCard}
                 >
                     <View style={style.vIcon}>
@@ -159,7 +160,7 @@ const BoxPayment = ({
                     <View style={style.vText}>
                         <Text style={style.textButton}>novo cartão de crédito</Text>
                     </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         :
             <View style={style.boletoForm}>

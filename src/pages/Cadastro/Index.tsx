@@ -23,9 +23,13 @@ const Cadastro = () => {
     const navigation = useNavigation();
 
     async function handleCadastrarButton() {
+        if (name === '' || email === '' || password === '') {
+            Alert.alert("Hey", "Preencha os campos")
+            return;
+        }
         isLoading(true)
         try {
-            const response = await api.post('users', { name, email, password });
+            await api.post('users', { name, email, password });
             Alert.alert("Sucesso", "Agora é só fazer login!")
             navigation.navigate('Login');
         } catch (error) {

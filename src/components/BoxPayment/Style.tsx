@@ -6,13 +6,13 @@ export default StyleSheet.create({
         borderWidth: 1
     },
     header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold'
+    },
+    subtitle: {
+        fontSize: 16,
     },
     switch: {
         marginTop: 8,
@@ -41,7 +41,7 @@ export default StyleSheet.create({
     creditCard: {
 
     },
-    noCreditCard: {
+    noInfo: {
         marginTop: 16,
         fontSize: 20,
         textAlign: 'center'

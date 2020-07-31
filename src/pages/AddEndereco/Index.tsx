@@ -78,10 +78,7 @@ const AddEndereco = ({ navigation, route }) => {
             return;
         }
         isLoading(true);
-
         try {
-            isLoading(true);
-
             if (!address.id)
                 await api.post('address/user', { address, user_id: user.id })
             else
@@ -89,6 +86,7 @@ const AddEndereco = ({ navigation, route }) => {
 
             route.params.onGoBack();
             navigation.goBack();
+            console.log('navegou')
         } catch (err) {
             Alert.alert('Hey', 'Aconteceu algum problema com o seu cadastro. Tente novamente');
             console.log('ERR ADD ENDERECOS', err)
