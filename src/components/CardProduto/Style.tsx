@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     cardProduto: {
         backgroundColor: '#d2ae6c',
+        borderColor: '#d2ae6c'
     },
     product: {
         width: '100%',

@@ -137,10 +137,18 @@ const Buscar = () => {
                 :
                 <>
                   <Text style={style.title}>Todas as categorias</Text>
-                  { categorys.map(cat => (
-                    <Categoria key={cat.id} category={cat} onClickCategory={handleSelectedCategory} />
-                  ))}
-                </>
+                  { 
+                  categorys.length > 0 ?
+                    categorys.map(cat => (
+                      <Categoria key={cat.id} category={cat} onClickCategory={handleSelectedCategory} />
+                    ))
+                    :
+                    <View style={style.box}>
+                        <Text style={style.txtBox}>Nenhuma categoria encontrada</Text>
+                      </View>
+                  }
+
+                  </>
               :
               <>
                 <GifLoading />

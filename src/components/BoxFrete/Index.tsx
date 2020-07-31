@@ -31,6 +31,7 @@ const BoxFrete = ({
     }, [initialCep])
 
     function handleButtonClick() {
+        if (cep === '') return;
         setOptionSelected(0);
         setOptions([]);
         loadOptions();
