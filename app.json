@@ -13,7 +13,7 @@
     "facebookDisplayName": "dany-make-up",
     "facebookAutoInitEnabled": true,
     "extra": {
-      "BASE_URL": "https://api-danymakeup.herokuapp.com/",
+      "BASE_URL": "https://api-danymakeup.herokuapp.com/"
     },
 
     "version": "1.0.0",
