@@ -1,8 +1,8 @@
 import axios from 'axios';
-
 import { AsyncStorage } from 'react-native';
+import Constants from 'expo-constants';
 
-const baseURL = 'http://192.168.2.14:3333';
+const baseURL = Constants.manifest.extra.BASE_URL;
 
 var api = axios.create({
     baseURL 

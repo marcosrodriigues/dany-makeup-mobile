@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "Dany MakeUp",
+    "slug": "DanyMakeUp",
     "platforms": [
       "ios",
       "android",
@@ -12,7 +12,9 @@
     "facebookAppId": "819081765286655",
     "facebookDisplayName": "dany-make-up",
     "facebookAutoInitEnabled": true,
-    
+    "extra": {
+      "BASE_URL": "https://api-danymakeup.herokuapp.com/",
+    },
 
     "version": "1.0.0",
     "orientation": "portrait",
