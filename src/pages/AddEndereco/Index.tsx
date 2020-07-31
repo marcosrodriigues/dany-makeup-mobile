@@ -68,7 +68,15 @@ const AddEndereco = ({ navigation, route }) => {
     }, [address.uf])
 
     async function handleAdd() {
-
+        if (!address.cep || 
+            !address.city || 
+            !address.neighborhood || 
+            !address.street || 
+            !address.uf || 
+            !address.number) {
+            Alert.alert('Hey', 'Preencha os campos do seu endereço corretamente');
+            return;
+        }
         isLoading(true);
 
         try {

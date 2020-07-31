@@ -12,6 +12,7 @@ import ICategory from '../../interface/ICategoria';
 import IProduct from '../../interface/IProduto';
 import api from '../../services/api';
 import GifLoading from '../../components/GifLoading/Index';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const Buscar = () => {
@@ -21,6 +22,9 @@ const Buscar = () => {
     const [categorySelected, setCategorySelected] = useState<ICategory>({} as ICategory);
     const [showList, setShowList] = useState<Boolean>(false);
     const [produtos, setProdutos] = useState<IProduct[]>([]);
+    const [countProducts, setCountProducts] = useState(0);
+    const [page, setPage] = useState(1)
+    const [loadingMore, isLoadingMore] = useState(false);
 
     const navigate = useNavigation();
 
@@ -40,20 +44,23 @@ const Buscar = () => {
     }
 
     useEffect(() => {
-      async function load() {
-        setProdutos([]);
-        const params = {
-          category_id: categorySelected.id,
-          search
-        }
-  
-        if (categorySelected.id !== undefined || search !== '') {
-          changeLoading(true);
-          const { data } = await api.get('mobile/products', { params });
-          setProdutos(data);
-          changeLoading(false);
-        }
-        setShowList(!(categorySelected.id === undefined && search === ''))
+        async function load() {
+          const params = {
+            category_id: categorySelected.id,
+            search,
+            page
+          }
+          if (categorySelected.id !== undefined || search !== '') {
+            changeLoading(true);
+            const response = await api.get('mobile/products', { params });
+            const { data, headers } = response;
+            const counter = headers['x-total-count'];
+            setProdutos(data);
+            setCountProducts(counter);
+            changeLoading(false);
+          }
+          setShowList(!(categorySelected.id === undefined && search === ''))
+          setPage(1);
       }
       load();
     }, [categorySelected, search]);
@@ -72,6 +79,29 @@ const Buscar = () => {
       navigate.navigate('Produto', { product: product });
     }
 
+    async function handleLoadMore() {
+      const params = {
+        category_id: categorySelected.id,
+        search,
+        page: page + 1
+      };
+      isLoadingMore(true);
+      try {
+        const { data } = await api.get('mobile/products', { params });
+        setPage(page + 1)
+        if (data.length > 0) {
+          setProdutos([
+            ...produtos, 
+            ...data
+          ])
+        }
+      } catch (error) { 
+        console.log('ERROR LOAD MORE PRODUCTS', error)
+        setProdutos([])
+      }
+      isLoadingMore(false);
+    }
+
     return (
       <View style={style.dataContainer}>
           <HeaderSearchBar onClickSearch={handleSearchButton} />
@@ -83,9 +113,26 @@ const Buscar = () => {
                   <>
                     <Text style={style.title}>{categorySelected.title? categorySelected.title : ''}{search && ` > ${search}`}</Text>
 
-                    {produtos.map(product => (
-                      <CardProduto key={product.id} produto={product} onClickComponent={() => onClickProduct(product)} />
-                    ))}
+                    {
+                    produtos.length > 0 ?
+                      produtos.map(product => (
+                        <CardProduto key={product.id} produto={product} onClickComponent={() => onClickProduct(product)} />
+                      ))
+                    :
+                      <View style={style.box}>
+                        <Text style={style.txtBox}>Nenhum produto encontrado</Text>
+                      </View>
+                  }
+                  {
+                    produtos.length < countProducts ?
+                      loadingMore ? <GifLoading />
+                      :
+                      <TouchableOpacity style={style.btn} onPress={handleLoadMore}>
+                        <Text style={style.txtBtn}>Carregar mais</Text>
+                      </TouchableOpacity>
+                    :
+                    <></>
+                  }
                   </>
                 :
                 <>
