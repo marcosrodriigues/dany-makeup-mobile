@@ -17,6 +17,7 @@ api.interceptors.response.use(config => {
     return Promise.reject(error);
 })
 
+
  api.interceptors.request.use(async function(config) {
     const token = await AsyncStorage.getItem("@DanyMakeUp:token");
 

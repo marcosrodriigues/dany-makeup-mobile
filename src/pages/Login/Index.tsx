@@ -13,8 +13,8 @@ import GifLoading from '../../components/GifLoading/Index';
 
 const Login = ({ navigation, route }) => {
     const [loading, isLoading] = useState(false)
-    const [email, setEmail] = useState<string>('marcos.rodriiigues@gmail.com');
-    const [password, setPassword] = useState<string>('123456');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
     
     const dispatch = useDispatch();
 
