@@ -19,7 +19,7 @@
     "expo": "^37.0.12",
     "expo-camera": "~8.2.0",
     "expo-facebook": "^8.1.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "moment": "^2.27.0",
     "pagarme": "^4.0.0",
     "react": "~16.9.0",
